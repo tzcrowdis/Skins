@@ -22,6 +22,7 @@ public class Home : MonoBehaviour
     public Canvas storeCanvas;
 
     List<Canvas> canvasList;
+    List<Button> buttonList;
 
 
     void Start()
@@ -32,15 +33,20 @@ public class Home : MonoBehaviour
         canvasList.Add(battlepassCanvas);
         canvasList.Add(storeCanvas);
 
-        playBtn.onClick.AddListener(delegate { OpenCanvas(playCanvas); });
-        collectionBtn.onClick.AddListener(delegate { OpenCanvas(collectionCanvas); });
-        battlepassBtn.onClick.AddListener(delegate { OpenCanvas(battlepassCanvas); });
-        storeBtn.onClick.AddListener(delegate { OpenCanvas(storeCanvas); });
+        buttonList = new List<Button>();
+        playBtn.onClick.AddListener(delegate { OpenCanvas(playCanvas, playBtn); });
+        buttonList.Add(playBtn);
+        collectionBtn.onClick.AddListener(delegate { OpenCanvas(collectionCanvas, collectionBtn); });
+        buttonList.Add(collectionBtn);
+        battlepassBtn.onClick.AddListener(delegate { OpenCanvas(battlepassCanvas, battlepassBtn); });
+        buttonList.Add(battlepassBtn);
+        storeBtn.onClick.AddListener(delegate { OpenCanvas(storeCanvas, storeBtn); });
+        buttonList.Add(storeBtn);
 
-        OpenCanvas(collectionCanvas);
+        OpenCanvas(collectionCanvas, collectionBtn);
     }
 
-    void OpenCanvas(Canvas canvas)
+    void OpenCanvas(Canvas canvas, Button navBtn)
     {
         foreach (Canvas c in canvasList)
         {
@@ -48,6 +54,14 @@ public class Home : MonoBehaviour
                 c.gameObject.SetActive(true);
             else
                 c.gameObject.SetActive(false);
+        }
+
+        foreach (Button btn in buttonList)
+        {
+            if (btn == navBtn)
+                btn.interactable = false;
+            else
+                btn.interactable = true;
         }
     }
 }
