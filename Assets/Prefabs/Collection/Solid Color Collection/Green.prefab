@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.10952163, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 3870137312497843737}
   - component: {fileID: 6734708302570901131}
   m_Layer: 5
-  m_Name: Collection Item
+  m_Name: Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -547,8 +547,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionItemImage: {fileID: 1846042405159878937}
-  skinName: Default
-  rarity: 1
+  skinName: Green
+  rarity: 0
   rarityBorder: {fileID: 7204501822290852210}
   infoPanel: {fileID: 3038627571007061569}
   nameText: {fileID: 6818932258828146078}

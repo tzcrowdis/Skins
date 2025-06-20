@@ -25,6 +25,15 @@ public class Home : MonoBehaviour
     List<Button> buttonList;
 
 
+    public static Home instance { get; private set; }
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(instance.gameObject);
+        else
+            instance = this;
+    }
+
     void Start()
     {
         canvasList = new List<Canvas>();
@@ -46,7 +55,7 @@ public class Home : MonoBehaviour
         OpenCanvas(collectionCanvas, collectionBtn);
     }
 
-    void OpenCanvas(Canvas canvas, Button navBtn)
+    public void OpenCanvas(Canvas canvas, Button navBtn)
     {
         foreach (Canvas c in canvasList)
         {
