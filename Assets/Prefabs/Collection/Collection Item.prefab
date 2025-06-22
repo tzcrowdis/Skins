@@ -546,8 +546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b026a02abdae14a804b7057f2ce5a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectionItemImage: {fileID: 1846042405159878937}
-  skinName: Default
+  itemImage: {fileID: 1846042405159878937}
+  itemName: 
   rarity: 1
   rarityBorder: {fileID: 7204501822290852210}
   infoPanel: {fileID: 3038627571007061569}

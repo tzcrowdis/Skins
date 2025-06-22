@@ -32,16 +32,16 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     {
         collectionItem = collectionItemObject.GetComponent<CollectionItem>();
 
-        itemImage.sprite = collectionItem.collectionItemImage.sprite;
-        itemImage.color = collectionItem.collectionItemImage.color;
-        itemImage.material = collectionItem.collectionItemImage.material;
+        itemImage.sprite = collectionItem.itemImage.sprite;
+        itemImage.color = collectionItem.itemImage.color;
+        itemImage.material = collectionItem.itemImage.material;
 
         rarityColor = collectionItem.GetRarityColor();
         rarityBorder.color = rarityColor;
 
         lockedOverlay.SetActive(locked);
 
-        //claimedPanel.SetActive(claimed);
+        claimedPanel.SetActive(claimed);
     }
 
     public void UnlockItem()
@@ -57,10 +57,10 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     {
         if (Player.instance.matchesPlayed >= matchesPlayedToClaim)
         {
-            // TODO add item to collection or currency to player
+            // TODO add item to collection or currency to player or modifier to list
             
             claimed = true;
-            //claimedPanel.SetActive(claimed);
+            claimedPanel.SetActive(claimed);
         }
     }
 

@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d418f4b16a52fe24c90803a27683e599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skinName: {fileID: 7873004131784486955}
+  itemName: {fileID: 7873004131784486955}
   rarityText: {fileID: 2228398725456868444}
   skinImage: {fileID: 8348891977145221426}
   locked: 0

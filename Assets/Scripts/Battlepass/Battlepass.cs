@@ -36,7 +36,8 @@ public class Battlepass : MonoBehaviour
         {
             purchasePremiumButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Get Coins";
             purchasePremiumButton.onClick.RemoveAllListeners();
-            purchasePremiumButton.onClick.AddListener(OpenCoinStore);
+            purchasePremiumButton.onClick.AddListener(Home.instance.OpenCoinStore);
+            purchasePremiumButton.onClick.AddListener(ExitPremiumPanel);
         }
         else
         {
@@ -69,11 +70,5 @@ public class Battlepass : MonoBehaviour
         {
             Debug.Log("couldnt buy battlepass");
         }
-    }
-
-    void OpenCoinStore()
-    {
-        ExitPremiumPanel();
-        Home.instance.OpenCanvas(Home.instance.storeCanvas, Home.instance.storeBtn); // TODO open directly to coin tab
     }
 }

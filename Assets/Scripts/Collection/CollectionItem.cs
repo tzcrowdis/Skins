@@ -9,11 +9,11 @@ using UnityEditor;
 
 public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [Header("Skin")]
-    public Image collectionItemImage;
+    [Header("Image")]
+    public Image itemImage;
     
     [Header("Name")]
-    public string skinName;
+    public string itemName;
     
     [Header("Rarity")]
     public Rarity rarity;
@@ -34,11 +34,11 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Legendary
     }
 
-    void Start()
+    protected virtual void Start()
     {
         collectionCanvas = GameObject.Find("Collection Canvas").transform;
         
-        nameText.text = skinName;
+        nameText.text = itemName;
         rarityText.text = ObjectNames.NicifyVariableName(rarity.ToString());
 
         SetRarityColor();
@@ -84,6 +84,22 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         }
 
         return Color.black;
+    }
+
+    public int GetLootPoolMult()
+    {
+        switch (rarity)
+        {
+            case Rarity.VeryCommon:
+                return 20;
+            case Rarity.Common:
+                return 10;
+            case Rarity.Rare:
+                return 2;
+            case Rarity.Legendary:
+                return 1;
+        }
+        return 0;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

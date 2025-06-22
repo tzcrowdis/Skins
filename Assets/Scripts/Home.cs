@@ -73,4 +73,9 @@ public class Home : MonoBehaviour
                 btn.interactable = true;
         }
     }
+
+    public void OpenCoinStore()
+    {
+        OpenCanvas(Home.instance.storeCanvas, Home.instance.storeBtn); // TODO open directly to coin tab
+    }
 }

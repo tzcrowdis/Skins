@@ -8,7 +8,7 @@ using UnityEditor;
 public class BattlepassInfoPanel : MonoBehaviour
 {
     [Header("Populate Variables")]
-    public TMP_Text skinName;
+    public TMP_Text itemName;
     public TMP_Text rarityText;
     public Image skinImage;
 
@@ -48,12 +48,12 @@ public class BattlepassInfoPanel : MonoBehaviour
         locked = battlepassItem.locked;
         lockedOverlay.SetActive(locked);
         
-        skinName.text = item.skinName;
+        itemName.text = item.itemName;
         rarityText.text = ObjectNames.NicifyVariableName(item.rarity.ToString());
         rarityText.color = item.GetRarityColor();
-        skinImage.color = item.collectionItemImage.color;
-        skinImage.sprite = item.collectionItemImage.sprite;
-        skinImage.material = item.collectionItemImage.material;
+        skinImage.color = item.itemImage.color;
+        skinImage.sprite = item.itemImage.sprite;
+        skinImage.material = item.itemImage.material;
         gameObject.SetActive(true);
     }
 }

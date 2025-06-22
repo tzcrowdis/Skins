@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     [Header("Modifiers")]
     [SerializeField]
     public List<Modifier> modifiers;
+    public int modifierCapacity = 5;
+    public GameObject modifierPanel;
 
     public static Player instance { get; private set; }
     void Awake()
@@ -30,6 +32,15 @@ public class Player : MonoBehaviour
     void Start()
     {
         UpdateCurrencyFields();
+    }
+
+    public void AddToModifierList(Modifier mod)
+    {
+        if (modifiers.Count + 1 > modifierCapacity)
+            return; // TODO open menu to organize modifiers
+
+        modifiers.Add(mod);
+        Instantiate(mod.gameObject, modifierPanel.transform);
     }
 
     void UpdateCurrencyFields()
