@@ -39,9 +39,15 @@ public class ReadyUp : MonoBehaviour
     {
         if (skinSelected)
         {
-            // TODO play the game
-
+            Home.instance.OpenCanvas(Home.instance.playCanvas);
             Home.instance.gameObject.SetActive(false);
+            
+            Player.instance.SetSkin(selectedSkin);
+            selectedSkin = null;
+            skinSelected = false;
+            startButton.GetComponentInChildren<TMP_Text>().text = "Equip Skin";
+
+            EnemyController.instance.StartPlay();
             gameObject.SetActive(false);
         }
         else
@@ -85,10 +91,5 @@ public class ReadyUp : MonoBehaviour
         startButton.GetComponentInChildren<TMP_Text>().text = "Start";
         readyUpPanel.transform.position += new Vector3(40f, 0f, 0f);
         skinSelectionScrollView.SetActive(false);
-    }
-
-    Skin GetSelectedSkin()
-    {
-        return selectedSkin;
     }
 }

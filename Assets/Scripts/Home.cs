@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class Home : MonoBehaviour
 {
     [Header("Play")]
-    public Button playBtn;
     public Canvas playCanvas;
+    
+    [Header("Ready Up")]
+    public Button readyUpBtn;
+    public Canvas readyUpCanvas;
 
     [Header("Collection")]
     public Button collectionBtn;
@@ -38,13 +41,14 @@ public class Home : MonoBehaviour
     {
         canvasList = new List<Canvas>();
         canvasList.Add(playCanvas);
+        canvasList.Add(readyUpCanvas);
         canvasList.Add(collectionCanvas);
         canvasList.Add(battlepassCanvas);
         canvasList.Add(storeCanvas);
 
         buttonList = new List<Button>();
-        playBtn.onClick.AddListener(delegate { OpenCanvas(playCanvas, playBtn); });
-        buttonList.Add(playBtn);
+        readyUpBtn.onClick.AddListener(delegate { OpenCanvas(readyUpCanvas, readyUpBtn); });
+        buttonList.Add(readyUpBtn);
         collectionBtn.onClick.AddListener(delegate { OpenCanvas(collectionCanvas, collectionBtn); });
         buttonList.Add(collectionBtn);
         battlepassBtn.onClick.AddListener(delegate { OpenCanvas(battlepassCanvas, battlepassBtn); });
@@ -55,7 +59,7 @@ public class Home : MonoBehaviour
         OpenCanvas(collectionCanvas, collectionBtn);
     }
 
-    public void OpenCanvas(Canvas canvas, Button navBtn)
+    public void OpenCanvas(Canvas canvas, Button navBtn = null)
     {
         foreach (Canvas c in canvasList)
         {
@@ -65,12 +69,15 @@ public class Home : MonoBehaviour
                 c.gameObject.SetActive(false);
         }
 
-        foreach (Button btn in buttonList)
+        if (navBtn)
         {
-            if (btn == navBtn)
-                btn.interactable = false;
-            else
-                btn.interactable = true;
+            foreach (Button btn in buttonList)
+            {
+                if (btn == navBtn)
+                    btn.interactable = false;
+                else
+                    btn.interactable = true;
+            }
         }
     }
 

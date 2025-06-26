@@ -5,6 +5,11 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
+    [Header("Skin")]
+    public SpriteRenderer spriteRenderer;
+    [HideInInspector]
+    public Skin skin;
+
     [Header("Stats")]
     public int matchesPlayed;
     
@@ -68,5 +73,22 @@ public class Player : MonoBehaviour
         coins -= coinAmount;
         UpdateCurrencyFields();
         return true;
+    }
+
+    /*
+     * PLAY
+     */
+    public void SetSkin(Skin equippedSkin)
+    {
+        skin = equippedSkin;
+        spriteRenderer.color = skin.itemImage.color;
+        spriteRenderer.material = skin.itemImage.material;
+        if (skin.itemImage.sprite)
+            spriteRenderer.sprite = skin.itemImage.sprite;
+    }
+
+    public void ApplyAllModifiers()
+    {
+
     }
 }
