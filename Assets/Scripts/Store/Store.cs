@@ -29,10 +29,21 @@ public class Store : MonoBehaviour
     public Button confirmButton;
     public Button cancelButton;
     Button itemButton;
-    
-    
+
+
+    public static Store instance { get; private set; }
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(instance.gameObject);
+        else
+            instance = this;
+    }
+
     void Start()
     {
+        RandomizeFeaturedStore();
+        
         foreach (Button button in storeButtons)
         {
             button.onClick.AddListener(delegate { OpenPurchasePanel(button.GetComponent<StoreButton>()); });
@@ -57,8 +68,8 @@ public class Store : MonoBehaviour
         featuredPanel.SetActive(true);
         featuredButton.interactable = false;
 
-        confirmButton.onClick.AddListener(ConfirmPurchase);
-        cancelButton.onClick.AddListener(CancelPurchase);
+        //confirmButton.onClick.AddListener(ConfirmPurchase);
+        //cancelButton.onClick.AddListener(CancelPurchase);
         confirmationPanel.SetActive(false);
     }
 
@@ -96,12 +107,48 @@ public class Store : MonoBehaviour
 
         itemButton = storeButton.GetComponent<Button>();
 
+        if (Player.instance.coins - storeButton.itemCost > 0)
+        {
+            confirmButton.onClick.RemoveAllListeners();
+            confirmButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Confirm";
+            confirmButton.onClick.AddListener(delegate { ConfirmPurchase(storeButton); });
+            confirmButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            confirmButton.onClick.RemoveAllListeners();
+            confirmButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Get Coins";
+            confirmButton.onClick.AddListener(Home.instance.OpenCoinStore);
+            confirmButton.onClick.AddListener(CancelPurchase);
+            confirmButton.gameObject.SetActive(true);
+        }
+
+        cancelButton.onClick.RemoveAllListeners();
+        cancelButton.onClick.AddListener(CancelPurchase);
+        cancelButton.gameObject.SetActive(true);
+
         confirmationPanel.SetActive(true);
     }
 
-    void ConfirmPurchase()
+    void ConfirmPurchase(StoreButton storeButton)
     {
-        // TODO add to inventory or currency or modifier list
+        bool purchased = Player.instance.InGamePurchase(storeButton.itemCost);
+
+        if (!purchased)
+            Debug.Log("not purchased");
+
+        switch (storeButton.type)
+        {
+            case StoreButton.itemType.Skin:
+                Collection.instance.AddToCollection(storeButton.item.GetComponent<CollectionItem>());
+                break;
+            case StoreButton.itemType.Crate:
+                Collection.instance.AddToCollection(storeButton.item.GetComponent<CollectionItem>());
+                break;
+            case StoreButton.itemType.Modifier:
+                Player.instance.AddToModifierList(storeButton.item.GetComponent<Modifier>());
+                break;
+        }
 
         itemButton.interactable = false;
         confirmationPanel.SetActive(false);
@@ -110,5 +157,13 @@ public class Store : MonoBehaviour
     void CancelPurchase()
     {
         confirmationPanel.SetActive(false);
+    }
+
+    public void RandomizeFeaturedStore()
+    {
+        foreach (Transform child in featuredPanel.transform)
+        {
+            child.GetComponent<StoreButton>().RandomizeItem();
+        }
     }
 }

@@ -83,6 +83,7 @@ public class Home : MonoBehaviour
 
     public void OpenCoinStore()
     {
-        OpenCanvas(Home.instance.storeCanvas, Home.instance.storeBtn); // TODO open directly to coin tab
+        OpenCanvas(Home.instance.storeCanvas, Home.instance.storeBtn);
+        Store.instance.OpenSubPanel(Store.instance.coinPanel, Store.instance.coinButton);
     }
 }

@@ -43,8 +43,7 @@ public class ReadyUp : MonoBehaviour
             Home.instance.gameObject.SetActive(false);
             
             Player.instance.SetSkin(selectedSkin);
-            selectedSkin = null;
-            skinSelected = false;
+            DeselectSkin();
             startButton.GetComponentInChildren<TMP_Text>().text = "Equip Skin";
 
             EnemyController.instance.StartPlay();
@@ -53,7 +52,7 @@ public class ReadyUp : MonoBehaviour
         else
         {
             UpdateSkinSelectionContent();
-            readyUpPanel.transform.position -= new Vector3(40f, 0f, 0f);
+            readyUpPanel.transform.position -= new Vector3(350f, 0f, 0f);
             skinSelectionScrollView.SetActive(true);
         }
     }
@@ -89,7 +88,16 @@ public class ReadyUp : MonoBehaviour
         skinImage.material = skin.itemImage.material;
 
         startButton.GetComponentInChildren<TMP_Text>().text = "Start";
-        readyUpPanel.transform.position += new Vector3(40f, 0f, 0f);
+        readyUpPanel.transform.position += new Vector3(350f, 0f, 0f);
         skinSelectionScrollView.SetActive(false);
+    }
+
+    void DeselectSkin()
+    {
+        selectedSkin = null;
+        skinImage.sprite = null;
+        skinImage.color = Color.white;
+        skinImage.material = null;
+        skinSelected = false;
     }
 }

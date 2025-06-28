@@ -550,6 +550,7 @@ MonoBehaviour:
   itemName: Green
   rarity: 0
   rarityBorder: {fileID: 7204501822290852210}
+  itemCost: 100
   infoPanel: {fileID: 3038627571007061569}
   nameText: {fileID: 6818932258828146078}
   rarityText: {fileID: 3247075111502549481}

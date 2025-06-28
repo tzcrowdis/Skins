@@ -19,6 +19,9 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public Rarity rarity;
     public Image rarityBorder;
 
+    [Header("Cost")]
+    public int itemCost;
+
     [Header("Info Panel")]
     public GameObject infoPanel;
     public TMP_Text nameText;

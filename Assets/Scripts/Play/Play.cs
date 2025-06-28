@@ -44,5 +44,6 @@ public class Play : MonoBehaviour
         gameObject.SetActive(false);
         Home.instance.gameObject.SetActive(true);
         Home.instance.OpenCanvas(Home.instance.collectionCanvas, Home.instance.collectionBtn);
+        Store.instance.RandomizeFeaturedStore();
     }
 }

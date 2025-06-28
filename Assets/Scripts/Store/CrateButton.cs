@@ -10,6 +10,7 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     [Header("Crate")]
     public Image crateImage;
     public int coinCost;
+    public GameObject cratePrefab;
     
     // TODO crate info panel with collection skins and name
     
@@ -34,11 +35,16 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
         if (purchased)
         {
-            // TODO add crate to collection
+            Collection.instance.AddToCollection(cratePrefab.GetComponent<CollectionItem>());
+            confirmationPanel.SetActive(false);
+
+            // TODO signal success
         }
         else
         {
             OpenCrateConfirmationPanel();
+
+            // TODO signal failure
         }
     }
 
@@ -49,7 +55,6 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         {
             crateConfirmButton.onClick.AddListener(Home.instance.OpenCoinStore);
             crateConfirmButton.onClick.AddListener(CloseCrateConfirmationPanel);
-
             crateConfirmButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Get Coins";
         }
         else

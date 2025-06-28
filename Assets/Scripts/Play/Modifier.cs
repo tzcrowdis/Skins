@@ -11,6 +11,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public string modifierName;
     public Rarity modifierRarity;
     public Image modifierImage;
+    public int modifierCost;
 
     [Header("Info Panel")]
     public GameObject modifierInfoPanel;
@@ -23,6 +24,8 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Rare,
         Legendary
     }
+
+    // TODO on delete, make all store/battlepass modifiers interactable
 
     void Start()
     {

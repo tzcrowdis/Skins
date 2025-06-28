@@ -434,8 +434,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac64e7bee4174124598bc8142790d9de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifierName: 
+  modifierName: Default Modifier
   modifierRarity: 0
+  modifierImage: {fileID: 7772839054300522219}
+  modifierCost: 1000
   modifierInfoPanel: {fileID: 7554370667190779950}
   nameText: {fileID: 6682322680532701472}
   rarityText: {fileID: 6228363101480043959}

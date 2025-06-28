@@ -685,6 +685,7 @@ MonoBehaviour:
   itemName: Solid Color Collection Crate
   rarity: 1
   rarityBorder: {fileID: 7204501822290852210}
+  itemCost: 250
   infoPanel: {fileID: 3038627571007061569}
   nameText: {fileID: 6818932258828146078}
   rarityText: {fileID: 3247075111502549481}

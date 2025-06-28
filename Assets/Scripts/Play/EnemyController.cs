@@ -32,14 +32,8 @@ public class EnemyController : MonoBehaviour
             Enemy nme = child.GetComponent<Enemy>();
             if (nme)
             {
-                // Strategy: random skin from random collection
-                int collectionIndex = Random.Range(0, collectionPaths.Count);
-                string[] guids = AssetDatabase.FindAssets("t:Object", new[] { collectionPaths[collectionIndex] });
-                int skinIndex = Random.Range(0, guids.Length);
-                Skin enemySkin = (Skin)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[skinIndex]), typeof(Skin));
+                Skin enemySkin = ItemDatabase.instance.RandomSkinRandomCollection();
                 nme.SetSkin(enemySkin);
-
-                // TODO Strategy: select skin in collection based on rarity
             }
         }
     }
