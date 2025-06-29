@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public int exp = 0;
     public int levelCap;
     public int levelBase = 100;
-    public int levelDelta = 2;
+    public float levelDelta = 1.5f;
     
     [Header("Currencies")]
     public int dollars;
@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
 
         if (exp >= levelCap)
         {
+            exp = 0;
             level += 1;
             levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
         }

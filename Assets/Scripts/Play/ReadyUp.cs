@@ -51,9 +51,12 @@ public class ReadyUp : MonoBehaviour
         }
         else
         {
-            UpdateSkinSelectionContent();
-            readyUpPanel.transform.position -= new Vector3(350f, 0f, 0f);
-            skinSelectionScrollView.SetActive(true);
+            if (!skinSelectionScrollView.activeSelf)
+            {
+                UpdateSkinSelectionContent();
+                readyUpPanel.transform.position -= new Vector3(350f, 0f, 0f);
+                skinSelectionScrollView.SetActive(true);
+            }
         }
     }
 
