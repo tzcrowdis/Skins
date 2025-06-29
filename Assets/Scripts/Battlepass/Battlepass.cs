@@ -21,6 +21,15 @@ public class Battlepass : MonoBehaviour
     [Header("Battlepass Content")]
     public GameObject bpContent;
 
+    public static Battlepass instance { get; private set; }
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(instance.gameObject);
+        else
+            instance = this;
+    }
+
     void Start()
     {
         premiumButton.onClick.AddListener(DisplayPremiumPanel);

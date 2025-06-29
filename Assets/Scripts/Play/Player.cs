@@ -11,7 +11,11 @@ public class Player : MonoBehaviour
     public Skin skin;
 
     [Header("Stats")]
-    public int matchesPlayed;
+    public int level = 0;
+    public int exp = 0;
+    public int levelCap;
+    public int levelBase = 100;
+    public int levelDelta = 2;
     
     [Header("Currencies")]
     public int dollars;
@@ -37,6 +41,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         UpdateCurrencyFields();
+
+        levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
     }
 
     public void AddToModifierList(Modifier mod)
@@ -91,4 +97,17 @@ public class Player : MonoBehaviour
     {
 
     }
+
+    public void AddExperience(int newExp)
+    {
+        exp += newExp;
+
+        if (exp >= levelCap)
+        {
+            level += 1;
+            levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
+        }
+    }
+
+
 }

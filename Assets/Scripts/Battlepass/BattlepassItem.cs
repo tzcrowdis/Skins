@@ -8,9 +8,15 @@ using UnityEngine.EventSystems;
 
 public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [Header("Collection Item")]
+    [Header("Collection Item - Skin")]
     public GameObject collectionItemObject;
     CollectionItem collectionItem;
+
+    [Header("Modifier")]
+    public GameObject modifierObject;
+
+    [Header("Currency")]
+    public int coinAmount;
 
     [Header("Premium Lock")]
     public bool locked;
@@ -22,11 +28,20 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     [Header("Claim Requirement")]
     public bool claimed = false;
-    public int matchesPlayedToClaim;
+    public int levelToClaim;
     public GameObject claimedPanel;
 
     Color rarityColor;
     bool selected = false;
+
+    [Header("Item Type")]
+    public itemType type;
+    public enum itemType
+    {
+        Skin,
+        Modifier,
+        Currency
+    }
 
     void Start()
     {
@@ -41,6 +56,15 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
         lockedOverlay.SetActive(locked);
 
+        for (int i = 0; i < Battlepass.instance.bpContent.transform.childCount; i++)
+        {
+            BattlepassItem child = Battlepass.instance.bpContent.transform.GetChild(i).GetComponent<BattlepassItem>();
+            if (child == this)
+            {
+                levelToClaim = i;
+                break;
+            }   
+        }
         claimedPanel.SetActive(claimed);
     }
 
@@ -54,11 +78,22 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     }
 
     public void ClaimItem()
-    {
-        if (Player.instance.matchesPlayed >= matchesPlayedToClaim)
+    {      
+        if (Player.instance.level >= levelToClaim)
         {
-            // TODO add item to collection or currency to player or modifier to list
-            
+            switch (type)
+            {
+                case itemType.Skin:
+                    Collection.instance.AddToCollection(collectionItem);
+                    break;
+                case itemType.Modifier:
+                    Player.instance.AddToModifierList(modifierObject.GetComponent<Modifier>());
+                    break;
+                case itemType.Currency:
+                    Player.instance.CoinPurchase(0, coinAmount);
+                    break;
+            }
+
             claimed = true;
             claimedPanel.SetActive(claimed);
         }

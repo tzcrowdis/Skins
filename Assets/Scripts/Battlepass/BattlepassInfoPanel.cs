@@ -16,6 +16,11 @@ public class BattlepassInfoPanel : MonoBehaviour
     public bool locked;
     public GameObject lockedOverlay;
 
+    [Header("Claimed")]
+    public bool claimed;
+    public Button claimButton;
+    public GameObject claimedOverlay;
+
     BattlepassItem bpItem;
 
     public static BattlepassInfoPanel instance { get; private set; }
@@ -31,6 +36,7 @@ public class BattlepassInfoPanel : MonoBehaviour
     {
         gameObject.SetActive(false);
         lockedOverlay.SetActive(false);
+        claimButton.gameObject.SetActive(false);
     }
 
     public void UnlockItem()
@@ -47,6 +53,18 @@ public class BattlepassInfoPanel : MonoBehaviour
 
         locked = battlepassItem.locked;
         lockedOverlay.SetActive(locked);
+
+        claimed = battlepassItem.claimed;
+        claimedOverlay.SetActive(claimed);
+        if (!claimed & !locked)
+        {
+            if (Player.instance.level >= battlepassItem.levelToClaim)
+            {
+                claimButton.gameObject.SetActive(true);
+                claimButton.onClick.RemoveAllListeners();
+                claimButton.onClick.AddListener(battlepassItem.ClaimItem);
+            }
+        }
         
         itemName.text = item.itemName;
         rarityText.text = ObjectNames.NicifyVariableName(item.rarity.ToString());

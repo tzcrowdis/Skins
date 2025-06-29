@@ -35,6 +35,7 @@ public class Play : MonoBehaviour
         // + coins?
 
         // + exp for battlepass?
+        Player.instance.AddExperience(100);
     }
 
     void ReturnHome()

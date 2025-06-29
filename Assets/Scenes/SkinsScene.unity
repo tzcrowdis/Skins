@@ -3484,7 +3484,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 605227569}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999654
+  m_Size: 0.9999576
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8762,7 +8762,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1527316581}
   skin: {fileID: 0}
-  matchesPlayed: 0
+  level: 0
+  exp: 0
+  levelCap: 0
+  levelBase: 100
+  levelDelta: 2
   dollars: 1000
   dollarText: {fileID: 2028734101}
   coins: 0
@@ -9858,7 +9862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00009282007}
+  m_AnchoredPosition: {x: 0, y: 0.000023020806}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1377965573
