@@ -22,6 +22,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     [Header("Premium Lock")]
     public bool locked;
+    public TMP_Text lockedLevel;
     public GameObject lockedOverlay;
 
     [Header("Image + Border")]

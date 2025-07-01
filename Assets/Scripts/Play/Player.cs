@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     public int modifierCapacity = 5;
     public GameObject modifierPanel;
 
+    [Header("Level Display")]
+    public TMP_Text levelText;
+
     public static Player instance { get; private set; }
     void Awake()
     {
@@ -41,6 +44,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         UpdateCurrencyFields();
+        UpdateLevelText();
 
         levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
     }
@@ -58,6 +62,11 @@ public class Player : MonoBehaviour
     {
         dollarText.text = $"${dollars}";
         coinsText.text = $"&{coins}";
+    }
+
+    public void UpdateLevelText()
+    {
+        levelText.text = $"Lvl. {level}";
     }
 
     public bool CoinPurchase(int dollarAmount, int coinAmount)
@@ -95,7 +104,7 @@ public class Player : MonoBehaviour
 
     public void ApplyAllModifiers()
     {
-
+        // TODO
     }
 
     public void AddExperience(int newExp)
@@ -107,6 +116,7 @@ public class Player : MonoBehaviour
             exp = 0;
             level += 1;
             levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
+            UpdateLevelText();
         }
     }
 
