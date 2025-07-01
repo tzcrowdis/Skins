@@ -430,13 +430,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionItemObject: {fileID: 0}
+  modifierObject: {fileID: 0}
+  coinAmount: 0
   locked: 0
   lockedOverlay: {fileID: 3344335779839080454}
   itemImage: {fileID: 1846042405159878937}
   rarityBorder: {fileID: 7204501822290852210}
   claimed: 0
-  matchesPlayedToClaim: 0
-  claimedPanel: {fileID: 552646394632702524}
+  levelToClaim: 0
+  claimedOverlay: {fileID: 552646394632702524}
+  type: 0
 --- !u!1 &8140060877547019850
 GameObject:
   m_ObjectHideFlags: 0

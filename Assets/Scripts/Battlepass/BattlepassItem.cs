@@ -5,6 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -29,7 +31,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     [Header("Claim Requirement")]
     public bool claimed = false;
     public int levelToClaim;
-    public GameObject claimedPanel;
+    public GameObject claimedOverlay;
 
     Color rarityColor;
     bool selected = false;
@@ -65,7 +67,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
                 break;
             }   
         }
-        claimedPanel.SetActive(claimed);
+        claimedOverlay.SetActive(claimed);
     }
 
     public void UnlockItem()
@@ -95,7 +97,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
             }
 
             claimed = true;
-            claimedPanel.SetActive(claimed);
+            claimedOverlay.SetActive(claimed);
         }
     }
 
@@ -126,15 +128,20 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     void MoveImageAndBorderUp()
     {
-        itemImage.transform.position += new Vector3(0f, 20f, 0f);
-        rarityBorder.transform.position += new Vector3(0f, 20f, 0f);
-        lockedOverlay.transform.position += new Vector3(0f, 20f, 0f);
+        float distance = 20f;
+        itemImage.transform.position += new Vector3(0, distance, 0);
+        rarityBorder.transform.position += new Vector3(0, distance, 0);
+        lockedOverlay.transform.position += new Vector3(0, distance, 0);
+        claimedOverlay.transform.position += new Vector3(0, distance, 0);
+        
     }
 
     void MoveImageAndBorderDown()
     {
-        itemImage.transform.position -= new Vector3(0f, 20f, 0f);
-        rarityBorder.transform.position -= new Vector3(0f, 20f, 0f);
-        lockedOverlay.transform.position -= new Vector3(0f, 20f, 0f);
+        float distance = 20f;
+        itemImage.transform.position -= new Vector3(0, distance, 0);
+        rarityBorder.transform.position -= new Vector3(0, distance, 0);
+        lockedOverlay.transform.position -= new Vector3(0, distance, 0);
+        claimedOverlay.transform.position -= new Vector3(0, distance, 0);
     }
 }

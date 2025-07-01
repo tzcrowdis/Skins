@@ -25,6 +25,14 @@ public class EnemyController : MonoBehaviour
         GenerateEnemyReactions();
     }
 
+    public void EndPlay()
+    {
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<Enemy>().dialogueCanvas.gameObject.SetActive(false);
+        }
+    }
+
     void GenerateEnemySkins()
     {
         foreach (Transform child in transform)
@@ -40,6 +48,14 @@ public class EnemyController : MonoBehaviour
 
     void GenerateEnemyReactions()
     {
-        // TODO
+        Skin playerSkin = Player.instance.skin;
+        foreach (Transform child in transform)
+        {
+            Enemy nme = child.GetComponent<Enemy>();
+            if (nme)
+            {
+                nme.ReactToPlayerSkin(playerSkin);
+            }
+        }
     }
 }
