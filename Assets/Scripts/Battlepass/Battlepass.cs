@@ -17,9 +17,11 @@ public class Battlepass : MonoBehaviour
     [Header("Premium Pricing")]
     public int premiumCoinPrice;
     public TMP_Text coinPriceText;
+    public bool premiumOwner = false;
 
     [Header("Battlepass Content")]
     public GameObject bpContent;
+    
 
     public static Battlepass instance { get; private set; }
     void Awake()
@@ -69,8 +71,10 @@ public class Battlepass : MonoBehaviour
 
         if (purchased)
         {
+            premiumOwner = true;
+            
             foreach (BattlepassItem bpItem in bpContent.GetComponentsInChildren<BattlepassItem>())
-                bpItem.UnlockItem();
+                bpItem.BattlepassUnlock();
 
             premiumButton.gameObject.SetActive(false);
             premiumPanel.SetActive(false);
@@ -79,5 +83,13 @@ public class Battlepass : MonoBehaviour
         {
             Debug.Log("couldnt buy battlepass");
         }
+    }
+
+    public void LevelReachedUnlock(int level)
+    {
+        if (premiumOwner)
+            bpContent.transform.GetChild(level - 1).GetComponent<BattlepassItem>().FullUnlock();
+        else
+            bpContent.transform.GetChild(level - 1).GetComponent<BattlepassItem>().LevelUnlock();
     }
 }

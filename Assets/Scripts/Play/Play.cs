@@ -42,7 +42,7 @@ public class Play : MonoBehaviour
     void PopulatePostMatchSummary()
     {
         // + exp
-        Player.instance.AddExperience(100);
+        Player.instance.AddExperience(1000);
 
         currentLevel.text = $"{Player.instance.level}";
         nextLevel.text = $"{Player.instance.level + 1}";

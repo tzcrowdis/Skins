@@ -104,7 +104,8 @@ public class Player : MonoBehaviour
 
     public void ApplyAllModifiers()
     {
-        // TODO
+        foreach (Modifier mod in modifiers)
+            mod.ModifierEffect();
     }
 
     public void AddExperience(int newExp)
@@ -113,12 +114,12 @@ public class Player : MonoBehaviour
 
         if (exp >= levelCap)
         {
+            // TODO track experience remainder
             exp = 0;
             level += 1;
             levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
             UpdateLevelText();
+            Battlepass.instance.LevelReachedUnlock(level);
         }
     }
-
-
 }

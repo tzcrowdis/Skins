@@ -12,8 +12,9 @@ public class BattlepassInfoPanel : MonoBehaviour
     public TMP_Text rarityText;
     public Image skinImage;
 
-    [Header("Premium Lock")]
+    [Header("Lock")]
     public bool locked;
+    public TMP_Text lockedLevel;
     public GameObject lockedOverlay;
 
     [Header("Claimed")]
@@ -39,7 +40,12 @@ public class BattlepassInfoPanel : MonoBehaviour
         claimButton.gameObject.SetActive(false);
     }
 
-    public void UnlockItem()
+    public void BattlepassUnlock()
+    {
+        lockedOverlay.GetComponent<Image>().enabled = locked;
+    }
+
+    public void FullUnlock()
     {
         locked = false;
         lockedOverlay.SetActive(locked);
@@ -52,10 +58,37 @@ public class BattlepassInfoPanel : MonoBehaviour
         bpItem = battlepassItem;
 
         locked = battlepassItem.locked;
-        lockedOverlay.SetActive(locked);
+        if (locked)
+        {
+            if (battlepassItem.lockedLevel.text == "")
+                lockedLevel.text = "";
+            else
+                lockedLevel.text = $"{battlepassItem.levelToClaim}";
+
+            if (Battlepass.instance.premiumOwner)
+                lockedOverlay.GetComponent<Image>().enabled = false;
+            else
+                lockedOverlay.GetComponent<Image>().enabled = true;
+
+            lockedOverlay.SetActive(true);
+        }
+        else
+        {
+            if (Player.instance.level < battlepassItem.levelToClaim)
+            {
+                lockedOverlay.SetActive(true);
+                lockedLevel.text = $"{battlepassItem.levelToClaim}";
+                lockedOverlay.GetComponent<Image>().enabled = false;
+            }
+            else
+            {
+                lockedOverlay.SetActive(false);
+            }
+        }
 
         claimed = battlepassItem.claimed;
         claimedOverlay.SetActive(claimed);
+
         if (!claimed & !locked)
         {
             if (Player.instance.level >= battlepassItem.levelToClaim)

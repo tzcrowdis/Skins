@@ -57,27 +57,42 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
         rarityColor = collectionItem.GetRarityColor();
         rarityBorder.color = rarityColor;
 
-        lockedOverlay.SetActive(locked);
-
         for (int i = 0; i < Battlepass.instance.bpContent.transform.childCount; i++)
         {
             BattlepassItem child = Battlepass.instance.bpContent.transform.GetChild(i).GetComponent<BattlepassItem>();
             if (child == this)
             {
-                levelToClaim = i;
+                levelToClaim = i + 1;
                 break;
             }   
         }
+
+        lockedLevel.text = $"{levelToClaim}";
+        BattlepassUnlock();
+
         claimedOverlay.SetActive(claimed);
     }
 
-    public void UnlockItem()
+    public void BattlepassUnlock()
+    {
+        lockedOverlay.GetComponent<Image>().enabled = locked;
+
+        if (selected)
+            BattlepassInfoPanel.instance.BattlepassUnlock();
+    }
+
+    public void LevelUnlock()
+    {
+        lockedLevel.text = "";
+    }
+
+    public void FullUnlock()
     {
         locked = false;
         lockedOverlay.SetActive(locked);
 
         if (selected)
-            BattlepassInfoPanel.instance.UnlockItem();
+            BattlepassInfoPanel.instance.FullUnlock();
     }
 
     public void ClaimItem()
