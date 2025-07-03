@@ -39,6 +39,14 @@ public class Battlepass : MonoBehaviour
 
         coinPriceText.text = $"&{premiumCoinPrice}";
         premiumPanel.SetActive(false);
+
+        GenerateBattlepassItems();
+    }
+
+    public void GenerateBattlepassItems()
+    {
+        foreach (Transform item in bpContent.transform)
+            item.GetComponent<BattlepassItem>().GenerateItem();
     }
 
     void DisplayPremiumPanel()

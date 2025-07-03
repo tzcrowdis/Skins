@@ -11,11 +11,10 @@ using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Collection Item - Skin")]
-    public GameObject collectionItemObject;
-    CollectionItem collectionItem;
+    public CollectionItem collectionItem;
 
     [Header("Modifier")]
-    public GameObject modifierObject;
+    public Modifier mod;
 
     [Header("Currency")]
     public int coinAmount;
@@ -23,6 +22,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     [Header("Premium Lock")]
     public bool locked;
     public TMP_Text lockedLevel;
+    public GameObject lockImage;
     public GameObject lockedOverlay;
 
     [Header("Image + Border")]
@@ -48,14 +48,72 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     void Start()
     {
-        collectionItem = collectionItemObject.GetComponent<CollectionItem>();
+        GenerateItem();
+    }
 
-        itemImage.sprite = collectionItem.itemImage.sprite;
-        itemImage.color = collectionItem.itemImage.color;
-        itemImage.material = collectionItem.itemImage.material;
+    public void GenerateItem()
+    {
+        ResetItem();
+        
+        float r = Random.Range(0f, 1f);
+        if (r < 0.5f) // skin
+        {
+            type = itemType.Skin;
+            Skin skin = ItemDatabase.instance.RandomSkinRandomCollection();
 
-        rarityColor = collectionItem.GetRarityColor();
-        rarityBorder.color = rarityColor;
+            collectionItem = skin;
+
+            itemImage.sprite = collectionItem.itemImage.sprite;
+            itemImage.color = collectionItem.itemImage.color;
+            itemImage.material = collectionItem.itemImage.material;
+
+            rarityColor = collectionItem.GetRarityColor();
+            rarityBorder.color = rarityColor;
+        }
+        else if (r < 0.75f) // modifier
+        {
+            type = itemType.Modifier;
+            mod = ItemDatabase.instance.RandomModifier();
+
+            itemImage.sprite = mod.modifierImage.sprite;
+            itemImage.color = mod.modifierImage.color;
+            itemImage.material = mod.modifierImage.material;
+
+            rarityBorder.color = mod.GetRarityColor();
+        }
+        else // currency
+        {
+            type = itemType.Currency;
+            float coinRandom = Random.Range(0, 3);
+            switch (coinRandom)
+            {
+                case 0:
+                    coinAmount = 100;
+                    break;
+                case 1:
+                    coinAmount = 200;
+                    break;
+                case 2:
+                    coinAmount = 300;
+                    break;
+            }
+
+            Image coinImage = ItemDatabase.instance.GetCoinImage();
+            itemImage.sprite = coinImage.sprite;
+            itemImage.color = coinImage.color;
+            itemImage.material = coinImage.material;
+            rarityBorder.color = Color.white;
+        }
+    }
+
+    void ResetItem()
+    {
+        collectionItem = null;
+        mod = null;
+        coinAmount = 0;
+
+        claimed = false;
+        claimedOverlay.SetActive(claimed);
 
         for (int i = 0; i < Battlepass.instance.bpContent.transform.childCount; i++)
         {
@@ -64,13 +122,11 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
             {
                 levelToClaim = i + 1;
                 break;
-            }   
+            }
         }
-
         lockedLevel.text = $"{levelToClaim}";
-        BattlepassUnlock();
 
-        claimedOverlay.SetActive(claimed);
+        BattlepassUnlock();
     }
 
     public void BattlepassUnlock()
@@ -83,7 +139,10 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void LevelUnlock()
     {
-        lockedLevel.text = "";
+        if (!locked)
+            lockImage.SetActive(false);
+        else
+            lockedLevel.text = "";
     }
 
     public void FullUnlock()
@@ -105,7 +164,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
                     Collection.instance.AddToCollection(collectionItem);
                     break;
                 case itemType.Modifier:
-                    Player.instance.AddToModifierList(modifierObject.GetComponent<Modifier>());
+                    Player.instance.AddToModifierList(mod);
                     break;
                 case itemType.Currency:
                     Player.instance.CoinPurchase(0, coinAmount);
@@ -119,7 +178,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        BattlepassInfoPanel.instance.DisplayBattlepassInfoPanel(collectionItem, this);
+        BattlepassInfoPanel.instance.DisplayBattlepassInfoPanel(this);
         selected = true;
     }
 

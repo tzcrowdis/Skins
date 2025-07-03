@@ -32,6 +32,14 @@ public class Player : MonoBehaviour
     [Header("Level Display")]
     public TMP_Text levelText;
 
+    [Header("Season")]
+    public int season = 1;
+    public TMP_Text seasonText;
+    public int lastSeason = 3;
+    public TMP_Text seasonTimerText;
+    public int seasonTotalMinutes = 5;
+    float seasonTimeLeft;
+
     public static Player instance { get; private set; }
     void Awake()
     {
@@ -47,6 +55,33 @@ public class Player : MonoBehaviour
         UpdateLevelText();
 
         levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
+
+        seasonText.text = $"Season: {season}";
+        seasonTimeLeft = seasonTotalMinutes * 60f;
+    }
+
+    void Update()
+    {
+        seasonTimeLeft -= Time.deltaTime;
+
+        int minutes = Mathf.FloorToInt(seasonTimeLeft / 60f);
+        int seconds = Mathf.FloorToInt(seasonTimeLeft - minutes * 60);
+        seasonTimerText.text = $"{minutes}:{seconds}";
+
+        if (seasonTimeLeft <= 0)
+            StartNextSeason();
+    }
+
+    void StartNextSeason()
+    {
+        Battlepass.instance.GenerateBattlepassItems();
+
+        season += 1; // TODO season themes??
+        if (season > lastSeason)
+            Debug.Log("GAME OVER"); // TODO
+
+        seasonText.text = $"Season: {season}";
+        seasonTimeLeft = seasonTotalMinutes * 60f;
     }
 
     public void AddToModifierList(Modifier mod)
@@ -110,16 +145,30 @@ public class Player : MonoBehaviour
 
     public void AddExperience(int newExp)
     {
-        exp += newExp;
+        int expRemainder = newExp;
 
-        if (exp >= levelCap)
+        exp += expRemainder;
+        for (int i = 0; i < 1000; i++) // 1000 iterations instead of while to prevent infinite loop
         {
-            // TODO track experience remainder
-            exp = 0;
-            level += 1;
-            levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
-            UpdateLevelText();
-            Battlepass.instance.LevelReachedUnlock(level);
+            if (exp >= levelCap)
+            {
+                expRemainder = exp - levelCap;
+                exp = expRemainder;
+                level += 1;
+                levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
+                UpdateLevelText();
+                Battlepass.instance.LevelReachedUnlock(level);
+            }
+            else
+            {
+                break;
+            }   
+
+            if (expRemainder <= 0)
+                break;
+
+            if (i == 999)
+                Debug.Log("Level couldn't be found in 1000 iterations");
         }
     }
 }

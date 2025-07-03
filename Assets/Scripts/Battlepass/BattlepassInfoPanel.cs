@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using static UnityEditor.Progress;
 
 public class BattlepassInfoPanel : MonoBehaviour
 {
     [Header("Populate Variables")]
     public TMP_Text itemName;
     public TMP_Text rarityText;
-    public Image skinImage;
+    public Image itemImage;
 
     [Header("Lock")]
     public bool locked;
@@ -51,7 +52,7 @@ public class BattlepassInfoPanel : MonoBehaviour
         lockedOverlay.SetActive(locked);
     }
 
-    public void DisplayBattlepassInfoPanel(CollectionItem item, BattlepassItem battlepassItem)
+    public void DisplayBattlepassInfoPanel(BattlepassItem battlepassItem)
     {
         if (bpItem != null & bpItem != battlepassItem)
             bpItem.Deselect();
@@ -96,15 +97,40 @@ public class BattlepassInfoPanel : MonoBehaviour
                 claimButton.gameObject.SetActive(true);
                 claimButton.onClick.RemoveAllListeners();
                 claimButton.onClick.AddListener(battlepassItem.ClaimItem);
+                claimButton.onClick.AddListener(ItemClaimed);
             }
         }
         
-        itemName.text = item.itemName;
-        rarityText.text = ObjectNames.NicifyVariableName(item.rarity.ToString());
-        rarityText.color = item.GetRarityColor();
-        skinImage.color = item.itemImage.color;
-        skinImage.sprite = item.itemImage.sprite;
-        skinImage.material = item.itemImage.material;
+        switch (battlepassItem.type)
+        {
+            case BattlepassItem.itemType.Skin:
+                CollectionItem item = battlepassItem.collectionItem;
+                itemName.text = item.itemName;
+                rarityText.text = ObjectNames.NicifyVariableName(item.rarity.ToString());
+                rarityText.color = item.GetRarityColor();
+                break;
+            case BattlepassItem.itemType.Modifier:
+                Modifier mod = battlepassItem.mod;
+                itemName.text = mod.modifierName;
+                rarityText.text = ObjectNames.NicifyVariableName(mod.modifierRarity.ToString());
+                rarityText.color = mod.GetRarityColor();
+                break;
+            case BattlepassItem.itemType.Currency:
+                itemName.text = "Coins";
+                rarityText.text = "Common";
+                rarityText.color = Color.white;
+                break;
+        }
+        itemImage.color = battlepassItem.itemImage.color;
+        itemImage.sprite = battlepassItem.itemImage.sprite;
+        itemImage.material = battlepassItem.itemImage.material;
+
         gameObject.SetActive(true);
+    }
+
+    void ItemClaimed()
+    {
+        claimButton.gameObject.SetActive(false);
+        claimedOverlay.SetActive(true);
     }
 }

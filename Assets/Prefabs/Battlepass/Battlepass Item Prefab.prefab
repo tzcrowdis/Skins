@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4795348335443503869}
   - component: {fileID: 1846042405159878937}
   m_Layer: 5
-  m_Name: Collection Item Image
+  m_Name: Item Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,11 +564,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4c07323e74ced448806632e5a2ce809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectionItemObject: {fileID: 0}
-  modifierObject: {fileID: 0}
+  collectionItem: {fileID: 0}
+  mod: {fileID: 0}
   coinAmount: 0
   locked: 0
   lockedLevel: {fileID: 168889589221469304}
+  lockImage: {fileID: 3292541417778557144}
   lockedOverlay: {fileID: 3344335779839080454}
   itemImage: {fileID: 1846042405159878937}
   rarityBorder: {fileID: 7204501822290852210}

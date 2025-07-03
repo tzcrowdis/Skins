@@ -32,18 +32,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         nameText.text = modifierName;
         rarityText.text = modifierRarity.ToString();
 
-        switch (modifierRarity)
-        {
-            case Rarity.Common:
-                rarityText.color = Color.blue;
-                break;
-            case Rarity.Rare:
-                rarityText.color = Color.magenta;
-                break;
-            case Rarity.Legendary:
-                rarityText.color = Color.yellow;
-                break;
-        }
+        rarityText.color = GetRarityColor();
 
         modifierInfoPanel.SetActive(false);
     }
@@ -62,6 +51,21 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 return 1;
         }
         return 0;
+    }
+
+    public Color GetRarityColor()
+    {
+        switch (modifierRarity)
+        {
+            case Rarity.Common:
+                return Color.blue;
+            case Rarity.Rare:
+                return Color.magenta;
+            case Rarity.Legendary:
+                return Color.yellow;
+        }
+
+        return Color.black;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

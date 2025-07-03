@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemDatabase : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class ItemDatabase : MonoBehaviour
 
     [Header("Modifiers Path")]
     public string modifiersPath;
+
+    [Header("Coin Image")]
+    public Sprite coin;
 
 
     public static ItemDatabase instance { get; private set; }
@@ -46,5 +50,14 @@ public class ItemDatabase : MonoBehaviour
         string[] guids = AssetDatabase.FindAssets("t:Object", new[] { modifiersPath });
         int modifierIndex = Random.Range(0, guids.Length);
         return (Modifier)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[modifierIndex]), typeof(Modifier));
+    }
+
+    public Image GetCoinImage()
+    {
+        GameObject temp = new GameObject("temp from get coin image");
+        Image coinImage = temp.AddComponent<Image>();
+        coinImage.color = Color.yellow;
+        coinImage.sprite = coin;
+        return coinImage;
     }
 }
