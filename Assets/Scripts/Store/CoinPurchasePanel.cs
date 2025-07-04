@@ -30,7 +30,7 @@ public class CoinPurchasePanel : MonoBehaviour
     {
         coinPurchaseButton.onClick.AddListener(OpenConfirmationPanel);
 
-        coinQuantityText.text = $"&{coinQuantity}";
+        coinQuantityText.text = $"\u0424{coinQuantity}";
         dollarPriceText.text = $"${dollarPrice}";
 
         discount = (coinQuantity / dollarPrice) - 100f;

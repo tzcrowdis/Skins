@@ -67,7 +67,7 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         crateConfirmationImage.sprite = crateImage.sprite;
         crateConfirmationImage.material = crateImage.material;
 
-        costConfirmationText.text = $"&{coinCost}";
+        costConfirmationText.text = $"\u0424{coinCost}";
 
         confirmationPanel.SetActive(true);
     }

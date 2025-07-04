@@ -47,7 +47,7 @@ public class StoreButton : MonoBehaviour
 
                 itemName.text = skin.itemName;
                 itemCost = (int)(skin.itemCost - skin.itemCost * discount / 100);
-                cost.text = $"&{itemCost}";
+                cost.text = $"\u0424{itemCost}";
                 image.color = skin.itemImage.color;
                 image.material = skin.itemImage.material;
                 if (skin.itemImage.sprite) image.sprite = skin.itemImage.sprite;
@@ -59,7 +59,7 @@ public class StoreButton : MonoBehaviour
 
                 itemName.text = mod.modifierName;
                 itemCost = (int)(mod.modifierCost - mod.modifierCost * discount / 100);
-                cost.text = $"&{itemCost}";
+                cost.text = $"\u0424{itemCost}";
                 image.color = mod.modifierImage.color;
                 image.material = mod.modifierImage.material;
                 if (mod.modifierImage.sprite) image.sprite = mod.modifierImage.sprite;
@@ -74,7 +74,7 @@ public class StoreButton : MonoBehaviour
 
                 itemName.text = crate.itemName;
                 itemCost = (int)(crate.itemCost - crate.itemCost * discount / 100);
-                cost.text = $"&{itemCost}";
+                cost.text = $"\u0424{itemCost}";
                 image.color = crate.itemImage.color;
                 image.material = crate.itemImage.material;
                 if (crate.itemImage.sprite) image.sprite = crate.itemImage.sprite;

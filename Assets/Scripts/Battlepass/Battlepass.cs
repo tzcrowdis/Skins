@@ -37,7 +37,7 @@ public class Battlepass : MonoBehaviour
         premiumButton.onClick.AddListener(DisplayPremiumPanel);
         exitPremiumPanel.onClick.AddListener(ExitPremiumPanel);
 
-        coinPriceText.text = $"&{premiumCoinPrice}";
+        coinPriceText.text = $"\u0424{premiumCoinPrice}";
         premiumPanel.SetActive(false);
 
         GenerateBattlepassItems();

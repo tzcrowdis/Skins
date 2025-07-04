@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
     void UpdateCurrencyFields()
     {
         dollarText.text = $"${dollars}";
-        coinsText.text = $"&{coins}";
+        coinsText.text = $"\u0424{coins}";
     }
 
     public void UpdateLevelText()
