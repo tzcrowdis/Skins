@@ -68,8 +68,6 @@ public class Store : MonoBehaviour
         featuredPanel.SetActive(true);
         featuredButton.interactable = false;
 
-        //confirmButton.onClick.AddListener(ConfirmPurchase);
-        //cancelButton.onClick.AddListener(CancelPurchase);
         confirmationPanel.SetActive(false);
     }
 

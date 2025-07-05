@@ -52,7 +52,7 @@ public class Collection : MonoBehaviour
 
     public void OpenCrateKeyPanel(Crate crate)
     {
-        crateKeyImage.sprite = crate.itemImage.sprite;
+        //crateKeyImage.sprite = crate.itemImage.sprite;
         crateKeyCost.text = $"\u0424{crate.keyCoinCost}";
 
         crateKeyButton.onClick.RemoveAllListeners();

@@ -102,7 +102,9 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
             itemImage.sprite = coinImage.sprite;
             itemImage.color = coinImage.color;
             itemImage.material = coinImage.material;
-            rarityBorder.color = Color.white;
+            Color blank = Color.white;
+            blank.a = 0;
+            rarityBorder.color = blank;
         }
     }
 
