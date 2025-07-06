@@ -57,6 +57,7 @@ public class ItemDatabase : MonoBehaviour
         GameObject temp = new GameObject("temp from get coin image");
         Image coinImage = temp.AddComponent<Image>();
         coinImage.sprite = coin;
+        Destroy(temp);
         return coinImage;
     }
 }

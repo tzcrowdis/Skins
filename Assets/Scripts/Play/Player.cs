@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Player : MonoBehaviour
@@ -58,6 +59,8 @@ public class Player : MonoBehaviour
 
         seasonText.text = $"Season: {season}";
         seasonTimeLeft = seasonTotalMinutes * 60f;
+
+        HidePlayer();
     }
 
     void Update()
@@ -87,10 +90,15 @@ public class Player : MonoBehaviour
     public void AddToModifierList(Modifier mod)
     {
         if (modifiers.Count + 1 > modifierCapacity)
-            return; // TODO open menu to organize modifiers
+            return; // TODO notify player that a mod needs to be deleted
 
         modifiers.Add(mod);
         Instantiate(mod.gameObject, modifierPanel.transform);
+    }
+
+    public void RemoveFromModifierList(Modifier mod)
+    {
+        modifiers.Remove(mod);
     }
 
     void UpdateCurrencyFields()
@@ -128,6 +136,18 @@ public class Player : MonoBehaviour
     /*
      * PLAY
      */
+    public void DisplayPlayer()
+    {
+        foreach (Transform child in transform)
+            child.gameObject.SetActive(true);
+    }
+
+    public void HidePlayer()
+    {
+        foreach (Transform child in transform)
+            child.gameObject.SetActive(false);
+    }
+
     public void SetSkin(Skin equippedSkin)
     {
         skin = equippedSkin;

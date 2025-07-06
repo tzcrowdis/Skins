@@ -17,7 +17,7 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     
     [Header("Rarity")]
     public Rarity rarity;
-    public Image rarityBorder;
+    public Outline rarityBorder;
 
     [Header("Cost")]
     public int itemCost;
@@ -54,19 +54,19 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         switch (rarity)
         {
             case Rarity.VeryCommon:
-                rarityBorder.color = Color.white;
+                rarityBorder.effectColor = Color.white;
                 rarityText.color = Color.white;
                 break;
             case Rarity.Common:
-                rarityBorder.color = Color.blue;
+                rarityBorder.effectColor = Color.blue;
                 rarityText.color = Color.blue;
                 break;
             case Rarity.Rare:
-                rarityBorder.color = Color.magenta;
+                rarityBorder.effectColor = Color.magenta;
                 rarityText.color = Color.magenta;
                 break;
             case Rarity.Legendary:
-                rarityBorder.color = Color.yellow;
+                rarityBorder.effectColor = Color.yellow;
                 rarityText.color = Color.yellow;
                 break;
         }

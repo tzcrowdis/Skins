@@ -42,6 +42,7 @@ public class ReadyUp : MonoBehaviour
             Home.instance.OpenCanvas(Home.instance.playCanvas);
             Home.instance.gameObject.SetActive(false);
             
+            Player.instance.DisplayPlayer();
             Player.instance.SetSkin(selectedSkin);
             DeselectSkin();
             startButton.GetComponentInChildren<TMP_Text>().text = "Equip Skin";

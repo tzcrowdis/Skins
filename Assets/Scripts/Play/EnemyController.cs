@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Skin Collection Paths")]
-    public List<string> collectionPaths;
-    
+
     
     public static EnemyController instance { get; private set; }
     void Awake()
@@ -18,8 +16,17 @@ public class EnemyController : MonoBehaviour
             instance = this;
     }
 
+    private void Start()
+    {
+        foreach (Transform child in transform)
+            child.gameObject.SetActive(false);
+    }
+
     public void StartPlay()
     {
+        foreach (Transform child in transform)
+            child.gameObject.SetActive(true);
+
         Player.instance.ApplyAllModifiers();
         GenerateEnemySkins();
         GenerateEnemyReactions();
@@ -31,6 +38,9 @@ public class EnemyController : MonoBehaviour
         {
             child.GetComponent<Enemy>().dialogueCanvas.gameObject.SetActive(false);
         }
+
+        foreach (Transform child in transform)
+            child.gameObject.SetActive(false);
     }
 
     void GenerateEnemySkins()

@@ -36,10 +36,8 @@ public class Home : MonoBehaviour
             Destroy(instance.gameObject);
         else
             instance = this;
-    }
 
-    void Start()
-    {
+
         canvasList = new List<Canvas>();
         canvasList.Add(playCanvas);
         canvasList.Add(readyUpCanvas);
@@ -56,7 +54,10 @@ public class Home : MonoBehaviour
         buttonList.Add(battlepassBtn);
         storeBtn.onClick.AddListener(delegate { OpenCanvas(storeCanvas, storeBtn); });
         buttonList.Add(storeBtn);
+    }
 
+    void Start()
+    {
         OpenCanvas(collectionCanvas, collectionBtn);
     }
 

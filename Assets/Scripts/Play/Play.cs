@@ -35,6 +35,7 @@ public class Play : MonoBehaviour
     {
         endMatchButton.gameObject.SetActive(false);
         EnemyController.instance.EndPlay();
+        Player.instance.HidePlayer();
         PopulatePostMatchSummary();
         postMatchSummaryPanel.SetActive(true);
     }

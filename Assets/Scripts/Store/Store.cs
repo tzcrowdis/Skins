@@ -38,16 +38,7 @@ public class Store : MonoBehaviour
             Destroy(instance.gameObject);
         else
             instance = this;
-    }
 
-    void Start()
-    {
-        RandomizeFeaturedStore();
-        
-        foreach (Button button in storeButtons)
-        {
-            button.onClick.AddListener(delegate { OpenPurchasePanel(button.GetComponent<StoreButton>()); });
-        }
 
         featuredButton.onClick.AddListener(delegate { OpenSubPanel(featuredPanel, featuredButton); });
         crateButton.onClick.AddListener(delegate { OpenSubPanel(cratePanel, crateButton); });
@@ -62,6 +53,16 @@ public class Store : MonoBehaviour
         subPanels.Add(featuredPanel);
         subPanels.Add(cratePanel);
         subPanels.Add(coinPanel);
+    }
+
+    void Start()
+    {
+        RandomizeFeaturedStore();
+        
+        foreach (Button button in storeButtons)
+        {
+            button.onClick.AddListener(delegate { OpenPurchasePanel(button.GetComponent<StoreButton>()); });
+        }
 
         foreach (GameObject panel in subPanels)
             panel.SetActive(false);
