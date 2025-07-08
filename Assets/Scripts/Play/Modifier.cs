@@ -17,11 +17,17 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public GameObject modifierNamePanel;
     public TMP_Text nameText;
 
-    [Header("Effect Panel")]
-    public GameObject modifierEffectPanel;
+    [Header("Detailed Panel")]
+    public GameObject modifierDetailPanel;
+    Transform modifierCanvas;
 
-    [Header("Delete")]
-    public Button deleteButton;
+    [Header("Hover Effects")]
+    public Outline outline;
+    [HideInInspector]
+    public AudioSource buttonHover;
+    public AudioClip hoverSound;
+    AudioSource buttonClick;
+    public AudioClip clickSound;
 
     public enum Rarity
     {
@@ -37,10 +43,12 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         modifierNamePanel.GetComponent<Outline>().effectColor = GetRarityColor();
         modifierNamePanel.SetActive(false);
 
-        modifierEffectPanel.SetActive(false);
+        modifierDetailPanel.SetActive(false);
+        modifierCanvas = GameObject.Find("Modifier Canvas").transform;
 
-        deleteButton.onClick.AddListener(DeleteModifier);
-        deleteButton.gameObject.SetActive(false);
+        outline.enabled = false;
+        buttonHover = GameObject.Find("Button Hover Audio Source").GetComponent<AudioSource>();
+        buttonClick = GameObject.Find("Button Click Audio Source").GetComponent<AudioSource>();
     }
     
     public virtual void ModifierEffect() { /* TODO override */ }
@@ -74,7 +82,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         return Color.black;
     }
 
-    void DeleteModifier()
+    public void DeleteModifier()
     {
         Player.instance.RemoveFromModifierList(this);
         
@@ -101,39 +109,41 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 storeItem.GetComponent<Button>().interactable = true;
         }
 
-        modifierEffectPanel.transform.SetParent(transform);
-        deleteButton.transform.SetParent(transform);
+        modifierDetailPanel.transform.SetParent(transform);
 
         Destroy(gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        modifierNamePanel.SetActive(true);
+        if (!modifierDetailPanel.activeSelf)
+            modifierNamePanel.SetActive(true);
+
+        outline.enabled = true;
+        buttonHover.PlayOneShot(hoverSound);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        modifierNamePanel.SetActive(false);
+        if (!modifierDetailPanel.activeSelf)
+            modifierNamePanel.SetActive(false);
+
+        outline.enabled = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!modifierEffectPanel.activeSelf)
+        if (!modifierDetailPanel.activeSelf)
         {
-            modifierEffectPanel.SetActive(true);
-            modifierEffectPanel.transform.SetParent(Home.instance.transform);
-
-            deleteButton.gameObject.SetActive(true);
-            deleteButton.transform.SetParent(Home.instance.transform);
+            modifierDetailPanel.SetActive(true);
+            modifierDetailPanel.transform.SetParent(modifierCanvas);
         }
         else
         {
-            modifierEffectPanel.SetActive(false);
-            modifierEffectPanel.transform.SetParent(transform);
-
-            deleteButton.gameObject.SetActive(false);
-            deleteButton.transform.SetParent(transform);
+            modifierDetailPanel.SetActive(false);
+            modifierDetailPanel.transform.SetParent(transform);
         }
+
+        buttonClick.PlayOneShot(clickSound);
     }
 }

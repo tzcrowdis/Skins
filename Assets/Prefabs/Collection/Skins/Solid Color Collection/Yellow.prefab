@@ -9,12 +9,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2194661887340983621, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
+      propertyPath: rarity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2194661887340983621, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: itemCost
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -2194661887340983621, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: itemName
-      value: Blue
+      value: Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 466925660307145571, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_AnchorMax.y
@@ -46,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2389232879022139920, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_Name
-      value: Blue
+      value: Yellow
       objectReference: {fileID: 0}
     - target: {fileID: 4791198196206884680, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_Pivot.x
@@ -150,15 +154,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7950764259121604680, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7950764259121604680, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7950764259121604680, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

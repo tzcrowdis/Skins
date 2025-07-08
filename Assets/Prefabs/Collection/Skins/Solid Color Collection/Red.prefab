@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2194661887340983621, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
+      propertyPath: itemCost
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -2194661887340983621, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: itemName
       value: Red
       objectReference: {fileID: 0}
