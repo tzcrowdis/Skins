@@ -135,6 +135,13 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (!modifierDetailPanel.activeSelf)
         {
+            Transform modifiersPanel = modifierCanvas.GetChild(0);
+            foreach (Transform modPanel in modifiersPanel)
+            {
+                if (modPanel.GetComponent<Modifier>().modifierDetailPanel.gameObject.activeSelf)
+                    modPanel.GetComponent<Modifier>().modifierDetailPanel.gameObject.SetActive(false);
+            }
+            
             modifierDetailPanel.SetActive(true);
             modifierDetailPanel.transform.SetParent(modifierCanvas);
         }

@@ -31,7 +31,6 @@ public class StoreButton : MonoBehaviour
         Modifier
     }
 
-
     public void RandomizeItem()
     {
         discount = Random.Range(minDiscount, maxDiscount);
@@ -65,7 +64,7 @@ public class StoreButton : MonoBehaviour
                 if (mod.modifierImage.sprite) image.sprite = mod.modifierImage.sprite;
 
                 if (Player.instance.modifiers.Count == Player.instance.modifierCapacity)
-                    GetComponent<Button>().interactable = false;
+                    transform.GetChild(0).GetComponent<Button>().interactable = false;
                 break;
 
             case itemType.Crate:

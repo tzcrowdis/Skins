@@ -61,7 +61,7 @@ public class Store : MonoBehaviour
         
         foreach (Button button in storeButtons)
         {
-            button.onClick.AddListener(delegate { OpenPurchasePanel(button.GetComponent<StoreButton>()); });
+            button.onClick.AddListener(delegate { OpenPurchasePanel(button.GetComponentInParent<StoreButton>()); });
         }
 
         foreach (GameObject panel in subPanels)

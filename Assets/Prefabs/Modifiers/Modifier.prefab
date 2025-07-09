@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.64705884, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.74509805, g: 0.15686275, b: 0.15686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.64705884, g: 0, b: 0, a: 1}
+  m_EffectColor: {r: 0.74509805, g: 0.15686275, b: 0.15686275, a: 1}
   m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 0
 --- !u!114 &7793530768981801234
@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 4146454665589586321}
   - component: {fileID: 8072500251660059936}
   m_Layer: 5
-  m_Name: Modifier Panel
+  m_Name: Modifier Detailed Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1364,8 +1364,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190245
-  m_fontColor: {r: 0.64705884, g: 0, b: 0, a: 1}
+    rgba: 4280821950
+  m_fontColor: {r: 0.74509805, g: 0.15686275, b: 0.15686275, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -41,8 +41,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5900121647622007469, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: itemCost
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900121647622007469, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
       propertyPath: itemName
       value: Solid Color Collection Crate
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900121647622007469, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: keyCoinCost
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 5900121647622007469, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
       propertyPath: items.Array.size
