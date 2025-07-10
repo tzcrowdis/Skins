@@ -104,7 +104,7 @@ public class Store : MonoBehaviour
         costText.text = storeButton.cost.text;
         costText.gameObject.SetActive(true);
 
-        itemButton = storeButton.GetComponent<Button>();
+        itemButton = storeButton.transform.GetChild(0).GetComponent<Button>();
 
         if (Player.instance.coins - storeButton.itemCost > 0)
         {

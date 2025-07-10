@@ -72,7 +72,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         switch (modifierRarity)
         {
             case Rarity.Common:
-                return Color.blue;
+                return Color.cyan;
             case Rarity.Rare:
                 return Color.magenta;
             case Rarity.Legendary:
@@ -106,7 +106,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             StoreButton.itemType type = storeItem.GetComponent<StoreButton>().type;
             if (type == StoreButton.itemType.Modifier)
-                storeItem.GetComponent<Button>().interactable = true;
+                storeItem.GetChild(0).GetComponent<Button>().interactable = true;
         }
 
         modifierDetailPanel.transform.SetParent(transform);

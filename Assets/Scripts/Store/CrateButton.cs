@@ -4,16 +4,26 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
+using static UnityEditor.Progress;
 
 public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Crate")]
+    public string crateName;
     public Image crateImage;
     public int coinCost;
     public GameObject cratePrefab;
-    
+    public Outline outline;
+
+    [Header("Info Panel")]
+    public GameObject infoPanel;
+    public TMP_Text nameText;
+    public TMP_Text itemsText;
+    Transform storeCanvas;
+
     // TODO crate info panel with collection skins and name
-    
+
     [Header("Confirmation Panel")]
     public GameObject confirmationPanel;
     public Image crateConfirmationImage;
@@ -24,6 +34,19 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     void Start()
     {
+        nameText.text = crateName;
+        itemsText.text = "";
+        foreach (GameObject item in cratePrefab.GetComponent<Crate>().items)
+        {
+            CollectionItem colItem = item.GetComponent<CollectionItem>();
+            itemsText.text += $"<color=#{ColorUtility.ToHtmlStringRGBA(colItem.GetRarityColor())}>{colItem.itemName}</color>\n";
+        }
+
+        infoPanel.SetActive(false);
+        storeCanvas = Store.instance.transform;
+
+        outline.enabled = false;
+        
         crateCancelButton.onClick.AddListener(CloseCrateConfirmationPanel);
 
         confirmationPanel.SetActive(false);
@@ -84,11 +107,17 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // TODO hover effect
+        infoPanel.SetActive(true);
+        infoPanel.transform.SetParent(storeCanvas);
+
+        outline.enabled = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // TODO remove hover effect
+        infoPanel.transform.SetParent(transform);
+        infoPanel.SetActive(false);
+
+        outline.enabled = false;
     }
 }

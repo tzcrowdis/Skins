@@ -25,6 +25,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2829394258734626389, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829394258734626389, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -38,6 +42,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3667890831136682024, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721845916284476798, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721845916284476798, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 98ecb3916a358af4d90c997ebfed1d7a, type: 3}
+    - target: {fileID: 5721845916284476798, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_UseSpriteMesh
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5721845916284476798, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_PreserveAspect
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5900121647622007469, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
@@ -84,6 +104,30 @@ PrefabInstance:
       propertyPath: items.Array.data[6]
       value: 
       objectReference: {fileID: 1725199553424492520, guid: 555ef88ade04c9e4d8d57cb001d06dfb, type: 3}
+    - target: {fileID: 6700094315753424799, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6700094315753424799, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077386391590502707, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077386391590502707, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_UseGraphicAlpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077386391590502707, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077386391590502707, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_EffectDistance.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7152591572177003134, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -174,6 +218,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7720603065114942675, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7720603065114942675, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7720603065114942675, guid: 9816f08ec786f234f8b6ec50f11dd2b9, type: 3}

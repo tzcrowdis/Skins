@@ -25,6 +25,14 @@ public class Crate : CollectionItem, IPointerClickHandler
     protected override void Start()
     {
         base.Start();
+
+        // overwrite rarity text and use for crate item display
+        rarityText.text = "";
+        foreach (GameObject item in items)
+        {
+            CollectionItem colItem = item.GetComponent<CollectionItem>();
+            rarityText.text += $"<color=#{ColorUtility.ToHtmlStringRGBA(colItem.GetRarityColor())}>{colItem.itemName}</color>\n";
+        }
         
         // TODO not memory efficient, figure out percentages
         lootPool = new List<GameObject>();

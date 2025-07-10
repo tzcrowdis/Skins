@@ -58,8 +58,8 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
                 rarityText.color = Color.white;
                 break;
             case Rarity.Common:
-                rarityBorder.effectColor = Color.blue;
-                rarityText.color = Color.blue;
+                rarityBorder.effectColor = Color.cyan;
+                rarityText.color = Color.cyan;
                 break;
             case Rarity.Rare:
                 rarityBorder.effectColor = Color.magenta;
@@ -79,7 +79,7 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             case Rarity.VeryCommon:
                 return Color.white;
             case Rarity.Common:
-                return Color.blue;
+                return Color.cyan;
             case Rarity.Rare:
                 return Color.magenta;
             case Rarity.Legendary:
