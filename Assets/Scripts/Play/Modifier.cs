@@ -43,6 +43,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         modifierNamePanel.GetComponent<Outline>().effectColor = GetRarityColor();
         modifierNamePanel.SetActive(false);
 
+        modifierDetailPanel.transform.GetChild(1).GetComponent<TMP_Text>().text = $"<color=#{ColorUtility.ToHtmlStringRGBA(GetRarityColor())}>{modifierRarity.ToString()}</color>";
         modifierDetailPanel.SetActive(false);
         modifierCanvas = GameObject.Find("Modifier Canvas").transform;
 
@@ -138,8 +139,9 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             Transform modifiersPanel = modifierCanvas.GetChild(0);
             foreach (Transform modPanel in modifiersPanel)
             {
-                if (modPanel.GetComponent<Modifier>().modifierDetailPanel.gameObject.activeSelf)
-                    modPanel.GetComponent<Modifier>().modifierDetailPanel.gameObject.SetActive(false);
+                Modifier modComp = modPanel.GetComponent<Modifier>();
+                if (modComp && modComp.modifierDetailPanel.gameObject.activeSelf)
+                    modComp.modifierDetailPanel.gameObject.SetActive(false);
             }
             
             modifierDetailPanel.SetActive(true);

@@ -59,16 +59,11 @@ public class Enemy : MonoBehaviour
             dialogue.text = "That's okay I guess, for you.";
         }
 
-        // TODO more
+        // TODO more dialogue options
 
         if (dialogue.text != "")
         {
             dialogueCanvas.gameObject.SetActive(true);
-
-            // adjusts height based on dialogue line count
-            // TODO width too
-            dialogue.ForceMeshUpdate();
-            dialogueBoxBackground.sizeDelta = new Vector2(dialogueBoxBackground.sizeDelta.x, 3 * dialogue.textInfo.lineCount); 
         }   
     }
 }

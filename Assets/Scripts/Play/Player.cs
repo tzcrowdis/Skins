@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     public List<Modifier> modifiers;
     public int modifierCapacity = 5;
     public GameObject modifierPanel;
+    public GameObject emptyModifierSlot;
 
     [Header("Level Display")]
     public TMP_Text levelText;
@@ -92,13 +93,27 @@ public class Player : MonoBehaviour
         if (modifiers.Count + 1 > modifierCapacity)
             return; // TODO notify player that a mod needs to be deleted
 
+        int i = 0;
+        foreach (Transform child in modifierPanel.transform)
+        {
+            if (child.gameObject.CompareTag("Empty Modifier Slot"))
+            {
+                Destroy(child.gameObject);
+                break;
+            }
+            i++;
+        }
+
         modifiers.Add(mod);
-        Instantiate(mod.gameObject, modifierPanel.transform);
+        GameObject newMod = Instantiate(mod.gameObject, modifierPanel.transform);
+        newMod.transform.SetSiblingIndex(i);
     }
 
     public void RemoveFromModifierList(Modifier mod)
     {
         modifiers.Remove(mod);
+
+        Instantiate(emptyModifierSlot.gameObject, modifierPanel.transform);
     }
 
     void UpdateCurrencyFields()
