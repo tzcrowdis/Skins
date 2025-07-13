@@ -27,7 +27,6 @@ public class EnemyController : MonoBehaviour
         foreach (Transform child in transform)
             child.gameObject.SetActive(true);
 
-        Player.instance.ApplyAllModifiers();
         GenerateEnemySkins();
         GenerateEnemyReactions();
     }

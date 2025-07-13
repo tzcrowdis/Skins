@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.VisualScripting.Member;
 
 public class Play : MonoBehaviour
 {
@@ -11,24 +14,154 @@ public class Play : MonoBehaviour
 
     [Header("Post Match Summary")]
     public GameObject postMatchSummaryPanel;
-    public Button returnHomeButton;
+    public Button skipHomeButton;
 
     [Header("Exp Display")]
+    public float expSpeed;
     public Transform expContent;
     public GameObject expSourceText;
     public List<string> expSources;
     public RectTransform expCurrentProgressBar;
     public TMP_Text currentLevel;
     public TMP_Text nextLevel;
-    public TMP_Text expText;
-    
-    
+    //public TMP_Text expText;
+    public TMP_Text expGainText;
+    [HideInInspector]
+    public int expGain = 0;
+
+    [Header("Populate Timing")]
+    float t = 0f;
+    public float stepT;
+
+    // Populate Post Match Summary
+    bool postMatchSummary = false;
+    bool skip = false;
+
+    // populate progression
+    bool baseExpPhase = false;
+    bool modifierExpPhase = false;
+    int modifierExpPhaseIndex = 0;
+
+    // player exp state
+    int playerStartExp;
+    int playerStartLevel;
+    float displayCurrentExp;
+    int displayCurrentLevel;
+    int currentLevelCap;
+    float currentNewExp = 0;
+
+
+    public static Play instance { get; private set; }
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(instance.gameObject);
+        else
+            instance = this;
+    }
+
     void Start()
     {
         endMatchButton.onClick.AddListener(EndMatch);
 
         postMatchSummaryPanel.SetActive(false);
-        returnHomeButton.onClick.AddListener(ReturnHome);
+        skipHomeButton.onClick.AddListener(SkipToEndPostMatchSummary);
+        skipHomeButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "SKIP";
+    }
+
+    void Update()
+    {
+        if (skip)
+            return;
+        
+        if (!postMatchSummary)
+            return;
+
+        if (baseExpPhase) // doesn't wait to populate
+        {
+            expGain = 0;
+            expGain += GetSkinExp();
+            expGainText.text = $"+{expGain} xp";
+            
+            GameObject src = Instantiate(expSourceText, expContent);
+            src.GetComponent<TMP_Text>().text = $"+{expGain} xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())}";
+
+            baseExpPhase = false;
+            modifierExpPhase = true;
+            modifierExpPhaseIndex = 0;
+            t = 0f;
+        }
+        else if (modifierExpPhase)
+        {
+            // early exit if no modifiers
+            Modifier mod = null;
+            if (Player.instance.modifiers.Count > 0)
+                mod = Player.instance.modifiers[modifierExpPhaseIndex];
+            else
+                modifierExpPhaseIndex = 100;
+
+            if (mod)
+            {
+                if (mod.modifierType != Modifier.Type.ExpMult & mod.modifierType != Modifier.Type.ExpAdd)
+                    t = stepT + 1f;
+
+                // update exp gain
+                t += Time.deltaTime;
+                if (t >= stepT)
+                {
+                    if (mod.modifierType == Modifier.Type.ExpMult | mod.modifierType == Modifier.Type.ExpAdd)
+                    {
+                        bool success = mod.ModifierEffect();
+                        if (success)
+                        {
+                            expGainText.text = $"+{expGain} xp";
+                            GameObject src = Instantiate(expSourceText, expContent);
+                            src.GetComponent<TMP_Text>().text = mod.ModifierExpDescription();
+                        }
+                    }
+
+                    modifierExpPhaseIndex++;
+                    t = 0f;
+                }
+            }
+
+            // final exit
+            if (modifierExpPhaseIndex >= Player.instance.modifiers.Count)
+            {
+                modifierExpPhase = false;
+                modifierExpPhaseIndex = 0;
+                t = 0f;
+            }
+        }
+
+
+        // update exp progress bar
+        if (currentNewExp >= expGain)
+        {
+            if (!baseExpPhase & !modifierExpPhase)
+            {
+                skipHomeButton.onClick.RemoveAllListeners();
+                skipHomeButton.onClick.AddListener(ReturnHome);
+                skipHomeButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "HOME";
+            }
+            skip = true;
+            return;
+        }
+        
+        displayCurrentExp += expSpeed * Time.deltaTime;
+        currentNewExp += expSpeed * Time.deltaTime;
+
+        if (displayCurrentExp >= currentLevelCap)
+        {
+            displayCurrentExp = 0f;
+            displayCurrentLevel++;
+            currentLevel.text = $"{displayCurrentLevel}";
+            nextLevel.text = $"{displayCurrentLevel + 1}";
+            currentLevelCap = Player.instance.CalculateLevelCap(displayCurrentLevel);
+        }
+
+        expCurrentProgressBar.anchorMax = new Vector2(displayCurrentExp / (float)currentLevelCap, 0.5f);
+        expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
     }
 
     void EndMatch()
@@ -36,18 +169,23 @@ public class Play : MonoBehaviour
         endMatchButton.gameObject.SetActive(false);
         EnemyController.instance.EndPlay();
         Player.instance.HidePlayer();
-        PopulatePostMatchSummary();
+        StartPostMatchSummary();
         postMatchSummaryPanel.SetActive(true);
     }
 
-    void PopulatePostMatchSummary()
+    void StartPostMatchSummary()
     {
-        // + exp
-        Player.instance.AddExperience(1000);
+        postMatchSummary = true;
 
-        currentLevel.text = $"{Player.instance.level}";
-        nextLevel.text = $"{Player.instance.level + 1}";
-        expText.text = $"{Player.instance.exp}/{Player.instance.levelCap}";
+        playerStartExp = Player.instance.exp;
+        playerStartLevel = Player.instance.level;
+        displayCurrentExp = playerStartExp;
+        displayCurrentLevel = playerStartLevel;
+        currentLevelCap = Player.instance.CalculateLevelCap(displayCurrentLevel);
+        
+        currentLevel.text = $"{playerStartLevel}";
+        nextLevel.text = $"{playerStartLevel + 1}";
+        //expText.text = $"{Player.instance.exp}/{Player.instance.levelCap}";
 
         expCurrentProgressBar.anchorMax = new Vector2((float)Player.instance.exp / (float)Player.instance.levelCap, 0.5f);
         expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
@@ -55,21 +193,86 @@ public class Play : MonoBehaviour
         foreach (Transform t in expContent)
             Destroy(t.gameObject);
 
-        // TODO add reasons for exp somewhere
-        foreach (string source in expSources)
+        baseExpPhase = true;
+        currentNewExp = 0f;
+        t = 0f;
+
+        skip = false;
+        skipHomeButton.onClick.RemoveAllListeners();
+        skipHomeButton.onClick.AddListener(SkipToEndPostMatchSummary);
+        skipHomeButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "SKIP";
+    }
+
+    void SkipToEndPostMatchSummary()
+    {
+        skip = true;
+        foreach (Transform t in expContent)
+            Destroy(t.gameObject);
+
+        // base exp
+        expGain = 0;
+        expGain += GetSkinExp();
+        GameObject src = Instantiate(expSourceText, expContent);
+        src.GetComponent<TMP_Text>().text = $"+{expGain} xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())}";
+
+        // modifier exp
+        foreach (Modifier mod in Player.instance.modifiers)
         {
-            GameObject src = Instantiate(expSourceText, expContent);
-            src.GetComponent<TMP_Text>().text = source;
+            if (mod.modifierType == Modifier.Type.ExpMult | mod.modifierType == Modifier.Type.ExpAdd)
+            {
+                bool success = mod.ModifierEffect();
+                if (success)
+                {
+                    src = Instantiate(expSourceText, expContent);
+                    src.GetComponent<TMP_Text>().text = mod.ModifierExpDescription();
+                }
+            }
         }
+
+        expGainText.text = $"+{expGain} xp";
+        Player.instance.AddTotalExperience(expGain);
+
+        currentLevel.text = $"{Player.instance.level}";
+        nextLevel.text = $"{Player.instance.level + 1}";
+        //expText.text = $"{Player.instance.exp}/{Player.instance.levelCap}";
+
+        expCurrentProgressBar.anchorMax = new Vector2((float)Player.instance.exp / (float)Player.instance.levelCap, 0.5f);
+        expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
+
+        skipHomeButton.onClick.RemoveAllListeners();
+        skipHomeButton.onClick.AddListener(ReturnHome);
+        skipHomeButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "HOME";
     }
 
     void ReturnHome()
     {
+        postMatchSummary = false;
+
+        if (!skip)
+            Player.instance.AddTotalExperience(expGain);
+        
         endMatchButton.gameObject.SetActive(true);
         postMatchSummaryPanel.SetActive(false);
         gameObject.SetActive(false);
         Home.instance.gameObject.SetActive(true);
         Home.instance.OpenCanvas(Home.instance.collectionCanvas, Home.instance.collectionBtn);
         Store.instance.RandomizeFeaturedStore();
+    }
+
+    int GetSkinExp()
+    {
+        switch (Player.instance.GetSkinRarity())
+        {
+            case Skin.Rarity.VeryCommon:
+                return 100;
+            case Skin.Rarity.Common:
+                return 200;
+            case Skin.Rarity.Rare:
+                return 300;
+            case Skin.Rarity.Legendary:
+                return 400;
+        }
+
+        return 0;
     }
 }

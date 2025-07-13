@@ -12,6 +12,8 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Rarity modifierRarity;
     public Image modifierImage;
     public int modifierCost;
+    public Type modifierType;
+    public string modifierExpDescription;
 
     [Header("Name Panel")]
     public GameObject modifierNamePanel;
@@ -36,6 +38,13 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Legendary
     }
 
+    public enum Type
+    {
+        ExpMult,
+        ExpAdd,
+        AlterEnemy
+    }
+
     void Start()
     {
         nameText.text = modifierName;
@@ -52,7 +61,12 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         buttonClick = GameObject.Find("Button Click Audio Source").GetComponent<AudioSource>();
     }
     
-    public virtual void ModifierEffect() { /* TODO override */ }
+    public virtual bool ModifierEffect() { return false; /* TODO override */ }
+
+    public string ModifierExpDescription()
+    {
+        return modifierExpDescription;
+    }
 
     public int GetLootPoolMult()
     {

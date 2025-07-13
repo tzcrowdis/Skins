@@ -172,13 +172,12 @@ public class Player : MonoBehaviour
             spriteRenderer.sprite = skin.itemImage.sprite;
     }
 
-    public void ApplyAllModifiers()
+    public Skin.Rarity GetSkinRarity()
     {
-        foreach (Modifier mod in modifiers)
-            mod.ModifierEffect();
+        return skin.rarity;
     }
 
-    public void AddExperience(int newExp)
+    public void AddTotalExperience(int newExp)
     {
         int expRemainder = newExp;
 
@@ -190,7 +189,7 @@ public class Player : MonoBehaviour
                 expRemainder = exp - levelCap;
                 exp = expRemainder;
                 level += 1;
-                levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
+                levelCap = CalculateLevelCap(level);
                 UpdateLevelText();
                 Battlepass.instance.LevelReachedUnlock(level);
             }
@@ -205,5 +204,10 @@ public class Player : MonoBehaviour
             if (i == 999)
                 Debug.Log("Level couldn't be found in 1000 iterations");
         }
+    }
+
+    public int CalculateLevelCap(int level)
+    {
+        return levelBase * (int)Mathf.Pow(levelDelta, level + 1);
     }
 }
