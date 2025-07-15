@@ -11,10 +11,10 @@ PrefabInstance:
     - target: {fileID: 643875775329671029, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: modifier
       value: 
-      objectReference: {fileID: 2360758639157921635}
+      objectReference: {fileID: 8081443850833398616}
     - target: {fileID: 816702639457262600, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: x1.3 exp if at least three Very Common skins appear in the match
+      value: gain the xp from a higher skin rarity level
       objectReference: {fileID: 0}
     - target: {fileID: 1777193106275768079, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Pivot.x
@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2075746475058616377, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: Three Stones
+      value: Sunny Disposition
       objectReference: {fileID: 0}
     - target: {fileID: 2310916207335243524, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -182,7 +182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682322680532701472, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: Three Stones
+      value: Sunny Disposition
       objectReference: {fileID: 0}
     - target: {fileID: 7184628645145214161, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -230,12 +230,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Name
-      value: Three Stones
+      value: Sunny Disposition
       objectReference: {fileID: 0}
     - target: {fileID: 7772839054300522219, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 20d6d317439d6f548837bda148220512, type: 3}
+      objectReference: {fileID: 21300000, guid: 987b82dc45df82e44b22dcfbe9a035d2, type: 3}
     - target: {fileID: 8955967633608589712, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -267,7 +267,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2360758639157921635}
+      addedObject: {fileID: 8081443850833398616}
   m_SourcePrefab: {fileID: 100100000, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
 --- !u!114 &4329494154548758247 stripped
 MonoBehaviour:
@@ -301,7 +301,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
   m_PrefabInstance: {fileID: 1847780349768048589}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2360758639157921635
+--- !u!114 &8081443850833398616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -310,15 +310,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8248480471839362987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c23d6627ae1272c4eaf6262caca058a2, type: 3}
+  m_Script: {fileID: 11500000, guid: b9d63458e1be72347aa9c0d983841b73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifierName: Three Stones
+  modifierName: Sunny Disposition
   modifierRarity: 0
   modifierImage: {fileID: 8248916113598101798}
   modifierCost: 500
-  modifierType: 0
-  modifierExpDescription: x1.3 xp for three very common skins appearing
+  modifierType: 1
+  modifierExpDescription: actually, that wasn't so bad
   modifierNamePanel: {fileID: 8174638505999638499}
   nameText: {fileID: 4978944217581555437}
   modifierDetailPanel: {fileID: 8632436180661068475}

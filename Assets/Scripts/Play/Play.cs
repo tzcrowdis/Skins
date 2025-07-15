@@ -116,7 +116,7 @@ public class Play : MonoBehaviour
                         {
                             expGainText.text = $"+{expGain} xp";
                             GameObject src = Instantiate(expSourceText, expContent);
-                            src.GetComponent<TMP_Text>().text = mod.ModifierExpDescription();
+                            src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: {mod.ModifierExpDescription()}";
                         }
                     }
 
