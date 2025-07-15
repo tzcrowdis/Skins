@@ -20,18 +20,19 @@ public class Play : MonoBehaviour
     public float expSpeed;
     public Transform expContent;
     public GameObject expSourceText;
-    public List<string> expSources;
+    [HideInInspector] public List<string> expSources;
     public RectTransform expCurrentProgressBar;
     public TMP_Text currentLevel;
     public TMP_Text nextLevel;
     //public TMP_Text expText;
     public TMP_Text expGainText;
-    [HideInInspector]
-    public int expGain = 0;
+    [HideInInspector] public int expGain = 0;
+    int prevExpGain;
 
     [Header("Populate Timing")]
-    float t = 0f;
     public float stepT;
+    public float delayBtwnSteps;
+    float t = 0f;
 
     // Populate Post Match Summary
     bool postMatchSummary = false;
@@ -89,6 +90,8 @@ public class Play : MonoBehaviour
             baseExpPhase = false;
             modifierExpPhase = true;
             modifierExpPhaseIndex = 0;
+            expSpeed = expGain / (stepT - delayBtwnSteps);
+            prevExpGain = expGain;
             t = 0f;
         }
         else if (modifierExpPhase)
@@ -117,6 +120,9 @@ public class Play : MonoBehaviour
                             expGainText.text = $"+{expGain} xp";
                             GameObject src = Instantiate(expSourceText, expContent);
                             src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: {mod.ModifierExpDescription()}";
+
+                            expSpeed = (expGain - prevExpGain) / (stepT - delayBtwnSteps);
+                            prevExpGain = expGain;
                         }
                     }
 
@@ -143,8 +149,8 @@ public class Play : MonoBehaviour
                 skipHomeButton.onClick.RemoveAllListeners();
                 skipHomeButton.onClick.AddListener(ReturnHome);
                 skipHomeButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "HOME";
+                skip = true;
             }
-            skip = true;
             return;
         }
         
