@@ -28,7 +28,7 @@ public class ItemDatabase : MonoBehaviour
             instance = this;
     }
 
-    public Skin RandomSkinRandomCollection()
+    public Skin RandomSkinRandomCollection() // TODO rework with Resources.LoadAll
     {
         int collectionIndex = Random.Range(0, skinPaths.Count);
         string[] guids = AssetDatabase.FindAssets("t:Object", new[] { skinPaths[collectionIndex] });
@@ -37,15 +37,22 @@ public class ItemDatabase : MonoBehaviour
     }
 
     // TODO select skin in collection based on rarity
+    public Skin RandomSkinRandomCollection(Skin.Rarity rarity) // TODO rework with Resources.LoadAll
+    {
+        int collectionIndex = Random.Range(0, skinPaths.Count);
+        string[] guids = AssetDatabase.FindAssets("t:Object", new[] { skinPaths[collectionIndex] });
+        int skinIndex = Random.Range(0, guids.Length);
+        return (Skin)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[skinIndex]), typeof(Skin));
+    }
 
-    public Crate RandomCrate()
+    public Crate RandomCrate() // TODO rework with Resources.LoadAll
     {
         string[] guids = AssetDatabase.FindAssets("t:Object", new[] { cratesPath });
         int crateIndex = Random.Range(0, guids.Length);
         return (Crate)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guids[crateIndex]), typeof(Crate));
     }
 
-    public Modifier RandomModifier()
+    public Modifier RandomModifier() // TODO rework with Resources.LoadAll
     {
         string[] guids = AssetDatabase.FindAssets("t:Object", new[] { modifiersPath });
         int modifierIndex = Random.Range(0, guids.Length);

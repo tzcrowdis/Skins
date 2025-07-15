@@ -11,6 +11,7 @@ public class ReadyUp : MonoBehaviour
     public GameObject skinBorder;
     public Image skinImage;
     public Button startButton;
+    public Button changeSkinButton;
     bool skinSelected = false;
     Skin selectedSkin;
 
@@ -18,7 +19,6 @@ public class ReadyUp : MonoBehaviour
     public GameObject skinSelectionScrollView;
     public Transform skinSelectionContent;
     public GameObject skinSelectionButtonPrefab;
-    List<Button> selectableSkins;
 
     [Header("Collection")]
     public Transform collectionContent;
@@ -27,10 +27,17 @@ public class ReadyUp : MonoBehaviour
     void Start()
     {
         startButton.onClick.AddListener(PlayOrSelectSkin);
+        changeSkinButton.onClick.AddListener(OpenSelectSkin);
         if (skinSelected)
+        {
             startButton.GetComponentInChildren<TMP_Text>().text = "Start";
+            changeSkinButton.gameObject.SetActive(true);
+        }
         else
+        {
             startButton.GetComponentInChildren<TMP_Text>().text = "Equip Skin";
+            changeSkinButton.gameObject.SetActive(false);
+        }
 
         skinSelectionScrollView.SetActive(false);
     }
@@ -46,6 +53,7 @@ public class ReadyUp : MonoBehaviour
             Player.instance.SetSkin(selectedSkin);
             DeselectSkin();
             startButton.GetComponentInChildren<TMP_Text>().text = "Equip Skin";
+            changeSkinButton.gameObject.SetActive(false);
 
             EnemyController.instance.StartPlay();
             gameObject.SetActive(false);
@@ -58,6 +66,16 @@ public class ReadyUp : MonoBehaviour
                 readyUpPanel.transform.position -= new Vector3(350f, 0f, 0f);
                 skinSelectionScrollView.SetActive(true);
             }
+        }
+    }
+
+    void OpenSelectSkin()
+    {
+        if (!skinSelectionScrollView.activeSelf)
+        {
+            UpdateSkinSelectionContent();
+            readyUpPanel.transform.position -= new Vector3(350f, 0f, 0f);
+            skinSelectionScrollView.SetActive(true);
         }
     }
 
@@ -92,6 +110,7 @@ public class ReadyUp : MonoBehaviour
         skinImage.material = skin.itemImage.material;
 
         startButton.GetComponentInChildren<TMP_Text>().text = "Start";
+        changeSkinButton.gameObject.SetActive(true);
         readyUpPanel.transform.position += new Vector3(350f, 0f, 0f);
         skinSelectionScrollView.SetActive(false);
     }
