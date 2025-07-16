@@ -26,9 +26,12 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     public GameObject lockImage;
     public GameObject lockedOverlay;
 
-    [Header("Image + Border")]
+    [Header("Image + Border + Text")]
     public Image itemImage;
     public Image rarityBorder;
+    public GameObject textPanel;
+    public TMP_Text nameText;
+    public TMP_Text descriptionText;
 
     [Header("Claim Requirement")]
     public bool claimed = false;
@@ -51,6 +54,8 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     void Start()
     {
         GenerateItem();
+
+        textPanel.SetActive(false);
     }
 
     public void GenerateItem()
@@ -146,6 +151,9 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
         itemImage.sprite = mod.modifierImage.sprite;
         itemImage.color = mod.modifierImage.color;
         itemImage.material = mod.modifierImage.material;
+
+        nameText.text = mod.modifierName;
+        descriptionText.text = mod.modifierDescription.text;
 
         rarityBorder.color = mod.GetRarityColor();
     }
@@ -250,24 +258,48 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     {
         BattlepassInfoPanel.instance.DisplayBattlepassInfoPanel(this);
         selected = true;
+
+        if (type == itemType.Modifier)
+        {
+            textPanel.transform.SetParent(transform);
+            textPanel.SetActive(false);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!selected)
+        {
             MoveImageAndBorderUp();
+
+            if (type == itemType.Modifier)
+            {
+                textPanel.SetActive(true);
+                textPanel.transform.SetParent(Battlepass.instance.transform);
+            }   
+        }   
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (!selected)
+        {
             MoveImageAndBorderDown();
+
+            if (type == itemType.Modifier)
+            {
+                textPanel.transform.SetParent(transform);
+                textPanel.SetActive(false);
+            }
+        }
     }
 
     public void Deselect()
     {
         if (selected)
+        {
             MoveImageAndBorderDown();
+        }  
         selected = false;
     }
 
@@ -278,7 +310,9 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
         rarityBorder.transform.position += new Vector3(0, distance, 0);
         lockedOverlay.transform.position += new Vector3(0, distance, 0);
         claimedOverlay.transform.position += new Vector3(0, distance, 0);
-        
+
+        if (type == itemType.Modifier)
+            textPanel.transform.position += new Vector3(0, distance, 0);
     }
 
     void MoveImageAndBorderDown()
@@ -288,5 +322,8 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
         rarityBorder.transform.position -= new Vector3(0, distance, 0);
         lockedOverlay.transform.position -= new Vector3(0, distance, 0);
         claimedOverlay.transform.position -= new Vector3(0, distance, 0);
+
+        if (type == itemType.Modifier)
+            textPanel.transform.position -= new Vector3(0, distance, 0);
     }
 }

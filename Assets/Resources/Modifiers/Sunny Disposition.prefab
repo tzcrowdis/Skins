@@ -269,6 +269,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8081443850833398616}
   m_SourcePrefab: {fileID: 100100000, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
+--- !u!114 &1364908210219533253 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 816702639457262600, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
+  m_PrefabInstance: {fileID: 1847780349768048589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4329494154548758247 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2716182460678101290, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
@@ -322,6 +333,7 @@ MonoBehaviour:
   modifierNamePanel: {fileID: 8174638505999638499}
   nameText: {fileID: 4978944217581555437}
   modifierDetailPanel: {fileID: 8632436180661068475}
+  modifierDescription: {fileID: 1364908210219533253}
   outline: {fileID: 4329494154548758247}
   buttonHover: {fileID: 0}
   hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}

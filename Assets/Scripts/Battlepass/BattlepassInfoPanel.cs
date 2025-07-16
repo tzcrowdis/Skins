@@ -11,6 +11,7 @@ public class BattlepassInfoPanel : MonoBehaviour
     [Header("Populate Variables")]
     public TMP_Text itemName;
     public TMP_Text rarityText;
+    public TMP_Text descriptionText;
     public Image itemImage;
 
     [Header("Lock")]
@@ -108,17 +109,21 @@ public class BattlepassInfoPanel : MonoBehaviour
                 itemName.text = item.itemName;
                 rarityText.text = ObjectNames.NicifyVariableName(item.rarity.ToString());
                 rarityText.color = item.GetRarityColor();
+                descriptionText.gameObject.SetActive(false);
                 break;
             case BattlepassItem.itemType.Modifier:
                 Modifier mod = battlepassItem.mod;
                 itemName.text = mod.modifierName;
                 rarityText.text = ObjectNames.NicifyVariableName(mod.modifierRarity.ToString());
                 rarityText.color = mod.GetRarityColor();
+                descriptionText.gameObject.SetActive(true);
+                descriptionText.text = mod.modifierDescription.text;
                 break;
             case BattlepassItem.itemType.Currency:
                 itemName.text = "Coins";
                 rarityText.text = "Common";
                 rarityText.color = Color.white;
+                descriptionText.gameObject.SetActive(false);
                 break;
         }
         itemImage.color = battlepassItem.itemImage.color;

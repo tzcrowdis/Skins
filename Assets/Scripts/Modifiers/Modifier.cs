@@ -21,6 +21,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("Detailed Panel")]
     public GameObject modifierDetailPanel;
+    public TMP_Text modifierDescription;
     Transform modifierCanvas;
 
     [Header("Hover Effects")]

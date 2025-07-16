@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class StoreButton : MonoBehaviour
+public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Item")]
     public GameObject item;
     public int itemCost;
+    public bool purchased = false;
 
     [Header("Display")]
     public TMP_Text itemName;
     public Image image;
+    public Outline outline;
     public TMP_Text cost;
+    public GameObject modDescPanel;
+    public TMP_Text modDesc;
 
     [Header("Discount")]
     public float discount;
@@ -29,6 +34,12 @@ public class StoreButton : MonoBehaviour
         Skin,
         Crate,
         Modifier
+    }
+
+    void Start()
+    {
+        outline.enabled = false;
+        modDescPanel.SetActive(false);
     }
 
     public void RandomizeItem()
@@ -62,6 +73,7 @@ public class StoreButton : MonoBehaviour
                 image.color = mod.modifierImage.color;
                 image.material = mod.modifierImage.material;
                 if (mod.modifierImage.sprite) image.sprite = mod.modifierImage.sprite;
+                modDesc.text = mod.modifierDescription.text;
 
                 if (Player.instance.modifiers.Count == Player.instance.modifierCapacity)
                     transform.GetChild(0).GetComponent<Button>().interactable = false;
@@ -78,6 +90,59 @@ public class StoreButton : MonoBehaviour
                 image.material = crate.itemImage.material;
                 if (crate.itemImage.sprite) image.sprite = crate.itemImage.sprite;
                 break;
+        }
+    }
+
+    public void SetPurchased(bool success)
+    {
+        purchased = success;
+        if (!purchased)
+            return;
+
+        itemName.text = "";
+        image.sprite = null;
+        image.material = null;
+        image.color = Color.black;
+        discountText.text = "";
+        cost.text = "";
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (!purchased)
+        {
+            Store.instance.OpenPurchasePanel(this);
+
+            if (type == itemType.Modifier)
+            {
+                modDescPanel.SetActive(false);
+            }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!purchased)
+        {
+            outline.enabled = true;
+
+            if (type == itemType.Modifier)
+            {
+                modDescPanel.SetActive(true);
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!purchased)
+        {
+            outline.enabled = false;
+
+            if (type == itemType.Modifier)
+            {
+                modDescPanel.SetActive(false);
+            }
         }
     }
 }

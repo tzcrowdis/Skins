@@ -10,7 +10,9 @@ public class Enemy : MonoBehaviour
     public SpriteRenderer skinSpriteRenderer;
     [HideInInspector]
     public Skin skin;
-    // TODO display skin info on hover
+
+    [Header("Skin Info")]
+    public PlayedSkin playedSkin;
 
     [Header("Dialogue")]
     public Canvas dialogueCanvas;
@@ -32,6 +34,8 @@ public class Enemy : MonoBehaviour
         skinSpriteRenderer.material = skin.itemImage.material;
         if (skin.itemImage.sprite)
             skinSpriteRenderer.sprite = skin.itemImage.sprite;
+
+        playedSkin.SetSkin(newSkin);
     }
 
     public void ReactToPlayerSkin(Skin playerSkin)

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     [Header("Skin")]
     public SpriteRenderer spriteRenderer;
+    public PlayedSkin playedSkin;
     [HideInInspector]
     public Skin skin;
 
@@ -170,6 +171,8 @@ public class Player : MonoBehaviour
         spriteRenderer.material = skin.itemImage.material;
         if (skin.itemImage.sprite)
             spriteRenderer.sprite = skin.itemImage.sprite;
+
+        playedSkin.SetSkin(skin);
     }
 
     public Skin.Rarity GetSkinRarity()

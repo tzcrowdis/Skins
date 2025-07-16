@@ -39,7 +39,7 @@ public class ItemDatabase : MonoBehaviour
 
     public Skin RandomSkinRandomCollection(Skin.Rarity rarity)
     {
-        int collectionIndex = Random.Range(0, skinPaths.Count);
+        int collectionIndex = Random.Range(1, skinPaths.Count); // NOTE 1 is temp to avoid solid color collection
         Skin[] skins = Resources.LoadAll<Skin>(skinPaths[collectionIndex]);
 
         // sort skins by rarity
@@ -80,7 +80,7 @@ public class ItemDatabase : MonoBehaviour
                 skinIndex = Random.Range(0, rareSkins.Count);
                 return rareSkins[skinIndex];
             case Skin.Rarity.Legendary:
-                skinIndex = Random.Range(0, legendarySkins.Count);
+                skinIndex = Random.Range(0, legendarySkins.Count); // TODO error bc no legendary skin in solid color collection
                 return legendarySkins[skinIndex];
         }
 

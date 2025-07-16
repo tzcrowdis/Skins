@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class Store : MonoBehaviour
 {
-    [Header("Store Buttons")]
-    [SerializeField]
-    public Button[] storeButtons;
+    //[Header("Store Buttons")]
+    //[SerializeField]
+    //public Button[] storeButtons;
 
     [Header("Sub-Store Buttons")]
     public Button featuredButton;
@@ -28,7 +28,6 @@ public class Store : MonoBehaviour
     public TMP_Text costText;
     public Button confirmButton;
     public Button cancelButton;
-    Button itemButton;
 
 
     public static Store instance { get; private set; }
@@ -59,10 +58,10 @@ public class Store : MonoBehaviour
     {
         RandomizeFeaturedStore();
         
-        foreach (Button button in storeButtons)
+        /*foreach (Button button in storeButtons)
         {
             button.onClick.AddListener(delegate { OpenPurchasePanel(button.GetComponentInParent<StoreButton>()); });
-        }
+        }*/
 
         foreach (GameObject panel in subPanels)
             panel.SetActive(false);
@@ -91,7 +90,7 @@ public class Store : MonoBehaviour
         }
     }
 
-    void OpenPurchasePanel(StoreButton storeButton)
+    public void OpenPurchasePanel(StoreButton storeButton)
     {
         foreach (Transform child in confirmationPanel.transform)
             child.gameObject.SetActive(false);
@@ -103,8 +102,6 @@ public class Store : MonoBehaviour
 
         costText.text = storeButton.cost.text;
         costText.gameObject.SetActive(true);
-
-        itemButton = storeButton.transform.GetChild(0).GetComponent<Button>();
 
         if (Player.instance.coins - storeButton.itemCost > 0)
         {
@@ -134,7 +131,10 @@ public class Store : MonoBehaviour
         bool purchased = Player.instance.InGamePurchase(storeButton.itemCost);
 
         if (!purchased)
-            Debug.Log("not purchased");
+        {
+            Debug.Log("not purchased"); // TODO notify player
+            return;
+        }  
 
         switch (storeButton.type)
         {
@@ -149,7 +149,7 @@ public class Store : MonoBehaviour
                 break;
         }
 
-        itemButton.interactable = false;
+        storeButton.SetPurchased(true);
         confirmationPanel.SetActive(false);
     }
 

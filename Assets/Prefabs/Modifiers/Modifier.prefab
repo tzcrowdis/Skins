@@ -1244,9 +1244,12 @@ MonoBehaviour:
   modifierRarity: 0
   modifierImage: {fileID: 7772839054300522219}
   modifierCost: 1000
+  modifierType: 0
+  modifierExpDescription: 
   modifierNamePanel: {fileID: 7554370667190779950}
   nameText: {fileID: 6682322680532701472}
   modifierDetailPanel: {fileID: 7955662102764944758}
+  modifierDescription: {fileID: 816702639457262600}
   outline: {fileID: 2716182460678101290}
   buttonHover: {fileID: 0}
   hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
