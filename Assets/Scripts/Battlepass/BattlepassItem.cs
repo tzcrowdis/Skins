@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using static UnityEditor.Progress;
 
 public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -46,6 +47,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
         Currency
     }
 
+
     void Start()
     {
         GenerateItem();
@@ -56,56 +58,122 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
         ResetItem();
         
         float r = Random.Range(0f, 1f);
-        if (r < 0.5f) // skin
+        if (levelToClaim < 8)
         {
-            type = itemType.Skin;
-            Skin skin = ItemDatabase.instance.RandomSkinRandomCollection();
-
-            collectionItem = skin;
-
-            itemImage.sprite = collectionItem.itemImage.sprite;
-            itemImage.color = collectionItem.itemImage.color;
-            itemImage.material = collectionItem.itemImage.material;
-
-            rarityColor = collectionItem.GetRarityColor();
-            rarityBorder.color = rarityColor;
+            if (r < 0.5f)
+                GenerateSkin();
+            else if (r < 0.75f)
+                GenerateModifier();
+            else
+                GenerateCurrency();
         }
-        else if (r < 0.75f) // modifier
+        else if (levelToClaim < 10)
         {
-            type = itemType.Modifier;
-            mod = ItemDatabase.instance.RandomModifier();
-
-            itemImage.sprite = mod.modifierImage.sprite;
-            itemImage.color = mod.modifierImage.color;
-            itemImage.material = mod.modifierImage.material;
-
-            rarityBorder.color = mod.GetRarityColor();
+            if (r < 0.75f)
+                GenerateSkin();
+            else
+                GenerateModifier();
         }
-        else // currency
+        else
+            GenerateSkin();
+    }
+
+    void GenerateSkin()
+    {
+        type = itemType.Skin;
+
+        float r = Random.Range(0f, 1f);
+        Skin.Rarity rarity = Skin.Rarity.VeryCommon;
+        if (levelToClaim < 6)
         {
-            type = itemType.Currency;
-            float coinRandom = Random.Range(0, 3);
-            switch (coinRandom)
-            {
-                case 0:
-                    coinAmount = 100;
-                    break;
-                case 1:
-                    coinAmount = 200;
-                    break;
-                case 2:
-                    coinAmount = 300;
-                    break;
-            }
-
-            Image coinImage = ItemDatabase.instance.GetCoinImage();
-            itemImage.sprite = coinImage.sprite;
-            itemImage.color = coinImage.color;
-            itemImage.material = coinImage.material;
-            Color blank = Color.white;
-            blank.a = 0;
-            rarityBorder.color = blank;
+            // 60% very common
+            // 40% common
+            if (r < 0.6f)
+                rarity = Skin.Rarity.VeryCommon;
+            else
+                rarity = Skin.Rarity.Common;
         }
+        else if (levelToClaim < 8)
+        {
+            // 30% very common
+            // 40% common
+            // 30% rare
+            if (r < 0.3f)
+                rarity = Skin.Rarity.VeryCommon;
+            else if (r < 0.7f)
+                rarity = Skin.Rarity.Common;
+            else
+                rarity = Skin.Rarity.Rare;
+        }
+        else if (levelToClaim < 10)
+        {
+            // 50% common
+            // 50% rare
+            if (r < 0.5f)
+                rarity = Skin.Rarity.Common;
+            else
+                rarity = Skin.Rarity.Rare;
+        }
+        else
+        {
+            // 50% rare
+            // 50% legendary
+            if (r < 0.5f)
+                rarity = Skin.Rarity.Rare;
+            else
+                rarity = Skin.Rarity.Legendary;
+        }
+
+        Skin skin = ItemDatabase.instance.RandomSkinRandomCollection(rarity);
+        collectionItem = skin;
+
+        itemImage.sprite = collectionItem.itemImage.sprite;
+        itemImage.color = collectionItem.itemImage.color;
+        itemImage.material = collectionItem.itemImage.material;
+
+        rarityColor = collectionItem.GetRarityColor();
+        rarityBorder.color = rarityColor;
+    }
+
+    void GenerateModifier()
+    {
+        type = itemType.Modifier;
+
+        // TODO modifier rarity grows with battle pass index
+
+        mod = ItemDatabase.instance.RandomModifier();
+
+        itemImage.sprite = mod.modifierImage.sprite;
+        itemImage.color = mod.modifierImage.color;
+        itemImage.material = mod.modifierImage.material;
+
+        rarityBorder.color = mod.GetRarityColor();
+    }
+
+    void GenerateCurrency()
+    {
+        type = itemType.Currency;
+        float coinRandom = Random.Range(0, 3);
+        switch (coinRandom)
+        {
+            case 0:
+                coinAmount = 100;
+                break;
+            case 1:
+                coinAmount = 200;
+                break;
+            case 2:
+                coinAmount = 300;
+                break;
+        }
+
+        Image coinImage = ItemDatabase.instance.GetCoinImage();
+        itemImage.sprite = coinImage.sprite;
+        itemImage.color = coinImage.color;
+        itemImage.material = coinImage.material;
+        Color blank = Color.white;
+        blank.a = 0;
+        rarityBorder.color = blank;
     }
 
     void ResetItem()
