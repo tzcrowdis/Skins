@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 264584253985514726}
   - component: {fileID: 2086382918307408650}
   m_Layer: 5
-  m_Name: Empty Modifier Slot
+  m_Name: Drag Modifier Object
   m_TagString: Empty Modifier Slot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ RectTransform:
   m_GameObject: {fileID: 5447770173701632408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7057434195363341407}

@@ -183,6 +183,9 @@ public class Play : MonoBehaviour
     {
         postMatchSummary = true;
 
+        foreach (Modifier mod in Player.instance.modifiers)
+            mod.lockDrag = true;
+
         playerStartExp = Player.instance.exp;
         playerStartLevel = Player.instance.level;
         displayCurrentExp = playerStartExp;
@@ -253,6 +256,9 @@ public class Play : MonoBehaviour
     void ReturnHome()
     {
         postMatchSummary = false;
+
+        foreach (Modifier mod in Player.instance.modifiers)
+            mod.lockDrag = false;
 
         if (!skip)
             Player.instance.AddTotalExperience(expGain);

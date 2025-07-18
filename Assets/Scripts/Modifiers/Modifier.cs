@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [Header("Modifier Details")]
     public string modifierName;
@@ -31,6 +31,11 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public AudioClip hoverSound;
     AudioSource buttonClick;
     public AudioClip clickSound;
+
+    [Header("Drag")]
+    public GameObject modifierDragPrefab;
+    public GameObject modifierDrag;
+    public bool lockDrag = false;
 
     public enum Rarity
     {
@@ -62,7 +67,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         buttonClick = GameObject.Find("Button Click Audio Source").GetComponent<AudioSource>();
     }
     
-    public virtual bool ModifierEffect() { return false; /* TODO override */ }
+    public virtual bool ModifierEffect() { return false; /* override */ }
 
     public string ModifierExpDescription()
     {
@@ -130,6 +135,9 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         Destroy(gameObject);
     }
 
+    /*
+     * POINTER
+     */
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!modifierDetailPanel.activeSelf)
@@ -169,5 +177,64 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
 
         buttonClick.PlayOneShot(clickSound);
+    }
+
+    /*
+     * DRAG
+     */
+    // TODO lock drag during post match summary
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (lockDrag)
+            return;
+
+        modifierDrag = Instantiate(modifierDragPrefab, transform.parent.transform.parent); // parent is transform canvas... shameful
+        Image img = modifierDrag.GetComponent<Image>();
+        img.sprite = modifierImage.sprite;
+        img.material = modifierImage.material;
+        img.color = modifierImage.color;
+
+        modifierDetailPanel.SetActive(false);
+        modifierImage.enabled = false;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (lockDrag)
+            return;
+
+        // image tracks mouse position
+        if (modifierDrag)
+            modifierDrag.transform.position = eventData.position;
+
+        // sort modifier based on panel objects positions (just set it to be the closest to the pointer?)
+        float closestDistance = Mathf.Infinity;
+        int closestIndex = -1;
+        int i = 0;
+        foreach (Transform child in Player.instance.modifierPanel.transform)
+        {
+            float modDist = Vector3.Distance(child.position, eventData.position);
+            if (modDist < closestDistance)
+            {
+                closestDistance = modDist;
+                closestIndex = i;
+            }
+            i++;
+        }
+
+        if (closestIndex != -1)
+        {
+            transform.SetSiblingIndex(closestIndex);
+            Player.instance.ResortModifierList();
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (lockDrag)
+            return;
+
+        Destroy(modifierDrag);
+        modifierImage.enabled = true;
     }
 }

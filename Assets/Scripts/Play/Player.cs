@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     public List<Modifier> modifiers;
     public int modifierCapacity = 5;
     public GameObject modifierPanel;
+    public TMP_Text modifierCount;
     public GameObject emptyModifierSlot;
 
     [Header("Level Display")]
@@ -61,6 +62,8 @@ public class Player : MonoBehaviour
 
         seasonText.text = $"Season: {season}";
         seasonTimeLeft = seasonTotalMinutes * 60f;
+
+        modifierCount.text = $"{modifiers.Count} / {modifierCapacity}";
 
         HidePlayer();
     }
@@ -108,6 +111,7 @@ public class Player : MonoBehaviour
         modifiers.Add(mod);
         GameObject newMod = Instantiate(mod.gameObject, modifierPanel.transform);
         newMod.transform.SetSiblingIndex(i);
+        modifierCount.text = $"{modifiers.Count} / {modifierCapacity}";
     }
 
     public void RemoveFromModifierList(Modifier mod)
@@ -115,6 +119,17 @@ public class Player : MonoBehaviour
         modifiers.Remove(mod);
 
         Instantiate(emptyModifierSlot.gameObject, modifierPanel.transform);
+
+        modifierCount.text = $"{modifiers.Count} / {modifierCapacity}";
+    }
+
+    public void ResortModifierList()
+    {
+        modifiers.Clear();
+        foreach (Transform child in modifierPanel.transform)
+        {
+            modifiers.Add(child.GetComponent<Modifier>());
+        }
     }
 
     void UpdateCurrencyFields()

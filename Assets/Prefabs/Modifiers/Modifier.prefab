@@ -1254,6 +1254,8 @@ MonoBehaviour:
   buttonHover: {fileID: 0}
   hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
   clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
+  modifierDragPrefab: {fileID: 5447770173701632408, guid: f323cf4b7fa01814f8352457fc61791b, type: 3}
+  modifierDrag: {fileID: 0}
 --- !u!1 &7955662102764944758
 GameObject:
   m_ObjectHideFlags: 0
