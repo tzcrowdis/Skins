@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 3340334461242891014}
   - component: {fileID: 579518635093580824}
   - component: {fileID: 2725855323642100142}
+  - component: {fileID: 8436896238118590265}
   - component: {fileID: 6698637197487757456}
   m_Layer: 5
   m_Name: Crate Button
@@ -491,6 +492,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8436896238118590265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7280501299784919810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_EffectDistance: {x: 5, y: 5}
+  m_UseGraphicAlpha: 0
 --- !u!114 &6698637197487757456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,7 +523,7 @@ MonoBehaviour:
   crateImage: {fileID: 0}
   coinCost: 0
   cratePrefab: {fileID: 0}
-  outline: {fileID: 0}
+  outline: {fileID: 8436896238118590265}
   infoPanel: {fileID: 5111075019912027561}
   nameText: {fileID: 8633434612121936583}
   itemsText: {fileID: 7554632212428758837}

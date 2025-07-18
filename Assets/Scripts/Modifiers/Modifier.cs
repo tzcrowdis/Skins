@@ -34,8 +34,8 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("Drag")]
     public GameObject modifierDragPrefab;
-    public GameObject modifierDrag;
     public bool lockDrag = false;
+    GameObject modifierDrag;
 
     public enum Rarity
     {

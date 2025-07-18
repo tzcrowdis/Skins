@@ -25,6 +25,13 @@ public class Player : MonoBehaviour
     public int coins;
     public TMP_Text coinsText;
 
+    [Header("Bank")]
+    public Button bankButton;
+    public GameObject bankPanel;
+
+    [Header("Alert")]
+    public GameObject alertPrefab;
+
     [Header("Modifiers")]
     [SerializeField]
     public List<Modifier> modifiers;
@@ -55,6 +62,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        bankButton.onClick.AddListener(OpenCloseBankPanel);
+        bankPanel.SetActive(false);
+        
         UpdateCurrencyFields();
         UpdateLevelText();
 
@@ -78,6 +88,11 @@ public class Player : MonoBehaviour
 
         if (seasonTimeLeft <= 0)
             StartNextSeason();
+    }
+
+    void QueueBoss()
+    {
+        // TODO
     }
 
     void StartNextSeason()
@@ -143,6 +158,24 @@ public class Player : MonoBehaviour
         levelText.text = $"Lvl. {level}";
     }
 
+    public bool InGamePurchase(int coinAmount)
+    {
+        if (coins - coinAmount < 0)
+            return false;
+
+        coins -= coinAmount;
+        UpdateCurrencyFields();
+        return true;
+    }
+
+    /*
+     * BANK
+     */
+    void OpenCloseBankPanel()
+    {
+        bankPanel.SetActive(!bankPanel.activeSelf);
+    }
+
     public bool CoinPurchase(int dollarAmount, int coinAmount)
     {
         if (dollars - dollarAmount < 0)
@@ -150,16 +183,6 @@ public class Player : MonoBehaviour
 
         dollars -= dollarAmount;
         coins += coinAmount;
-        UpdateCurrencyFields();
-        return true;
-    }
-
-    public bool InGamePurchase(int coinAmount)
-    {
-        if (coins - coinAmount < 0)
-            return false;
-
-        coins -= coinAmount;
         UpdateCurrencyFields();
         return true;
     }

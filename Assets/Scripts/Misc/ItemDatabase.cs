@@ -39,7 +39,7 @@ public class ItemDatabase : MonoBehaviour
 
     public Skin RandomSkinRandomCollection(Skin.Rarity rarity)
     {
-        int collectionIndex = Random.Range(1, skinPaths.Count); // NOTE 1 is temp to avoid solid color collection
+        int collectionIndex = Random.Range(0, skinPaths.Count);
         Skin[] skins = Resources.LoadAll<Skin>(skinPaths[collectionIndex]);
 
         // sort skins by rarity

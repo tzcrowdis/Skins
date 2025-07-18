@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class CoinPurchasePanel : MonoBehaviour
+public class CoinPurchasePanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Input Fields")]
     public int coinQuantity;
@@ -12,6 +13,7 @@ public class CoinPurchasePanel : MonoBehaviour
     
     [Header("Properties")]
     public Image image;
+    public Outline outline;
     public TMP_Text coinQuantityText;
     public Button coinPurchaseButton;
     public TMP_Text dollarPriceText;
@@ -28,6 +30,8 @@ public class CoinPurchasePanel : MonoBehaviour
 
     void Start()
     {
+        outline.enabled = false;
+        
         coinPurchaseButton.onClick.AddListener(OpenConfirmationPanel);
 
         coinQuantityText.text = $"\u0424{coinQuantity}";
@@ -84,5 +88,15 @@ public class CoinPurchasePanel : MonoBehaviour
         {
             // TODO say "need more funds in wallet"
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        outline.enabled = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        outline.enabled = false;
     }
 }

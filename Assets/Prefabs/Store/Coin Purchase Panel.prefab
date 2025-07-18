@@ -622,6 +622,7 @@ GameObject:
   - component: {fileID: 2743445204646288669}
   - component: {fileID: 1452747937949651223}
   - component: {fileID: 5074790345605133067}
+  - component: {fileID: 3604387216304042963}
   - component: {fileID: 5656739595078522206}
   m_Layer: 5
   m_Name: Coin Purchase Panel
@@ -682,7 +683,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -2413806693520163455, guid: 547bed6effa3c924c991a224fe496298, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -691,7 +692,22 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 5
+--- !u!114 &3604387216304042963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008941659546298973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
+  m_EffectDistance: {x: 2.5, y: 2.5}
+  m_UseGraphicAlpha: 0
 --- !u!114 &5656739595078522206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -707,6 +723,7 @@ MonoBehaviour:
   coinQuantity: 1000
   dollarPrice: 10
   image: {fileID: 2963350977103825114}
+  outline: {fileID: 3604387216304042963}
   coinQuantityText: {fileID: 600757581025265977}
   coinPurchaseButton: {fileID: 7936703576270944607}
   dollarPriceText: {fileID: 8597446536163680365}

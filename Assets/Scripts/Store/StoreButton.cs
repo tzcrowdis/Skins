@@ -15,7 +15,6 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     [Header("Display")]
     public TMP_Text itemName;
     public Image image;
-    public Outline outline;
     public TMP_Text cost;
     public GameObject modDescPanel;
     public TMP_Text modDesc;
@@ -38,7 +37,6 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     void Start()
     {
-        outline.enabled = false;
         modDescPanel.SetActive(false);
     }
 
@@ -124,7 +122,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     {
         if (!purchased)
         {
-            outline.enabled = true;
+            transform.localScale += Vector3.one * 0.05f;
 
             if (type == itemType.Modifier)
             {
@@ -137,7 +135,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     {
         if (!purchased)
         {
-            outline.enabled = false;
+            transform.localScale -= Vector3.one * 0.05f;
 
             if (type == itemType.Modifier)
             {
