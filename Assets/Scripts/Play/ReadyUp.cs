@@ -13,6 +13,8 @@ public class ReadyUp : MonoBehaviour
     public Button startButton;
     public Button changeSkinButton;
     bool skinSelected = false;
+    public GameObject bossWarningContainer;
+    public TMP_Text bossWarning;
     Skin selectedSkin;
 
     [Header("Skin Selection")]
@@ -22,7 +24,16 @@ public class ReadyUp : MonoBehaviour
 
     [Header("Collection")]
     public Transform collectionContent;
-    
+
+
+    public static ReadyUp instance { get; private set; }
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(instance.gameObject);
+        else
+            instance = this;
+    }
 
     void Start()
     {
@@ -40,6 +51,8 @@ public class ReadyUp : MonoBehaviour
         }
 
         skinSelectionScrollView.SetActive(false);
+
+        bossWarningContainer.SetActive(false);
     }
 
     void PlayOrSelectSkin()

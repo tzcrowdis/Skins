@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
     public TMP_Text seasonTimerText;
     public int seasonTotalMinutes = 5;
     float seasonTimeLeft;
+    bool seasonTimerLock = false;
 
     public static Player instance { get; private set; }
     void Awake()
@@ -80,31 +81,56 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (seasonTimerLock)
+            return;
+
         seasonTimeLeft -= Time.deltaTime;
 
         int minutes = Mathf.FloorToInt(seasonTimeLeft / 60f);
-        int seconds = Mathf.FloorToInt(seasonTimeLeft - minutes * 60);
-        seasonTimerText.text = $"{minutes}:{seconds}";
+        //int seconds = Mathf.FloorToInt(seasonTimeLeft - minutes * 60);
+        int seconds = Mathf.FloorToInt(seasonTimeLeft % 60);
+        seasonTimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); ;
 
         if (seasonTimeLeft <= 0)
-            StartNextSeason();
+            QueueBoss();
     }
 
     void QueueBoss()
     {
-        // TODO
+        seasonTimerLock = true;
+        seasonTimerText.text = $"00:00";
+        seasonTimerText.color = Color.red;
+
+        GameObject alert = Instantiate(alertPrefab, Home.instance.transform);
+        alert.transform.position = Home.instance.readyUpBtn.transform.position - new Vector3(115f, 0f, 0f);
+        Home.instance.readyUpBtn.onClick.AddListener(delegate { DestroyAlert(alert); });
+        ReadyUp.instance.startButton.onClick.AddListener(delegate { DestroyAlert(alert); });
+
+        EnemyController.instance.QueueBoss(EnemyController.BossType.Randomizer); // TODO different bosses
+
+        ReadyUp.instance.bossWarningContainer.SetActive(true);
+        ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.Randomizer.ToString()}!";
     }
 
-    void StartNextSeason()
+    public void DestroyAlert(GameObject alert)
+    {
+        Destroy(alert);
+    }
+
+    public void StartNextSeason()
     {
         Battlepass.instance.GenerateBattlepassItems();
 
         season += 1; // TODO season themes??
         if (season > lastSeason)
-            Debug.Log("GAME OVER"); // TODO
+            Debug.Log("GAME OVER"); // TODO win/lose state
 
         seasonText.text = $"Season: {season}";
+        seasonText.color = Color.white;
         seasonTimeLeft = seasonTotalMinutes * 60f;
+        seasonTimerLock = false;
+
+        ReadyUp.instance.bossWarningContainer.SetActive(false);
     }
 
     public void AddToModifierList(Modifier mod)

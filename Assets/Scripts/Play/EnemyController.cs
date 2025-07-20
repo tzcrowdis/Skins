@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static EnemyController;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Bosses")]
+    public bool bossFight = false;
+    public BossType boss;
+    public GameObject randomizerBoss;
 
+    public enum BossType
+    {
+        Randomizer
+    }
     
     public static EnemyController instance { get; private set; }
     void Awake()
@@ -24,11 +33,23 @@ public class EnemyController : MonoBehaviour
 
     public void StartPlay()
     {
-        foreach (Transform child in transform)
-            child.gameObject.SetActive(true);
+        if (bossFight)
+        {
+            switch (boss)
+            {
+                case BossType.Randomizer:
+                    randomizerBoss.SetActive(true);
+                    break;
+            }
+        }
+        else
+        {
+            foreach (Transform child in transform)
+                if (!child.gameObject.CompareTag("Boss")) child.gameObject.SetActive(true);
 
-        GenerateEnemySkins();
-        GenerateEnemyReactions();
+            GenerateEnemySkins();
+            GenerateEnemyReactions();
+        }  
     }
 
     public void EndPlay()
@@ -46,6 +67,9 @@ public class EnemyController : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
+            if (child.gameObject.CompareTag("Boss"))
+                continue;
+
             Enemy nme = child.GetComponent<Enemy>();
             if (nme)
             {
@@ -60,11 +84,32 @@ public class EnemyController : MonoBehaviour
         Skin playerSkin = Player.instance.skin;
         foreach (Transform child in transform)
         {
+            if (child.gameObject.CompareTag("Boss"))
+                continue;
+            
             Enemy nme = child.GetComponent<Enemy>();
             if (nme)
             {
                 nme.ReactToPlayerSkin(playerSkin);
             }
         }
+    }
+
+    public void QueueBoss(BossType bossType)
+    {
+        bossFight = true;
+        boss = bossType;
+
+        switch (boss)
+        {
+            case BossType.Randomizer:
+                randomizerBoss.GetComponent<RandomizerBoss>().EnableParticleEffects();
+                break;
+        }
+    }
+
+    public void RemoveBoss()
+    {
+        bossFight = false;
     }
 }

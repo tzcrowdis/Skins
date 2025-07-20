@@ -269,6 +269,9 @@ public class Play : MonoBehaviour
         Home.instance.gameObject.SetActive(true);
         Home.instance.OpenCanvas(Home.instance.collectionCanvas, Home.instance.collectionBtn);
         Store.instance.RandomizeFeaturedStore();
+
+        if (EnemyController.instance.bossFight)
+            Player.instance.StartNextSeason();
     }
 
     int GetSkinExp()

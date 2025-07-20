@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     [Header("Play Canvas")]
     public Canvas playCanvas;
     
-    void Start()
+    protected virtual void Start()
     {
         dialogueCanvas.gameObject.SetActive(false);
     }
@@ -34,6 +34,8 @@ public class Enemy : MonoBehaviour
         skinSpriteRenderer.material = skin.itemImage.material;
         if (skin.itemImage.sprite)
             skinSpriteRenderer.sprite = skin.itemImage.sprite;
+        else
+            skinSpriteRenderer.sprite = null;
 
         playedSkin.SetSkin(newSkin);
     }
