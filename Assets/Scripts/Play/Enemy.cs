@@ -21,7 +21,12 @@ public class Enemy : MonoBehaviour
 
     [Header("Play Canvas")]
     public Canvas playCanvas;
-    
+
+    [Header("XP")]
+    public TMP_Text expText;
+    [HideInInspector] public int negExp;
+
+
     protected virtual void Start()
     {
         dialogueCanvas.gameObject.SetActive(false);
@@ -38,9 +43,32 @@ public class Enemy : MonoBehaviour
             skinSpriteRenderer.sprite = null;
 
         playedSkin.SetSkin(newSkin);
+
+        SetExpAndText();
     }
 
-    public void ReactToPlayerSkin(Skin playerSkin)
+    protected virtual void SetExpAndText()
+    {
+        switch (skin.rarity)
+        {
+            case CollectionItem.Rarity.VeryCommon:
+                negExp = -5;
+                break;
+            case CollectionItem.Rarity.Common:
+                negExp = -10;
+                break;
+            case CollectionItem.Rarity.Rare:
+                negExp = -15;
+                break;
+            case CollectionItem.Rarity.Legendary:
+                negExp = -25;
+                break;
+        }
+        
+        expText.text = $"{negExp}xp";
+    }
+
+    public virtual void ReactToPlayerSkin(Skin playerSkin)
     {
         dialogue.text = "";
         

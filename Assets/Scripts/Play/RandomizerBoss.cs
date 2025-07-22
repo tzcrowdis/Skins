@@ -27,6 +27,12 @@ public class RandomizerBoss : Boss
         RotateEyes();
     }
 
+    public override void ReactToPlayerSkin(Skin playerSkin)
+    {
+        dialogue.text = "I don't care what you pick, either way you're nothing to me.";
+        dialogueCanvas.gameObject.SetActive(true);
+    }
+
     void RandomizeSkin()
     {
         t += Time.deltaTime;
@@ -41,7 +47,7 @@ public class RandomizerBoss : Boss
     void RotateEyes()
     {
         eyeL.Rotate(new Vector3(0f, 0f, spinSpeed * Time.deltaTime));
-        eyeR.Rotate(new Vector3(0f, 0f, spinSpeed * Time.deltaTime));
+        eyeR.Rotate(new Vector3(0f, 0f, -spinSpeed * Time.deltaTime));
     }
 
     public void EnableParticleEffects()
@@ -54,7 +60,7 @@ public class RandomizerBoss : Boss
 
         Gradient gradient2 = new Gradient();
         gradient2.SetKeys(
-            new GradientColorKey[] { new GradientColorKey(Color.yellow, 0f), new GradientColorKey(Color.green, 1f) },
+            new GradientColorKey[] { new GradientColorKey(Color.yellow, 0f), new GradientColorKey(Color.magenta, 1f) },
             new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
         );
 

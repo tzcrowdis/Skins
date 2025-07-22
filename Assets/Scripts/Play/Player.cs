@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public PlayedSkin playedSkin;
     [HideInInspector]
     public Skin skin;
+    public TMP_Text skinExpText;
 
     [Header("Stats")]
     public int level = 0;
@@ -126,7 +127,7 @@ public class Player : MonoBehaviour
             Debug.Log("GAME OVER"); // TODO win/lose state
 
         seasonText.text = $"Season: {season}";
-        seasonText.color = Color.white;
+        seasonTimerText.color = Color.white;
         seasonTimeLeft = seasonTotalMinutes * 60f;
         seasonTimerLock = false;
 
@@ -237,6 +238,8 @@ public class Player : MonoBehaviour
             spriteRenderer.sprite = skin.itemImage.sprite;
 
         playedSkin.SetSkin(skin);
+
+        skinExpText.text = $"+{Play.instance.GetSkinExp()}xp";
     }
 
     public Skin.Rarity GetSkinRarity()

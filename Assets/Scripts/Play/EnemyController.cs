@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     public BossType boss;
     public GameObject randomizerBoss;
 
+    int negExp;
+
     public enum BossType
     {
         Randomizer
@@ -41,6 +43,8 @@ public class EnemyController : MonoBehaviour
                     randomizerBoss.SetActive(true);
                     break;
             }
+
+            GenerateEnemyReactions();
         }
         else
         {
@@ -54,6 +58,8 @@ public class EnemyController : MonoBehaviour
 
     public void EndPlay()
     {
+        SetNegativeExp();
+        
         foreach (Transform child in transform)
         {
             child.GetComponent<Enemy>().dialogueCanvas.gameObject.SetActive(false);
@@ -61,6 +67,22 @@ public class EnemyController : MonoBehaviour
 
         foreach (Transform child in transform)
             child.gameObject.SetActive(false);
+    }
+
+    void SetNegativeExp()
+    {
+        negExp = 0;
+        foreach (Transform child in transform)
+        {
+            Enemy nme = child.GetComponent<Enemy>();
+            if (nme & nme.gameObject.activeSelf)
+                negExp += nme.negExp;
+        }
+    }
+
+    public int GetNegativeExp()
+    {
+        return negExp;
     }
 
     void GenerateEnemySkins()
@@ -84,11 +106,11 @@ public class EnemyController : MonoBehaviour
         Skin playerSkin = Player.instance.skin;
         foreach (Transform child in transform)
         {
-            if (child.gameObject.CompareTag("Boss"))
-                continue;
+            //if (child.gameObject.CompareTag("Boss"))
+            //    continue;
             
             Enemy nme = child.GetComponent<Enemy>();
-            if (nme)
+            if (nme & nme.gameObject.activeSelf)
             {
                 nme.ReactToPlayerSkin(playerSkin);
             }

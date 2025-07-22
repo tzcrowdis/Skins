@@ -81,11 +81,13 @@ public class Play : MonoBehaviour
         if (baseExpPhase) // doesn't wait to populate
         {
             expGain = 0;
-            expGain += GetSkinExp();
-            expGainText.text = $"+{expGain} xp";
+            int posExpGain = GetSkinExp();
+            int negExpGain = EnemyController.instance.GetNegativeExp();
+            expGain += posExpGain + negExpGain;
+            expGainText.text = $"+{expGain}xp";
             
             GameObject src = Instantiate(expSourceText, expContent);
-            src.GetComponent<TMP_Text>().text = $"+{expGain} xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())}";
+            src.GetComponent<TMP_Text>().text = $"+{posExpGain}xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())} and {negExpGain}xp from enemies";
 
             baseExpPhase = false;
             modifierExpPhase = true;
@@ -221,6 +223,7 @@ public class Play : MonoBehaviour
         // base exp
         expGain = 0;
         expGain += GetSkinExp();
+        expGain += EnemyController.instance.GetNegativeExp();
         GameObject src = Instantiate(expSourceText, expContent);
         src.GetComponent<TMP_Text>().text = $"+{expGain} xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())}";
 
@@ -239,7 +242,6 @@ public class Play : MonoBehaviour
         }
 
         expGainText.text = $"+{expGain} xp";
-        Player.instance.AddTotalExperience(expGain);
 
         currentLevel.text = $"{Player.instance.level}";
         nextLevel.text = $"{Player.instance.level + 1}";
@@ -260,8 +262,7 @@ public class Play : MonoBehaviour
         foreach (Modifier mod in Player.instance.modifiers)
             mod.lockDrag = false;
 
-        if (!skip)
-            Player.instance.AddTotalExperience(expGain);
+        Player.instance.AddTotalExperience(expGain);
         
         endMatchButton.gameObject.SetActive(true);
         postMatchSummaryPanel.SetActive(false);
@@ -274,7 +275,7 @@ public class Play : MonoBehaviour
             Player.instance.StartNextSeason();
     }
 
-    int GetSkinExp()
+    public int GetSkinExp()
     {
         switch (Player.instance.GetSkinRarity())
         {

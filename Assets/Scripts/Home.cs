@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,9 @@ public class Home : MonoBehaviour
     [Header("Store")]
     public Button storeBtn;
     public Canvas storeCanvas;
+
+    [Header("Quit")]
+    public Button quitButton;
 
     List<Canvas> canvasList;
     List<Button> buttonList;
@@ -54,6 +58,8 @@ public class Home : MonoBehaviour
         buttonList.Add(battlepassBtn);
         storeBtn.onClick.AddListener(delegate { OpenCanvas(storeCanvas, storeBtn); });
         buttonList.Add(storeBtn);
+
+        quitButton.onClick.AddListener(QuitGame);
     }
 
     void Start()
@@ -87,5 +93,24 @@ public class Home : MonoBehaviour
     {
         OpenCanvas(Home.instance.storeCanvas, Home.instance.storeBtn);
         Store.instance.OpenSubPanel(Store.instance.coinPanel, Store.instance.coinButton);
+    }
+
+    public void FastForward()
+    {
+        Time.timeScale = 10.0f;
+    }
+
+    public void NormalTime()
+    {
+        Time.timeScale = 1.0f;
+    }
+
+    void QuitGame()
+    {
+        #if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }
