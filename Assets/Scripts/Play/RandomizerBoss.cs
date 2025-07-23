@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class RandomizerBoss : Boss
 {
@@ -15,6 +16,11 @@ public class RandomizerBoss : Boss
 
     [Header("Background Particles")]
     public ParticleSystem backgroundParticles;
+    public float transitionSpeed;
+    [HideInInspector] public bool transition = false;
+    float startSimSpeed;
+    float endSimSpeed;
+    float transitionTime;
 
     protected override void Start()
     {
@@ -50,6 +56,16 @@ public class RandomizerBoss : Boss
         eyeR.Rotate(new Vector3(0f, 0f, -spinSpeed * Time.deltaTime));
     }
 
+    public void TransitionParticleSimSpeed()
+    {
+        var mainModule = backgroundParticles.main;
+        transitionTime += Time.deltaTime * transitionSpeed;
+        mainModule.simulationSpeed = Mathf.Lerp(startSimSpeed, endSimSpeed, transitionTime);
+
+        if (transitionTime >= 1)
+            transition = false;
+    }
+
     public void EnableParticleEffects()
     {
         Gradient gradient1 = new Gradient();
@@ -66,11 +82,24 @@ public class RandomizerBoss : Boss
 
         var mainModule = backgroundParticles.main;
         mainModule.startColor = new ParticleSystem.MinMaxGradient(gradient1, gradient2);
+
+        startSimSpeed = mainModule.simulationSpeed;
+        endSimSpeed = 5f;
+        transition = true;
+        transitionTime = 0;
+
+        Debug.Log("trans");
     }
 
     void OnDisable()
     {
         var mainModule = backgroundParticles.main;
         mainModule.startColor = Color.gray;
+        mainModule.simulationSpeed = 1f; // TODO lerp the simulation speed
+
+        startSimSpeed = mainModule.simulationSpeed;
+        endSimSpeed = 1f;
+        transition = true;
+        transitionTime = 0;
     }
 }

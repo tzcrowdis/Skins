@@ -27,10 +27,16 @@ public class EnemyController : MonoBehaviour
             instance = this;
     }
 
-    private void Start()
+    void Start()
     {
         foreach (Transform child in transform)
             child.gameObject.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (bossFight && randomizerBoss.GetComponent<RandomizerBoss>().transition)
+            randomizerBoss.GetComponent<RandomizerBoss>().TransitionParticleSimSpeed();
     }
 
     public void StartPlay()

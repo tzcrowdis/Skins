@@ -26,9 +26,8 @@ public class Player : MonoBehaviour
     public int coins;
     public TMP_Text coinsText;
 
-    [Header("Bank")]
-    public Button bankButton;
-    public GameObject bankPanel;
+    [Header("Currency Adder")]
+    public int dollarsPerSeason = 50;
 
     [Header("Alert")]
     public GameObject alertPrefab;
@@ -64,9 +63,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        bankButton.onClick.AddListener(OpenCloseBankPanel);
-        bankPanel.SetActive(false);
-        
         UpdateCurrencyFields();
         UpdateLevelText();
 
@@ -88,7 +84,6 @@ public class Player : MonoBehaviour
         seasonTimeLeft -= Time.deltaTime;
 
         int minutes = Mathf.FloorToInt(seasonTimeLeft / 60f);
-        //int seconds = Mathf.FloorToInt(seasonTimeLeft - minutes * 60);
         int seconds = Mathf.FloorToInt(seasonTimeLeft % 60);
         seasonTimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); ;
 
@@ -130,6 +125,12 @@ public class Player : MonoBehaviour
         seasonTimerText.color = Color.white;
         seasonTimeLeft = seasonTotalMinutes * 60f;
         seasonTimerLock = false;
+
+        dollars += dollarsPerSeason;
+        GameObject alert = Instantiate(alertPrefab, Home.instance.transform);
+        alert.transform.position = dollarText.transform.position + new Vector3(-75f, 0f, 0f);
+        alert.GetComponent<AlertEffect>().lifetime = 5f;
+        UpdateCurrencyFields();
 
         ReadyUp.instance.bossWarningContainer.SetActive(false);
     }
@@ -193,14 +194,6 @@ public class Player : MonoBehaviour
         coins -= coinAmount;
         UpdateCurrencyFields();
         return true;
-    }
-
-    /*
-     * BANK
-     */
-    void OpenCloseBankPanel()
-    {
-        bankPanel.SetActive(!bankPanel.activeSelf);
     }
 
     public bool CoinPurchase(int dollarAmount, int coinAmount)
