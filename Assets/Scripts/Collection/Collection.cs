@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 using static Crate;
@@ -22,6 +23,12 @@ public class Collection : MonoBehaviour
     public GameObject openingPanel;
     public Image rewardImage;
     public Button claimButton;
+    public float rotationSpeed;
+    public float crateAnimLength;
+    bool crateOpeningAnimation = false;
+    float crateAnimTime = 0f;
+    Crate purchasedCrate;
+    bool rotateClockwise = false;
 
     public static Collection instance { get; private set; }
     void Awake()
@@ -43,6 +50,31 @@ public class Collection : MonoBehaviour
 
         crateKeyPanel.SetActive(false);
         openingPanel.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (crateOpeningAnimation)
+        {
+            if (rotateClockwise)
+                rewardImage.transform.Rotate(new Vector3(0f, 0f, rotationSpeed * Time.deltaTime));
+            else
+                rewardImage.transform.Rotate(new Vector3(0f, 0f, -rotationSpeed * Time.deltaTime));
+
+            crateAnimTime += Time.deltaTime;
+            if (crateAnimTime > crateAnimLength)
+            {
+                CancelInvoke();
+                crateOpeningAnimation = false;
+                crateAnimTime = 0f;
+                OpenOpeningPanel(purchasedCrate);
+            }
+        }
+    }
+
+    void CrateAnimRotationFlip()
+    {
+        rotateClockwise = !rotateClockwise;
     }
 
     public void AddToCollection(CollectionItem item)
@@ -77,7 +109,18 @@ public class Collection : MonoBehaviour
 
         if (purchased)
         {
-            OpenOpeningPanel(crate);
+            crateOpeningAnimation = true;
+            purchasedCrate = crate;
+
+            rewardImage.color = crate.itemImage.color;
+            rewardImage.sprite = crate.itemImage.sprite;
+            rewardImage.material = crate.itemImage.material;
+
+            claimButton.gameObject.SetActive(false);
+            openingPanel.SetActive(true);
+
+            InvokeRepeating("CrateAnimRotationFlip", 0.25f, 0.5f);
+
             CloseCrateKeyPanel();
         }
         else
@@ -110,11 +153,11 @@ public class Collection : MonoBehaviour
                 rewardImage.material = modImage.material;
                 break;
         }
+        rewardImage.transform.rotation = Quaternion.Euler(0, 0, 0);
 
+        claimButton.gameObject.SetActive(true);
         claimButton.onClick.RemoveAllListeners();
         claimButton.onClick.AddListener(delegate { AddReward(crate, reward, crate.type); });
-
-        openingPanel.SetActive(true);
     }
 
     void AddReward(Crate crate, GameObject reward, Crate.CrateType type)
