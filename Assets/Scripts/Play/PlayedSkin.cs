@@ -13,17 +13,21 @@ public class PlayedSkin : MonoBehaviour
     public Outline outline;
     Skin skin;
 
+    bool monkeyPaw = false;
+
 
     void Start()
     {
         skinCanvas.SetActive(false);
     }
 
-    public void SetSkin(Skin newSkin)
+    public void SetSkin(Skin newSkin, bool monkey = false)
     {
         skin = newSkin;
         skinName.text = skin.itemName;
         outline.effectColor = skin.GetRarityColor();
+
+        monkeyPaw = monkey;
     }
 
     void OnMouseOver()
@@ -34,5 +38,11 @@ public class PlayedSkin : MonoBehaviour
     void OnMouseExit()
     {
         skinCanvas.SetActive(false);
+    }
+
+    void OnMouseDown()
+    {
+        if (monkeyPaw)
+            GameObject.Find("Monkey Paw").GetComponent<MonkeyPaw>().SetSkin(skin);
     }
 }

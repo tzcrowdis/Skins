@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
         dialogueCanvas.gameObject.SetActive(false);
     }
 
-    public void SetSkin(Skin newSkin)
+    public virtual void SetSkin(Skin newSkin)
     {
         skin = newSkin;
         skinSpriteRenderer.color = skin.itemImage.color;

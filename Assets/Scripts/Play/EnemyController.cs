@@ -10,12 +10,16 @@ public class EnemyController : MonoBehaviour
     public bool bossFight = false;
     public BossType boss;
     public GameObject randomizerBoss;
+    public GameObject evilRandomizer;
+    public GameObject monkeyPaw;
 
     int negExp;
 
     public enum BossType
     {
-        Randomizer
+        Randomizer,
+        EvilRandomizer,
+        MonkeyPaw
     }
     
     public static EnemyController instance { get; private set; }
@@ -35,8 +39,13 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (bossFight && randomizerBoss.GetComponent<RandomizerBoss>().transition)
-            randomizerBoss.GetComponent<RandomizerBoss>().TransitionParticleSimSpeed();
+        if (bossFight )
+        {
+            if (boss == BossType.Randomizer && randomizerBoss.GetComponent<RandomizerBoss>().transition)
+                randomizerBoss.GetComponent<RandomizerBoss>().TransitionParticleSimSpeed();
+            else if (boss == BossType.EvilRandomizer && evilRandomizer.GetComponent<EvilRandomizer>().transition)
+                evilRandomizer.GetComponent<EvilRandomizer>().TransitionParticleSimSpeed();
+        }   
     }
 
     public void StartPlay()
@@ -47,6 +56,13 @@ public class EnemyController : MonoBehaviour
             {
                 case BossType.Randomizer:
                     randomizerBoss.SetActive(true);
+                    break;
+                case BossType.EvilRandomizer:
+                    evilRandomizer.SetActive(true);
+                    break;
+                case BossType.MonkeyPaw:
+                    monkeyPaw.SetActive(true);
+                    monkeyPaw.GetComponent<MonkeyPaw>().SetSkinOptions();
                     break;
             }
 
@@ -132,6 +148,12 @@ public class EnemyController : MonoBehaviour
         {
             case BossType.Randomizer:
                 randomizerBoss.GetComponent<RandomizerBoss>().EnableParticleEffects();
+                break;
+            case BossType.EvilRandomizer:
+                evilRandomizer.GetComponent<EvilRandomizer>().EnableParticleEffects();
+                break;
+            case BossType.MonkeyPaw:
+                monkeyPaw.GetComponent<MonkeyPaw>().EnableParticleEffects();
                 break;
         }
     }

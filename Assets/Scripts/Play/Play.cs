@@ -247,6 +247,7 @@ public class Play : MonoBehaviour
         nextLevel.text = $"{Player.instance.level + 1}";
         //expText.text = $"{Player.instance.exp}/{Player.instance.levelCap}";
 
+        // TODO skip breaking xp bar
         expCurrentProgressBar.anchorMax = new Vector2((float)Player.instance.exp / (float)Player.instance.levelCap, 0.5f);
         expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
 

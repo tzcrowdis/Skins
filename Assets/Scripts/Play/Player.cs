@@ -102,10 +102,25 @@ public class Player : MonoBehaviour
         Home.instance.readyUpBtn.onClick.AddListener(delegate { DestroyAlert(alert); });
         ReadyUp.instance.startButton.onClick.AddListener(delegate { DestroyAlert(alert); });
 
-        EnemyController.instance.QueueBoss(EnemyController.BossType.Randomizer); // TODO different bosses
+        LockStoreBattlepass();
 
+        if (season == 1)
+        {
+            EnemyController.instance.QueueBoss(EnemyController.BossType.Randomizer);
+            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.Randomizer.ToString()}!";
+        }   
+        else if (season == 2)
+        {
+            EnemyController.instance.QueueBoss(EnemyController.BossType.MonkeyPaw);
+            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.MonkeyPaw.ToString()}!";
+        }   
+        else if (season == 3)
+        {
+            EnemyController.instance.QueueBoss(EnemyController.BossType.EvilRandomizer);
+            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.EvilRandomizer.ToString()}!";
+        }
+            
         ReadyUp.instance.bossWarningContainer.SetActive(true);
-        ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.Randomizer.ToString()}!";
     }
 
     public void DestroyAlert(GameObject alert)
@@ -115,6 +130,8 @@ public class Player : MonoBehaviour
 
     public void StartNextSeason()
     {
+        UnlockStoreBattlepass();
+        
         Battlepass.instance.GenerateBattlepassItems();
 
         season += 1; // TODO season themes??
@@ -133,6 +150,19 @@ public class Player : MonoBehaviour
         UpdateCurrencyFields();
 
         ReadyUp.instance.bossWarningContainer.SetActive(false);
+    }
+
+    void LockStoreBattlepass()
+    {
+        Home.instance.OpenCanvas(Home.instance.collectionCanvas);
+        Home.instance.battlepassBtn.interactable = false;
+        Home.instance.storeBtn.interactable = false;
+    }
+
+    void UnlockStoreBattlepass()
+    {
+        Home.instance.battlepassBtn.interactable = true;
+        Home.instance.storeBtn.interactable = true;
     }
 
     public void AddToModifierList(Modifier mod)

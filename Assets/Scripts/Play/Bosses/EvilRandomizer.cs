@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class RandomizerBoss : Boss
+public class EvilRandomizer : Boss
 {
     [Header("Eyes")]
     public Transform eyeL;
     public Transform eyeR;
     public float spinSpeed;
 
-    [Header("Randomize")]
-    public float skinSwitchTime;
+    //[Header("Randomize")]
+    float skinSwitchTime; 
     float t = 0f;
 
     [Header("Background Particles")]
@@ -35,7 +34,7 @@ public class RandomizerBoss : Boss
 
     public override void ReactToPlayerSkin(Skin playerSkin)
     {
-        dialogue.text = "I don't care what you pick, either way you're nothing to me.";
+        dialogue.text = "I don't care what you pick, you'll always be nothing to me.";
         dialogueCanvas.gameObject.SetActive(true);
     }
 
@@ -44,8 +43,24 @@ public class RandomizerBoss : Boss
         t += Time.deltaTime;
         if (t > skinSwitchTime)
         {
-            // NOTE should probably make a custom function for this use case (load all skins only once)
-            SetSkin(ItemDatabase.instance.RandomSkinRandomCollection()); 
+            SetSkin(ItemDatabase.instance.RandomSkinRandomCollection());
+
+            // longer for worse skins and shorter for better
+            switch (skin.rarity)
+            {
+                case CollectionItem.Rarity.VeryCommon:
+                    skinSwitchTime = 0.1f;
+                    break;
+                case CollectionItem.Rarity.Common:
+                    skinSwitchTime = 0.15f;
+                    break;
+                case CollectionItem.Rarity.Rare:
+                    skinSwitchTime = 0.5f;
+                    break;
+                case CollectionItem.Rarity.Legendary:
+                    skinSwitchTime = 0.75f;
+                    break;
+            }
             t = 0f;
         }
     }
@@ -68,34 +83,25 @@ public class RandomizerBoss : Boss
 
     public void EnableParticleEffects()
     {
-        Gradient gradient1 = new Gradient();
-        gradient1.SetKeys(
-            new GradientColorKey[] { new GradientColorKey(Color.cyan, 0f), new GradientColorKey(Color.red, 1f) },
-            new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
-        );
-
-        Gradient gradient2 = new Gradient();
-        gradient2.SetKeys(
-            new GradientColorKey[] { new GradientColorKey(Color.yellow, 0f), new GradientColorKey(Color.magenta, 1f) },
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(Color.black, 0f), new GradientColorKey(Color.red, 1f) },
             new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
         );
 
         var mainModule = backgroundParticles.main;
-        mainModule.startColor = new ParticleSystem.MinMaxGradient(gradient1, gradient2);
+        mainModule.startColor = new ParticleSystem.MinMaxGradient(gradient);
 
         startSimSpeed = mainModule.simulationSpeed;
-        endSimSpeed = 5f;
+        endSimSpeed = 10f;
         transition = true;
         transitionTime = 0;
-
-        Debug.Log("trans");
     }
 
     void OnDisable()
     {
         var mainModule = backgroundParticles.main;
         mainModule.startColor = Color.gray;
-        mainModule.simulationSpeed = 1f; // TODO lerp the simulation speed
 
         startSimSpeed = mainModule.simulationSpeed;
         endSimSpeed = 1f;
