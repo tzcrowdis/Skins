@@ -13,11 +13,19 @@ public class PlayedSkin : MonoBehaviour
     public Outline outline;
     Skin skin;
 
+    [Header("Audio")]
+    public AudioClip hoverSound;
+    [HideInInspector] public AudioSource hoverSource;
+    public AudioClip clickSound;
+    [HideInInspector] public AudioSource clickSource;
+
     bool monkeyPaw = false;
+    Vector3 startScale;
 
 
     void Start()
     {
+        startScale = transform.localScale;
         skinCanvas.SetActive(false);
     }
 
@@ -30,19 +38,33 @@ public class PlayedSkin : MonoBehaviour
         monkeyPaw = monkey;
     }
 
-    void OnMouseOver()
+    void OnMouseEnter()
     {
         skinCanvas.SetActive(true);
+
+        if (monkeyPaw)
+        {
+            transform.localScale = startScale * 1.1f;
+            hoverSource.PlayOneShot(hoverSound);
+        }
     }
 
     void OnMouseExit()
     {
         skinCanvas.SetActive(false);
+
+        if (monkeyPaw)
+        {
+            transform.localScale = startScale;
+        }
     }
 
     void OnMouseDown()
     {
         if (monkeyPaw)
+        {
             GameObject.Find("Monkey Paw").GetComponent<MonkeyPaw>().SetSkin(skin);
+            clickSource.PlayOneShot(clickSound);
+        }   
     }
 }

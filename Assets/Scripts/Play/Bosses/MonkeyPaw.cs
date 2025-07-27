@@ -14,7 +14,11 @@ public class MonkeyPaw : Boss
     public SpriteRenderer[] skinOptionsRenderers;
     public TMP_Text[] skinOptionsXp;
     public PlayedSkin[] skinOptionsPlayed;
-    
+
+    [Header("Audio")]
+    public AudioSource hoverSource;
+    public AudioSource clickSource;
+
     protected override void Start()
     {
         base.Start();
@@ -30,6 +34,8 @@ public class MonkeyPaw : Boss
             skinOptionsRenderers[i].sprite = newSkin.itemImage.sprite;
 
             skinOptionsPlayed[i].SetSkin(newSkin, true);
+            skinOptionsPlayed[i].hoverSource = hoverSource;
+            skinOptionsPlayed[i].clickSource = clickSource;
 
             int optionExp = 0;
             switch (newSkin.rarity)

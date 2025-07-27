@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Empty Modifier Slot
   - Boss
+  - Opening Canvas
   layers:
   - Default
   - TransparentFX

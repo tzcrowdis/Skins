@@ -130,7 +130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4830444923270001669, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4830444923270001669, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_UseGraphicAlpha

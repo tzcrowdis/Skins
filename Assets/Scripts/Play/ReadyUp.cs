@@ -25,6 +25,13 @@ public class ReadyUp : MonoBehaviour
     [Header("Collection")]
     public Transform collectionContent;
 
+    [Header("Button Audio Sources")]
+    public AudioSource hoverSource;
+    public AudioSource clickSource;
+
+    Vector3 rdyUpDefaultPosition = Vector3.zero;
+    Vector3 rdyUpSelectPosition = Vector3.zero;
+
 
     public static ReadyUp instance { get; private set; }
     void Awake()
@@ -76,7 +83,7 @@ public class ReadyUp : MonoBehaviour
             if (!skinSelectionScrollView.activeSelf)
             {
                 UpdateSkinSelectionContent();
-                readyUpPanel.transform.position -= new Vector3(350f, 0f, 0f);
+                readyUpPanel.transform.position = rdyUpSelectPosition;
                 skinSelectionScrollView.SetActive(true);
             }
         }
@@ -87,9 +94,29 @@ public class ReadyUp : MonoBehaviour
         if (!skinSelectionScrollView.activeSelf)
         {
             UpdateSkinSelectionContent();
-            readyUpPanel.transform.position -= new Vector3(350f, 0f, 0f);
+            readyUpPanel.transform.position = rdyUpSelectPosition;
             skinSelectionScrollView.SetActive(true);
         }
+    }
+
+    void CloseSelectSkin()
+    {
+        if (skinSelectionScrollView.activeSelf)
+        {
+            readyUpPanel.transform.position = rdyUpDefaultPosition;
+            skinSelectionScrollView.SetActive(false);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (rdyUpDefaultPosition == Vector3.zero & rdyUpSelectPosition == Vector3.zero)
+        {
+            rdyUpDefaultPosition = readyUpPanel.transform.position;
+            rdyUpSelectPosition = rdyUpDefaultPosition - new Vector3(350f, 0f, 0f);
+        }
+        
+        CloseSelectSkin();
     }
 
     void UpdateSkinSelectionContent()
@@ -103,7 +130,11 @@ public class ReadyUp : MonoBehaviour
             if (skin)
             {
                 GameObject skinButton = Instantiate(skinSelectionButtonPrefab, skinSelectionContent);
-                skinButton.GetComponent<Button>().onClick.AddListener(delegate { SelectSkin(skin); });
+                SkinSelectionButton skinSelectionBtn = skinButton.GetComponent<SkinSelectionButton>();
+                skinSelectionBtn.skin = skin;
+                skinSelectionBtn.hoverSource = hoverSource;
+                skinSelectionBtn.clickSource = clickSource;
+                skinSelectionBtn.PopulateSkinInfo();
 
                 Image img = skinButton.GetComponent<Image>();
                 img.sprite = skin.itemImage.sprite;
@@ -113,7 +144,7 @@ public class ReadyUp : MonoBehaviour
         }
     }
 
-    void SelectSkin(Skin skin)
+    public void SelectSkin(Skin skin)
     {
         selectedSkin = skin;
         skinSelected = true;
@@ -124,7 +155,7 @@ public class ReadyUp : MonoBehaviour
 
         startButton.GetComponentInChildren<TMP_Text>().text = "Start";
         changeSkinButton.gameObject.SetActive(true);
-        readyUpPanel.transform.position += new Vector3(350f, 0f, 0f);
+        readyUpPanel.transform.position = rdyUpDefaultPosition;
         skinSelectionScrollView.SetActive(false);
     }
 

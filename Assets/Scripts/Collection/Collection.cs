@@ -42,14 +42,27 @@ public class Collection : MonoBehaviour
     void Start()
     {
         // NOTE temp while no save/load functionailty
+        ResetCollection();
+
+        crateKeyPanel.SetActive(false);
+        openingPanel.SetActive(false);
+    }
+
+    public void ResetCollection()
+    {
+        // i = 3 to preserve first three (RGB)
+        for (int i = 3; i < collectionContent.transform.childCount; i++)
+        {
+            try { Destroy(collectionContent.transform.GetChild(i)); }
+            catch { break; }
+        }
+
+        if (items != null) items.Clear();
         items = new List<CollectionItem>();
         foreach (Transform child in collectionContent.transform)
         {
             items.Add(child.GetComponent<CollectionItem>());
         }
-
-        crateKeyPanel.SetActive(false);
-        openingPanel.SetActive(false);
     }
 
     void Update()

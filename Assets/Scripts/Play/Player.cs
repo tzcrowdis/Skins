@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour
     public TMP_Text seasonTimerText;
     public int seasonTotalMinutes = 5;
     float seasonTimeLeft;
-    bool seasonTimerLock = false;
+    [HideInInspector] public bool seasonTimerLock = false;
 
     public static Player instance { get; private set; }
     void Awake()
@@ -61,7 +63,7 @@ public class Player : MonoBehaviour
             instance = this;
     }
 
-    void Start()
+    public void Start()
     {
         UpdateCurrencyFields();
         UpdateLevelText();
@@ -102,7 +104,7 @@ public class Player : MonoBehaviour
         Home.instance.readyUpBtn.onClick.AddListener(delegate { DestroyAlert(alert); });
         ReadyUp.instance.startButton.onClick.AddListener(delegate { DestroyAlert(alert); });
 
-        LockStoreBattlepass();
+        //LockStoreAndBattlepass();
 
         if (season == 1)
         {
@@ -130,13 +132,30 @@ public class Player : MonoBehaviour
 
     public void StartNextSeason()
     {
-        UnlockStoreBattlepass();
+        //UnlockStoreAndBattlepass();
         
         Battlepass.instance.GenerateBattlepassItems();
 
         season += 1; // TODO season themes??
         if (season > lastSeason)
-            Debug.Log("GAME OVER"); // TODO win/lose state
+        {
+            var particles = MainMenu.instance.backgroundParticles.main;
+            particles.simulationSpeed = 1f;
+            particles.startColor = Color.gray;
+
+            HidePlayer();
+            foreach (Transform enemy in EnemyController.instance.transform)
+                enemy.gameObject.SetActive(false);
+
+            Home.instance.OpenCanvas(Home.instance.collectionCanvas, Home.instance.collectionBtn);
+            foreach (GameObject canvas in MainMenu.instance.openingCanvases)
+                canvas.SetActive(false);
+
+            GameOver.instance.gameObject.SetActive(true);
+            GameOver.instance.PopulateGameExplanation();
+
+            return;
+        }
 
         seasonText.text = $"Season: {season}";
         seasonTimerText.color = Color.white;
@@ -152,14 +171,14 @@ public class Player : MonoBehaviour
         ReadyUp.instance.bossWarningContainer.SetActive(false);
     }
 
-    void LockStoreBattlepass()
+    void LockStoreAndBattlepass() // NOTE believe this is unnecessary (and complicated)
     {
         Home.instance.OpenCanvas(Home.instance.collectionCanvas);
         Home.instance.battlepassBtn.interactable = false;
         Home.instance.storeBtn.interactable = false;
     }
 
-    void UnlockStoreBattlepass()
+    void UnlockStoreAndBattlepass() // NOTE believe this is unnecessary (and complicated)
     {
         Home.instance.battlepassBtn.interactable = true;
         Home.instance.storeBtn.interactable = true;

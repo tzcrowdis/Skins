@@ -83,7 +83,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217737056657191338}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
@@ -547,7 +547,6 @@ MonoBehaviour:
   itemImage: {fileID: 1846042405159878937}
   itemName: 
   rarity: 1
-  rarityBorder: {fileID: 3801473689750642004}
   itemCost: 0
   infoPanel: {fileID: 3038627571007061569}
   nameText: {fileID: 6818932258828146078}

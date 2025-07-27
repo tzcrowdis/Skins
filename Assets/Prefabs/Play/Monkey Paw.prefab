@@ -797,6 +797,10 @@ MonoBehaviour:
   skinCanvas: {fileID: 5433132825191187877}
   skinName: {fileID: 938216986388263264}
   outline: {fileID: 7995013462488466819}
+  hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
+  hoverSource: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
+  clickSource: {fileID: 0}
 --- !u!1 &973603444278963763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2093,6 +2097,10 @@ MonoBehaviour:
   skinCanvas: {fileID: 8431505091360079031}
   skinName: {fileID: 8318790076762656961}
   outline: {fileID: 7188545578088381379}
+  hoverSound: {fileID: 0}
+  hoverSource: {fileID: 0}
+  clickSound: {fileID: 0}
+  clickSource: {fileID: 0}
 --- !u!1 &4647255579702912330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,6 +2588,10 @@ MonoBehaviour:
   skinCanvas: {fileID: 5519323273510121917}
   skinName: {fileID: 8553435171186100805}
   outline: {fileID: 2901094045015171005}
+  hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
+  hoverSource: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
+  clickSource: {fileID: 0}
 --- !u!1 &4975590564950822630
 GameObject:
   m_ObjectHideFlags: 0
@@ -3201,6 +3213,7 @@ MonoBehaviour:
   negExp: 0
   bossName: Monkey Paw
   negExpMult: 2
+  backgroundParticles: {fileID: 0}
   skinOptions:
   - {fileID: 8102396401684606566}
   - {fileID: 4893976271224416805}
@@ -3225,6 +3238,8 @@ MonoBehaviour:
   - {fileID: 3388389347895625997}
   - {fileID: 180041162359474926}
   - {fileID: 5405964588717913983}
+  hoverSource: {fileID: 0}
+  clickSource: {fileID: 0}
 --- !u!1 &5433132825191187877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4535,6 +4550,10 @@ MonoBehaviour:
   skinCanvas: {fileID: 1673886296380067037}
   skinName: {fileID: 9182398097608326407}
   outline: {fileID: 3847186189179983835}
+  hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
+  hoverSource: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
+  clickSource: {fileID: 0}
 --- !u!1 &7861639622849321062
 GameObject:
   m_ObjectHideFlags: 0
@@ -4901,6 +4920,10 @@ MonoBehaviour:
   skinCanvas: {fileID: 4837528376008030364}
   skinName: {fileID: 7723294847241321782}
   outline: {fileID: 6150939169524622050}
+  hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
+  hoverSource: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
+  clickSource: {fileID: 0}
 --- !u!1 &8135851861233251265
 GameObject:
   m_ObjectHideFlags: 0
@@ -5133,6 +5156,10 @@ MonoBehaviour:
   skinCanvas: {fileID: 493733002356677436}
   skinName: {fileID: 5175375471674846375}
   outline: {fileID: 6457756131024540935}
+  hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
+  hoverSource: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
+  clickSource: {fileID: 0}
 --- !u!1 &8431505091360079031
 GameObject:
   m_ObjectHideFlags: 0

@@ -57,11 +57,6 @@ public class Store : MonoBehaviour
     void Start()
     {
         RandomizeFeaturedStore();
-        
-        /*foreach (Button button in storeButtons)
-        {
-            button.onClick.AddListener(delegate { OpenPurchasePanel(button.GetComponentInParent<StoreButton>()); });
-        }*/
 
         foreach (GameObject panel in subPanels)
             panel.SetActive(false);

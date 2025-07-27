@@ -107,10 +107,6 @@ public class Home : MonoBehaviour
 
     void QuitGame()
     {
-        #if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+        MainMenu.instance.QuitToMainMenu();
     }
 }
