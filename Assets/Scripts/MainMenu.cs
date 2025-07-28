@@ -50,6 +50,8 @@ public class MainMenu : MonoBehaviour
         Player.instance.seasonTimerText.color = Color.white;
         Player.instance.Start();
 
+        // TODO destroy all modifiers
+
         Battlepass.instance.GenerateBattlepassItems();
         Collection.instance.ResetCollection();
         Store.instance.RandomizeFeaturedStore();

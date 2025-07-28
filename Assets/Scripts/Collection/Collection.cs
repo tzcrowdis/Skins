@@ -188,4 +188,14 @@ public class Collection : MonoBehaviour
         Destroy(crate.gameObject);
         openingPanel.SetActive(false);
     }
+
+    public void DeleteCollectionItem(CollectionItem item)
+    {
+        items.Remove(item);
+        foreach (Transform colItem in collectionContent.transform)
+        {
+            if (colItem.GetComponent<CollectionItem>() == item)
+                Destroy(colItem.gameObject);
+        }
+    }
 }

@@ -179,6 +179,7 @@ public class Play : MonoBehaviour
         Player.instance.HidePlayer();
         StartPostMatchSummary();
         postMatchSummaryPanel.SetActive(true);
+        Player.instance.seasonTimerLock = false;
     }
 
     void StartPostMatchSummary()

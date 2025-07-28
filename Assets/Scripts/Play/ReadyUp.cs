@@ -69,6 +69,7 @@ public class ReadyUp : MonoBehaviour
             Home.instance.OpenCanvas(Home.instance.playCanvas);
             Home.instance.gameObject.SetActive(false);
             
+            Player.instance.seasonTimerLock = true;
             Player.instance.DisplayPlayer();
             Player.instance.SetSkin(selectedSkin);
             DeselectSkin();
