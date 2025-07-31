@@ -86,11 +86,27 @@ public class Enemy : MonoBehaviour
         }
         else if (skin.rarity > playerSkin.rarity)
         {
-            dialogue.text = "Impressive, but check out mine... it's more rare.";
+            float r = Random.Range(0f, 1f);
+            if (r < 0.5f)
+            {
+                dialogue.text = "Impressive, but check out mine... higher rarity.";
+            }
+            else
+            {
+                dialogue.text = "The rarity of your skin pales in comparison to mine.";
+            }
         }
         else if (skin.rarity < playerSkin.rarity)
         {
-            dialogue.text = "That's okay I guess, for you.";
+            float r = Random.Range(0f, 1f);
+            if (r < 0.5f)
+            {
+                dialogue.text = "That's okay I guess, for you.";
+            }
+            else
+            {
+                dialogue.text = "Wow, that's more rarer than mine!";
+            }
         }
 
         // TODO more dialogue options

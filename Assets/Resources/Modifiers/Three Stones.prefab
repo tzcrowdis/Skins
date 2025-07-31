@@ -14,7 +14,8 @@ PrefabInstance:
       objectReference: {fileID: 2360758639157921635}
     - target: {fileID: 816702639457262600, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: x1.3 exp if at least three Very Common skins appear in the match
+      value: 3x xp if at least three Very Common skins appear in the match (including
+        yours)
       objectReference: {fileID: 0}
     - target: {fileID: 1777193106275768079, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Pivot.x
@@ -329,7 +330,7 @@ MonoBehaviour:
   modifierImage: {fileID: 8248916113598101798}
   modifierCost: 500
   modifierType: 0
-  modifierExpDescription: x1.3 xp for three very common skins appearing
+  modifierExpDescription: 3x xp for three very common skins appearing
   modifierNamePanel: {fileID: 8174638505999638499}
   nameText: {fileID: 4978944217581555437}
   modifierDetailPanel: {fileID: 8632436180661068475}
@@ -339,7 +340,6 @@ MonoBehaviour:
   hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
   clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
   modifierDragPrefab: {fileID: 5447770173701632408, guid: f323cf4b7fa01814f8352457fc61791b, type: 3}
-  modifierDrag: {fileID: 0}
   lockDrag: 0
 --- !u!114 &8248916113598101798 stripped
 MonoBehaviour:

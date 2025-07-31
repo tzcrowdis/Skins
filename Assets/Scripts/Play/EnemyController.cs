@@ -148,12 +148,15 @@ public class EnemyController : MonoBehaviour
         {
             case BossType.Randomizer:
                 randomizerBoss.GetComponent<RandomizerBoss>().EnableParticleEffects();
+                MusicController.instance.ChangeMusic(MusicController.Scenario.RandomizerBoss);
                 break;
             case BossType.EvilRandomizer:
                 evilRandomizer.GetComponent<EvilRandomizer>().EnableParticleEffects();
+                MusicController.instance.ChangeMusic(MusicController.Scenario.EvilRandomizerBoss);
                 break;
             case BossType.MonkeyPaw:
                 monkeyPaw.GetComponent<MonkeyPaw>().EnableParticleEffects();
+                MusicController.instance.ChangeMusic(MusicController.Scenario.MonkeyPawBoss);
                 break;
         }
     }
@@ -161,5 +164,6 @@ public class EnemyController : MonoBehaviour
     public void RemoveBoss()
     {
         bossFight = false;
+        MusicController.instance.ChangeMusic(MusicController.Scenario.Default);
     }
 }

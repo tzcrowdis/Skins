@@ -31,10 +31,16 @@ public class GameOver : MonoBehaviour
     public void PopulateGameExplanation()
     {
         if (Player.instance.level == 10)
+        {
             winLose.text = "WIN";
+            gameExplanation.text = $"you reached level 10 in the final season!";
+        }
         else
+        {
             winLose.text = "LOSE";
-
+            gameExplanation.text = $"you were level {Player.instance.level} but need to be level 10...";
+        }
+        
         // TODO grade based on how close they were?
         // TODO most played card?
         // TODO favorite collection?

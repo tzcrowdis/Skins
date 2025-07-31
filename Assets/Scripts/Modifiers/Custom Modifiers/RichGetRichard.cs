@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class RichGetRichard : Modifier
 {
@@ -46,5 +47,22 @@ public class RichGetRichard : Modifier
         {
             return false;
         }
+    }
+
+    /*
+     * DRAG
+     */
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        base.OnBeginDrag(eventData);
+
+        adderText.gameObject.SetActive(false);
+    }
+
+    public override void OnEndDrag(PointerEventData eventData)
+    {
+        base.OnEndDrag(eventData);
+
+        adderText.gameObject.SetActive(true);
     }
 }

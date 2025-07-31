@@ -183,12 +183,12 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
      * DRAG
      */
     // TODO lock drag during post match summary
-    public void OnBeginDrag(PointerEventData eventData)
+    public virtual void OnBeginDrag(PointerEventData eventData)
     {
         if (lockDrag)
             return;
 
-        modifierDrag = Instantiate(modifierDragPrefab, transform.parent.transform.parent); // parent is transform canvas... shameful
+        modifierDrag = Instantiate(modifierDragPrefab, transform.parent.transform.parent); // NOTE shameful parent accessing
         Image img = modifierDrag.GetComponent<Image>();
         img.sprite = modifierImage.sprite;
         img.material = modifierImage.material;
@@ -229,7 +229,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public virtual void OnEndDrag(PointerEventData eventData)
     {
         if (lockDrag)
             return;

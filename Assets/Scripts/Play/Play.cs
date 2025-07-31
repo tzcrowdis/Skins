@@ -179,7 +179,6 @@ public class Play : MonoBehaviour
         Player.instance.HidePlayer();
         StartPostMatchSummary();
         postMatchSummaryPanel.SetActive(true);
-        Player.instance.seasonTimerLock = false;
     }
 
     void StartPostMatchSummary()
@@ -224,9 +223,10 @@ public class Play : MonoBehaviour
         // base exp
         expGain = 0;
         expGain += GetSkinExp();
-        expGain += EnemyController.instance.GetNegativeExp();
+        int negExpGain = EnemyController.instance.GetNegativeExp();
+        expGain += negExpGain;
         GameObject src = Instantiate(expSourceText, expContent);
-        src.GetComponent<TMP_Text>().text = $"+{expGain} xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())}";
+        src.GetComponent<TMP_Text>().text = $"+{expGain} xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())} and {negExpGain}xp from enemies";
 
         // modifier exp
         foreach (Modifier mod in Player.instance.modifiers)
@@ -242,13 +242,14 @@ public class Play : MonoBehaviour
             }
         }
 
+        Player.instance.AddTotalExperience(expGain);
+
         expGainText.text = $"+{expGain} xp";
 
         currentLevel.text = $"{Player.instance.level}";
         nextLevel.text = $"{Player.instance.level + 1}";
         //expText.text = $"{Player.instance.exp}/{Player.instance.levelCap}";
 
-        // TODO skip breaking xp bar
         expCurrentProgressBar.anchorMax = new Vector2((float)Player.instance.exp / (float)Player.instance.levelCap, 0.5f);
         expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
 
@@ -264,7 +265,7 @@ public class Play : MonoBehaviour
         foreach (Modifier mod in Player.instance.modifiers)
             mod.lockDrag = false;
 
-        Player.instance.AddTotalExperience(expGain);
+        if (!skip) Player.instance.AddTotalExperience(expGain);
         
         endMatchButton.gameObject.SetActive(true);
         postMatchSummaryPanel.SetActive(false);
@@ -275,6 +276,8 @@ public class Play : MonoBehaviour
 
         if (EnemyController.instance.bossFight)
             Player.instance.StartNextSeason();
+
+        Player.instance.seasonTimerLock = false;
     }
 
     public int GetSkinExp()

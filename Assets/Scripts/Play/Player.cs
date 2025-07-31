@@ -168,6 +168,7 @@ public class Player : MonoBehaviour
         alert.GetComponent<AlertEffect>().lifetime = 5f;
         UpdateCurrencyFields();
 
+        EnemyController.instance.RemoveBoss();
         ReadyUp.instance.bossWarningContainer.SetActive(false);
     }
 

@@ -64,7 +64,7 @@ public class MainMenu : MonoBehaviour
 
     public void QuitToMainMenu()
     {
-        EnemyController.instance.bossFight = false;
+        EnemyController.instance.RemoveBoss();
         
         var mainParticles = backgroundParticles.main;
         mainParticles.simulationSpeed = 1f;

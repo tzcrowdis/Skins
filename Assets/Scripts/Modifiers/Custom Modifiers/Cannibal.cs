@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Cannibal : Modifier
 {
@@ -45,5 +46,22 @@ public class Cannibal : Modifier
         {
             return false;
         }
+    }
+
+    /*
+     * DRAG
+     */
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        base.OnBeginDrag(eventData);
+
+        multText.gameObject.SetActive(false);
+    }
+
+    public override void OnEndDrag(PointerEventData eventData)
+    {
+        base.OnEndDrag(eventData);
+
+        multText.gameObject.SetActive(true);
     }
 }
