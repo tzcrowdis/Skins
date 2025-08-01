@@ -39,7 +39,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (bossFight )
+        if (bossFight)
         {
             if (boss == BossType.Randomizer && randomizerBoss.GetComponent<RandomizerBoss>().transition)
                 randomizerBoss.GetComponent<RandomizerBoss>().TransitionParticleSimSpeed();
@@ -89,6 +89,8 @@ public class EnemyController : MonoBehaviour
 
         foreach (Transform child in transform)
             child.gameObject.SetActive(false);
+
+        MusicController.instance.ChangeMusic(MusicController.Scenario.Default);
     }
 
     void SetNegativeExp()
@@ -159,11 +161,5 @@ public class EnemyController : MonoBehaviour
                 MusicController.instance.ChangeMusic(MusicController.Scenario.MonkeyPawBoss);
                 break;
         }
-    }
-
-    public void RemoveBoss()
-    {
-        bossFight = false;
-        MusicController.instance.ChangeMusic(MusicController.Scenario.Default);
     }
 }

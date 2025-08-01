@@ -275,8 +275,10 @@ public class Play : MonoBehaviour
         Store.instance.RandomizeFeaturedStore();
 
         if (EnemyController.instance.bossFight)
+        {
             Player.instance.StartNextSeason();
-
+        }
+            
         Player.instance.seasonTimerLock = false;
     }
 

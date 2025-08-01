@@ -98,11 +98,13 @@ public class Home : MonoBehaviour
     public void FastForward()
     {
         Time.timeScale = 10.0f;
+        MusicController.instance.backgroundSource.pitch = 1.5f;
     }
 
     public void NormalTime()
     {
         Time.timeScale = 1.0f;
+        MusicController.instance.backgroundSource.pitch = 1f;
     }
 
     void QuitGame()

@@ -104,8 +104,6 @@ public class Player : MonoBehaviour
         Home.instance.readyUpBtn.onClick.AddListener(delegate { DestroyAlert(alert); });
         ReadyUp.instance.startButton.onClick.AddListener(delegate { DestroyAlert(alert); });
 
-        //LockStoreAndBattlepass();
-
         if (season == 1)
         {
             EnemyController.instance.QueueBoss(EnemyController.BossType.Randomizer);
@@ -132,10 +130,6 @@ public class Player : MonoBehaviour
 
     public void StartNextSeason()
     {
-        //UnlockStoreAndBattlepass();
-        
-        Battlepass.instance.GenerateBattlepassItems();
-
         season += 1; // TODO season themes??
         if (season > lastSeason)
         {
@@ -147,7 +141,7 @@ public class Player : MonoBehaviour
             foreach (Transform enemy in EnemyController.instance.transform)
                 enemy.gameObject.SetActive(false);
 
-            Home.instance.OpenCanvas(Home.instance.collectionCanvas, Home.instance.collectionBtn);
+            //Home.instance.OpenCanvas(Home.instance.collectionCanvas, Home.instance.collectionBtn);
             foreach (GameObject canvas in MainMenu.instance.openingCanvases)
                 canvas.SetActive(false);
 
@@ -156,6 +150,8 @@ public class Player : MonoBehaviour
 
             return;
         }
+
+        Battlepass.instance.GenerateBattlepassItems();
 
         seasonText.text = $"Season: {season}";
         seasonTimerText.color = Color.white;
@@ -168,21 +164,7 @@ public class Player : MonoBehaviour
         alert.GetComponent<AlertEffect>().lifetime = 5f;
         UpdateCurrencyFields();
 
-        EnemyController.instance.RemoveBoss();
         ReadyUp.instance.bossWarningContainer.SetActive(false);
-    }
-
-    void LockStoreAndBattlepass() // NOTE believe this is unnecessary (and complicated)
-    {
-        Home.instance.OpenCanvas(Home.instance.collectionCanvas);
-        Home.instance.battlepassBtn.interactable = false;
-        Home.instance.storeBtn.interactable = false;
-    }
-
-    void UnlockStoreAndBattlepass() // NOTE believe this is unnecessary (and complicated)
-    {
-        Home.instance.battlepassBtn.interactable = true;
-        Home.instance.storeBtn.interactable = true;
     }
 
     public void AddToModifierList(Modifier mod)
