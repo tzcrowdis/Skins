@@ -246,15 +246,15 @@ RectTransform:
   m_GameObject: {fileID: 3432094681427639000}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.18662, y: 0.18662, z: 0.18662}
+  m_LocalScale: {x: 0.083312504, y: 0.083312504, z: 0.083312504}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2796516962416865363}
-  m_Father: {fileID: 3953111519161413082}
+  m_Father: {fileID: 7284248594896457389}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.21, y: -6.96}
+  m_AnchoredPosition: {x: 0.022321567, y: -0.5669637}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1675785758756501710
@@ -633,15 +633,15 @@ RectTransform:
   m_GameObject: {fileID: 4837528376008030364}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
+  m_LocalScale: {x: 0.075892866, y: 0.075892866, z: 0.075892866}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7338653080440378848}
-  m_Father: {fileID: 3953111519161413082}
+  m_Father: {fileID: 7284248594896457389}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.52, y: -5.69}
+  m_AnchoredPosition: {x: 0.60714275, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!223 &7005618427833856052
@@ -741,9 +741,7 @@ Transform:
   - {fileID: 9057061255898651201}
   - {fileID: 8559574076610429177}
   - {fileID: 7284248594896457389}
-  - {fileID: 7473535542317556107}
   - {fileID: 4723706220098452361}
-  - {fileID: 8044649494156511689}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7983400953627239546
@@ -827,6 +825,9 @@ MonoBehaviour:
   backgroundParticles: {fileID: 0}
   transitionSpeed: 2.5
   transition: 0
+  hoverSource: {fileID: 0}
+  clickSource: {fileID: 0}
+  lockSkin: 0
 --- !u!1 &7726749215671427507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1097,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8665169334553965401}
+  - {fileID: 7473535542317556107}
+  - {fileID: 8044649494156511689}
   m_Father: {fileID: 3953111519161413082}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1841727933983018949
@@ -1210,6 +1213,10 @@ MonoBehaviour:
   skinCanvas: {fileID: 4837528376008030364}
   skinName: {fileID: 7723294847241321782}
   outline: {fileID: 6150939169524622050}
+  hoverSound: {fileID: 0}
+  hoverSource: {fileID: 0}
+  clickSound: {fileID: 0}
+  clickSource: {fileID: 0}
 --- !u!1 &9202904368864670524
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,16 +39,23 @@ public class MusicController : MonoBehaviour
         backgroundSource.Play();
     }
 
-    public void ChangeMusic(Scenario scenario) // TODO consider fading in/out
+    public void ChangeMusic(Scenario scenario)
     {
         switch (scenario)
         {
             case Scenario.Default:
-                bossMusicSource.Stop();
+                if (bossMusicSource.isPlaying)
+                    StartCoroutine(FadeOut(bossMusicSource, 1f));
+                else
+                    bossMusicSource.Stop();
+
                 backgroundSource.clip = background;
                 backgroundSource.loop = true;
                 backgroundSource.volume *= 2f;
-                backgroundSource.Play();
+                if (backgroundSource.isPlaying) // makes sense?
+                    backgroundSource.Play();
+                else
+                    StartCoroutine(FadeIn(backgroundSource, 1f));
                 break;
 
             case Scenario.RandomizerBoss:
@@ -57,7 +64,7 @@ public class MusicController : MonoBehaviour
                 bossMusicSource.clip = randomizer;
                 bossMusicSource.loop = true;
                 bossMusicSource.pitch = 0.75f;
-                bossMusicSource.Play();
+                StartCoroutine(FadeIn(bossMusicSource, 2.5f));
                 break;
 
             case Scenario.MonkeyPawBoss:
@@ -66,17 +73,47 @@ public class MusicController : MonoBehaviour
                 bossMusicSource.clip = monkeyPaw;
                 bossMusicSource.loop = true;
                 bossMusicSource.pitch = 1f;
-                bossMusicSource.Play();
+                StartCoroutine(FadeIn(bossMusicSource, 5f));
                 break;
 
             case Scenario.EvilRandomizerBoss:
-                backgroundSource.Stop();
+                StartCoroutine(FadeOut(backgroundSource, 0.5f));
                 bossMusicSource.clip = evilRandomizer;
                 bossMusicSource.loop = true;
                 bossMusicSource.pitch = 1f;
-                bossMusicSource.Play();
+                StartCoroutine(FadeIn(bossMusicSource, 1f));
                 break;
         }
-        
+    }
+
+    IEnumerator FadeIn(AudioSource audioSource, float fadeTime)
+    {
+        float startVolume = 0f;
+        float targetVolume = 0.5f; // NOTE make parameter?
+        audioSource.volume = startVolume;
+        audioSource.Play();
+
+        float timer = 0f;
+        while (timer < fadeTime)
+        {
+            timer += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, timer / fadeTime);
+            yield return null;
+        }
+        audioSource.volume = targetVolume;
+    }
+
+    IEnumerator FadeOut(AudioSource audioSource, float FadeTime)
+    {
+        float startVolume = audioSource.volume;
+
+        while (audioSource.volume > 0)
+        {
+            audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
+            yield return null;
+        }
+
+        audioSource.Stop();
+        audioSource.volume = startVolume;
     }
 }

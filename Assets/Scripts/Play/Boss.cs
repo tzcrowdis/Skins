@@ -20,4 +20,6 @@ public class Boss : Enemy
         negExp *= negExpMult;
         expText.text = $"{negExp}xp";
     }
+
+    public virtual void ReactToChosenSkin() { }
 }

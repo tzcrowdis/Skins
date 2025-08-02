@@ -66,6 +66,7 @@ public class EnemyController : MonoBehaviour
                     break;
             }
 
+            Play.instance.endMatchButton.gameObject.SetActive(false);
             GenerateEnemyReactions();
         }
         else

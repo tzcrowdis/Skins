@@ -98,6 +98,26 @@ public class MonkeyPaw : Boss
         dialogueCanvas.gameObject.SetActive(true);
     }
 
+    public override void ReactToChosenSkin()
+    {
+        switch (skin.rarity)
+        {
+            case CollectionItem.Rarity.VeryCommon:
+                dialogue.text = "Perfect.";
+                break;
+            case CollectionItem.Rarity.Common:
+                dialogue.text = "Well done.";
+                break;
+            case CollectionItem.Rarity.Rare:
+                dialogue.text = "Fine.";
+                break;
+            case CollectionItem.Rarity.Legendary:
+                dialogue.text = "I hate you.";
+                break;
+        }
+        dialogueCanvas.gameObject.SetActive(true);
+    }
+
     public void EnableParticleEffects()
     {
         Color color1, color2, color3, color4;

@@ -22,14 +22,23 @@ public class RandomizerBoss : Boss
     float endSimSpeed;
     float transitionTime;
 
+    [Header("Audio Sources")]
+    public AudioSource hoverSource;
+    public AudioSource clickSource;
+
+    [HideInInspector] public bool lockSkin = false;
+
     protected override void Start()
     {
         base.Start();
+
+        playedSkin.hoverSource = hoverSource;
+        playedSkin.clickSource = clickSource;
     }
 
     void Update()
     {
-        RandomizeSkin();
+        if (!lockSkin) RandomizeSkin();
         RotateEyes();
     }
 
@@ -39,13 +48,20 @@ public class RandomizerBoss : Boss
         dialogueCanvas.gameObject.SetActive(true);
     }
 
+    public override void ReactToChosenSkin()
+    {
+        dialogue.text = "I'll be seeing you"; // TODO better reaction
+        dialogueCanvas.gameObject.SetActive(true);
+    }
+
     void RandomizeSkin()
     {
         t += Time.deltaTime;
         if (t > skinSwitchTime)
         {
             // NOTE should probably make a custom function for this use case (load all skins only once)
-            SetSkin(ItemDatabase.instance.RandomSkinRandomCollection()); 
+            SetSkin(ItemDatabase.instance.RandomSkinRandomCollection());
+            playedSkin.SetSkin(skin, true);
             t = 0f;
         }
     }

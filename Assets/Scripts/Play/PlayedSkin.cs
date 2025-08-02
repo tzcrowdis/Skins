@@ -19,7 +19,7 @@ public class PlayedSkin : MonoBehaviour
     public AudioClip clickSound;
     [HideInInspector] public AudioSource clickSource;
 
-    bool monkeyPaw = false;
+    bool bossFight = false;
     Vector3 startScale;
 
 
@@ -29,20 +29,20 @@ public class PlayedSkin : MonoBehaviour
         skinCanvas.SetActive(false);
     }
 
-    public void SetSkin(Skin newSkin, bool monkey = false)
+    public void SetSkin(Skin newSkin, bool boss = false)
     {
         skin = newSkin;
         skinName.text = skin.itemName;
         outline.effectColor = skin.GetRarityColor();
 
-        monkeyPaw = monkey;
+        bossFight = boss;
     }
 
     void OnMouseEnter()
     {
         skinCanvas.SetActive(true);
 
-        if (monkeyPaw)
+        if (bossFight)
         {
             transform.localScale = startScale * 1.1f;
             hoverSource.PlayOneShot(hoverSound);
@@ -53,7 +53,7 @@ public class PlayedSkin : MonoBehaviour
     {
         skinCanvas.SetActive(false);
 
-        if (monkeyPaw)
+        if (bossFight)
         {
             transform.localScale = startScale;
         }
@@ -61,9 +61,28 @@ public class PlayedSkin : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (monkeyPaw)
+        if (bossFight)
         {
-            GameObject.Find("Monkey Paw").GetComponent<MonkeyPaw>().SetSkin(skin);
+            switch (EnemyController.instance.boss)
+            {
+                case EnemyController.BossType.Randomizer:
+                    EnemyController.instance.randomizerBoss.GetComponent<RandomizerBoss>().lockSkin = true;
+                    EnemyController.instance.randomizerBoss.GetComponent<RandomizerBoss>().ReactToChosenSkin();
+                    break;
+                case EnemyController.BossType.EvilRandomizer:
+                    EnemyController.instance.evilRandomizer.GetComponent<EvilRandomizer>().lockSkin = true;
+                    EnemyController.instance.evilRandomizer.GetComponent<EvilRandomizer>().ReactToChosenSkin();
+                    break;
+                case EnemyController.BossType.MonkeyPaw:
+                    EnemyController.instance.monkeyPaw.GetComponent<MonkeyPaw>().SetSkin(skin);
+                    EnemyController.instance.monkeyPaw.GetComponent<MonkeyPaw>().ReactToChosenSkin();
+                    break;
+            }
+
+            Play.instance.endMatchButton.gameObject.SetActive(true);
+            transform.localScale = startScale;
+            bossFight = false;
+
             clickSource.PlayOneShot(clickSound);
         }   
     }

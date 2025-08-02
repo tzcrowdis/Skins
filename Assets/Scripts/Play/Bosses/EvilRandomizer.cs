@@ -21,14 +21,23 @@ public class EvilRandomizer : Boss
     float endSimSpeed;
     float transitionTime;
 
+    [Header("Audio Sources")]
+    public AudioSource hoverSource;
+    public AudioSource clickSource;
+
+    [HideInInspector] public bool lockSkin = false;
+
     protected override void Start()
     {
         base.Start();
+
+        playedSkin.hoverSource = hoverSource;
+        playedSkin.clickSource = clickSource;
     }
 
     void Update()
     {
-        RandomizeSkin();
+        if (!lockSkin) RandomizeSkin();
         RotateEyes();
     }
 
@@ -38,12 +47,19 @@ public class EvilRandomizer : Boss
         dialogueCanvas.gameObject.SetActive(true);
     }
 
+    public override void ReactToChosenSkin()
+    {
+        dialogue.text = "So be it."; // TODO better reaction
+        dialogueCanvas.gameObject.SetActive(true);
+    }
+
     void RandomizeSkin()
     {
         t += Time.deltaTime;
         if (t > skinSwitchTime)
         {
             SetSkin(ItemDatabase.instance.RandomSkinRandomCollection());
+            playedSkin.SetSkin(skin, true);
 
             // longer for worse skins and shorter for better
             switch (skin.rarity)

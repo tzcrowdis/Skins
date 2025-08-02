@@ -4231,7 +4231,6 @@ Transform:
   m_Children:
   - {fileID: 177773307}
   - {fileID: 2104418049}
-  - {fileID: 1921567870}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &339883459
@@ -6157,7 +6156,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 605227569}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99996394
+  m_Size: 0.9999816
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -16631,7 +16630,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000115419694}
+  m_AnchoredPosition: {x: 0, y: 0.000096327916}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1377965573
@@ -17853,7 +17852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7983400953627239546, guid: 623c49d19d8be70458c6349e43647fc4, type: 3}
       propertyPath: m_SortingOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8093698597489019047, guid: 623c49d19d8be70458c6349e43647fc4, type: 3}
       propertyPath: m_LocalScale.x
@@ -19431,6 +19430,14 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2115627387496712914, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
+      propertyPath: clickSource
+      value: 
+      objectReference: {fileID: 177773306}
+    - target: {fileID: 2115627387496712914, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
+      propertyPath: hoverSource
+      value: 
+      objectReference: {fileID: 2104418048}
+    - target: {fileID: 2115627387496712914, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
       propertyPath: transitionSpeed
       value: 2
       objectReference: {fileID: 0}
@@ -19540,11 +19547,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7473535542317556107, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 7.84
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7473535542317556107, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.20999986
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7962267006550248449, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -19572,12 +19579,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8044649494156511689, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 6.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8044649494156511689, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.3600001
+      value: -0.55
       objectReference: {fileID: 0}
+    - target: {fileID: 8437729011899652720, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
+    - target: {fileID: 8437729011899652720, guid: 360cb4d44c30ac74a8189fb80cf2834e, type: 3}
+      propertyPath: hoverSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28541,14 +28556,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921567869}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 339883460}
   - {fileID: 1454263980}
-  m_Father: {fileID: 339011890}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1921567871
 MonoBehaviour:
@@ -29446,6 +29461,14 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2865922038762978346, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
+      propertyPath: clickSource
+      value: 
+      objectReference: {fileID: 177773306}
+    - target: {fileID: 2865922038762978346, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
+      propertyPath: hoverSource
+      value: 
+      objectReference: {fileID: 2104418048}
+    - target: {fileID: 2865922038762978346, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
       propertyPath: skinSwitchTime
       value: 0.2
       objectReference: {fileID: 0}
@@ -29567,11 +29590,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7473535542317556107, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 7.84
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7473535542317556107, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.20999986
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7962267006550248449, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
       propertyPath: m_AnchorMax.y
@@ -29599,12 +29622,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8044649494156511689, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 6.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8044649494156511689, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1.3600001
+      value: -0.55
       objectReference: {fileID: 0}
+    - target: {fileID: 8437729011899652720, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
+    - target: {fileID: 8437729011899652720, guid: 09c4eb4e65334a64cbaa82184786ddde, type: 3}
+      propertyPath: hoverSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -34262,6 +34293,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 339011890}
+  - {fileID: 1921567870}
   - {fileID: 1805202767}
   - {fileID: 233841698}
   - {fileID: 1985020670}
