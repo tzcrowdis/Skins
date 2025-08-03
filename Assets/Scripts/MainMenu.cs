@@ -1,20 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [Header("High Level")]
     public Button play;
     public Button settings;
     public Button quit;
     public ParticleSystem backgroundParticles;
     [HideInInspector] public GameObject[] openingCanvases;
-
-    //[Header("Settings")]
-
 
 
     public static MainMenu instance { get; private set; }
@@ -50,7 +47,7 @@ public class MainMenu : MonoBehaviour
         Player.instance.seasonTimerText.color = Color.white;
         Player.instance.Start();
 
-        // TODO destroy all modifiers
+        // TODO destroy all modifiers (done?)
 
         Battlepass.instance.GenerateBattlepassItems();
         Collection.instance.ResetCollection();
@@ -94,10 +91,7 @@ public class MainMenu : MonoBehaviour
 
     void OpenSettings()
     {
-        Debug.Log("tried to open settings");
+        gameObject.SetActive(false);
+        GameSettings.instance.OpenSettings(gameObject);
     }
-
-    // TODO general
-    // TODO graphics
-    // TODO audio
 }

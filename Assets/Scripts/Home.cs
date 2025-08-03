@@ -107,6 +107,12 @@ public class Home : MonoBehaviour
         MusicController.instance.backgroundSource.pitch = 1f;
     }
 
+    public void OpenSettings()
+    {
+        Time.timeScale = 0f;
+        GameSettings.instance.OpenSettings();
+    }
+
     void QuitGame()
     {
         MainMenu.instance.QuitToMainMenu();
