@@ -82,6 +82,8 @@ public class MainMenu : MonoBehaviour
 
     void QuitGame()
     {
+        SaveManager.instance.SavePlayerSettings();
+        
         #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
         #else

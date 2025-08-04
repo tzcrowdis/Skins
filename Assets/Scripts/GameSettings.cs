@@ -50,8 +50,6 @@ public class GameSettings : MonoBehaviour
 
         resolutionDropdown.onValueChanged.AddListener(SetResolution);
 
-        // TODO save/load settings
-
         OpenSettingsSubPanel(audioPanel, audioPanelButton);
         gameObject.SetActive(false);
     }
@@ -101,12 +99,12 @@ public class GameSettings : MonoBehaviour
             Time.timeScale = 1f;
     }
 
-    // TODO general
+    // TODO general settings
 
     /*
      * DISPLAY
      */
-    void SetResolution(int index)
+    public void SetResolution(int index)
     {
         string[] resolution = resolutionDropdown.options[index].text.Split('x');
         Screen.SetResolution(int.Parse(resolution[0]), int.Parse(resolution[1]), true);
