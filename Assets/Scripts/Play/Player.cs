@@ -40,7 +40,6 @@ public class Player : MonoBehaviour
     public int modifierCapacity = 5;
     public GameObject modifierPanel;
     public TMP_Text modifierCount;
-    public GameObject emptyModifierSlot;
 
     [Header("Level Display")]
     public TMP_Text levelText;
@@ -99,8 +98,8 @@ public class Player : MonoBehaviour
         seasonTimerText.text = $"00:00";
         seasonTimerText.color = Color.red;
 
-        GameObject alert = Instantiate(alertPrefab, Home.instance.transform);
-        alert.transform.position = Home.instance.readyUpBtn.transform.position - new Vector3(115f, 0f, 0f);
+        GameObject alert = Instantiate(alertPrefab, Home.instance.readyUpBtn.transform);
+        alert.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-115f, 0f, 0f);
         Home.instance.readyUpBtn.onClick.AddListener(delegate { DestroyAlert(alert); });
         ReadyUp.instance.startButton.onClick.AddListener(delegate { DestroyAlert(alert); });
 
@@ -141,7 +140,6 @@ public class Player : MonoBehaviour
             foreach (Transform enemy in EnemyController.instance.transform)
                 enemy.gameObject.SetActive(false);
 
-            //Home.instance.OpenCanvas(Home.instance.collectionCanvas, Home.instance.collectionBtn);
             foreach (GameObject canvas in MainMenu.instance.openingCanvases)
                 canvas.SetActive(false);
 
@@ -159,8 +157,8 @@ public class Player : MonoBehaviour
         seasonTimerLock = false;
 
         dollars += dollarsPerSeason;
-        GameObject alert = Instantiate(alertPrefab, Home.instance.transform);
-        alert.transform.position = dollarText.transform.position + new Vector3(-75f, 0f, 0f);
+        GameObject alert = Instantiate(alertPrefab, dollarText.transform);
+        alert.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-75f, 0f, 0f);
         alert.GetComponent<AlertEffect>().lifetime = 5f;
         UpdateCurrencyFields();
 
@@ -170,31 +168,26 @@ public class Player : MonoBehaviour
     public void AddToModifierList(Modifier mod)
     {
         if (modifiers.Count + 1 > modifierCapacity)
-            return; // TODO notify player that a mod needs to be deleted
+            return; // TODO notify player that a mod needs to be deleted?
 
-        int i = 0;
-        foreach (Transform child in modifierPanel.transform)
-        {
-            if (child.gameObject.CompareTag("Empty Modifier Slot"))
-            {
-                Destroy(child.gameObject);
-                break;
-            }
-            i++;
-        }
-
-        modifiers.Add(mod);
         GameObject newMod = Instantiate(mod.gameObject, modifierPanel.transform);
-        newMod.transform.SetSiblingIndex(i);
+        modifiers.Add(newMod.GetComponent<Modifier>());
         modifierCount.text = $"{modifiers.Count} / {modifierCapacity}";
+
+        if (modifiers.Count == modifierCapacity)
+        {
+            foreach (Transform btn in Store.instance.featuredPanel.transform)
+            {
+                StoreButton storeBtn = btn.GetComponent<StoreButton>();
+                if (storeBtn.type == StoreButton.itemType.Modifier)
+                    storeBtn.LockModifiersFull();
+            }
+        }
     }
 
     public void RemoveFromModifierList(Modifier mod)
     {
         modifiers.Remove(mod);
-
-        Instantiate(emptyModifierSlot.gameObject, modifierPanel.transform);
-
         modifierCount.text = $"{modifiers.Count} / {modifierCapacity}";
     }
 

@@ -127,10 +127,11 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             StoreButton.itemType type = storeItem.GetComponent<StoreButton>().type;
             if (type == StoreButton.itemType.Modifier)
-                storeItem.GetChild(0).GetComponent<Button>().interactable = true;
+                storeItem.GetComponent<StoreButton>().UnlockModifiersNotFull();
         }
 
         modifierDetailPanel.transform.SetParent(transform);
+        if (modifierDrag) modifierDrag.transform.SetParent(transform);
 
         Destroy(gameObject);
     }

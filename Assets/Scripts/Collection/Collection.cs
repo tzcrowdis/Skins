@@ -97,7 +97,6 @@ public class Collection : MonoBehaviour
 
     public void OpenCrateKeyPanel(Crate crate)
     {
-        //crateKeyImage.sprite = crate.itemImage.sprite;
         crateKeyCost.text = $"\u0424{crate.keyCoinCost}";
 
         crateKeyButton.onClick.RemoveAllListeners();
@@ -175,7 +174,7 @@ public class Collection : MonoBehaviour
 
     void AddReward(Crate crate, GameObject reward, Crate.CrateType type)
     {
-        switch (type)
+        switch (type) // DEPRECATED?
         {
             case CrateType.Skins:
                 Collection.instance.AddToCollection(reward.GetComponent<Skin>());

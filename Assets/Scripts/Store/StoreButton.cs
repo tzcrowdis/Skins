@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     public GameObject item;
     public int itemCost;
     public bool purchased = false;
+    bool modifierLock = false;
 
     [Header("Display")]
     public TMP_Text itemName;
@@ -46,6 +48,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         int numSteps = (int)Mathf.Floor(discount / stepSize);
         discount = numSteps * stepSize;
         discountText.text = $"-{discount}%";
+        purchased = false;
 
         switch (type)
         {
@@ -74,7 +77,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
                 modDesc.text = mod.modifierDescription.text;
 
                 if (Player.instance.modifiers.Count == Player.instance.modifierCapacity)
-                    transform.GetChild(0).GetComponent<Button>().interactable = false;
+                    LockModifiersFull();
                 break;
 
             case itemType.Crate:
@@ -105,9 +108,27 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         cost.text = "";
     }
 
+    public void LockModifiersFull()
+    {
+        modifierLock = true;
+
+        Color color = image.color;
+        color.a = 0.5f;
+        image.color = color;
+    }
+
+    public void UnlockModifiersNotFull()
+    {
+        modifierLock = false;
+
+        Color color = image.color;
+        color.a = 1f;
+        image.color = color;
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!purchased)
+        if (!purchased && !modifierLock)
         {
             Store.instance.OpenPurchasePanel(this);
 
@@ -120,7 +141,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!purchased)
+        if (!purchased && !modifierLock)
         {
             transform.localScale += Vector3.one * 0.05f;
 
@@ -133,7 +154,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!purchased)
+        if (!purchased && !modifierLock)
         {
             transform.localScale -= Vector3.one * 0.05f;
 

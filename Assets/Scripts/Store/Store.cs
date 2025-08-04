@@ -6,10 +6,6 @@ using UnityEngine.UI;
 
 public class Store : MonoBehaviour
 {
-    //[Header("Store Buttons")]
-    //[SerializeField]
-    //public Button[] storeButtons;
-
     [Header("Sub-Store Buttons")]
     public Button featuredButton;
     public Button crateButton;

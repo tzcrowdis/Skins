@@ -277,6 +277,7 @@ public class Play : MonoBehaviour
         if (EnemyController.instance.bossFight)
         {
             Player.instance.StartNextSeason();
+            EnemyController.instance.bossFight = false;
         }
             
         Player.instance.seasonTimerLock = false;

@@ -84,7 +84,7 @@ public class ReadyUp : MonoBehaviour
             if (!skinSelectionScrollView.activeSelf)
             {
                 UpdateSkinSelectionContent();
-                readyUpPanel.transform.position = rdyUpSelectPosition;
+                readyUpPanel.GetComponent<RectTransform>().anchoredPosition3D = rdyUpSelectPosition;
                 skinSelectionScrollView.SetActive(true);
             }
         }
@@ -95,7 +95,7 @@ public class ReadyUp : MonoBehaviour
         if (!skinSelectionScrollView.activeSelf)
         {
             UpdateSkinSelectionContent();
-            readyUpPanel.transform.position = rdyUpSelectPosition;
+            readyUpPanel.GetComponent<RectTransform>().anchoredPosition3D = rdyUpSelectPosition;
             skinSelectionScrollView.SetActive(true);
         }
     }
@@ -104,7 +104,7 @@ public class ReadyUp : MonoBehaviour
     {
         if (skinSelectionScrollView.activeSelf)
         {
-            readyUpPanel.transform.position = rdyUpDefaultPosition;
+            readyUpPanel.GetComponent<RectTransform>().anchoredPosition3D = rdyUpDefaultPosition;
             skinSelectionScrollView.SetActive(false);
         }
     }
@@ -113,7 +113,7 @@ public class ReadyUp : MonoBehaviour
     {
         if (rdyUpDefaultPosition == Vector3.zero & rdyUpSelectPosition == Vector3.zero)
         {
-            rdyUpDefaultPosition = readyUpPanel.transform.position;
+            rdyUpDefaultPosition = readyUpPanel.GetComponent<RectTransform>().anchoredPosition3D;
             rdyUpSelectPosition = rdyUpDefaultPosition - new Vector3(350f, 0f, 0f);
         }
         
@@ -156,7 +156,7 @@ public class ReadyUp : MonoBehaviour
 
         startButton.GetComponentInChildren<TMP_Text>().text = "Start";
         changeSkinButton.gameObject.SetActive(true);
-        readyUpPanel.transform.position = rdyUpDefaultPosition;
+        readyUpPanel.GetComponent<RectTransform>().anchoredPosition3D = rdyUpDefaultPosition;
         skinSelectionScrollView.SetActive(false);
     }
 
