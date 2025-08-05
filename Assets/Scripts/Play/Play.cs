@@ -72,6 +72,9 @@ public class Play : MonoBehaviour
 
     void Update()
     {
+        if (!skip && displayCurrentLevel == Player.instance.maxLevel)
+            SkipToEndPostMatchSummary();
+        
         if (skip)
             return;
         
@@ -88,6 +91,12 @@ public class Play : MonoBehaviour
             
             GameObject src = Instantiate(expSourceText, expContent);
             src.GetComponent<TMP_Text>().text = $"+{posExpGain}xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())} and {negExpGain}xp from enemies";
+
+            if (Player.instance.modifiers.Count > 0)
+            {
+                GameObject tempText = Instantiate(expSourceText, expContent);
+                tempText.GetComponent<TMP_Text>().text = "...";
+            }
 
             baseExpPhase = false;
             modifierExpPhase = true;
@@ -119,12 +128,23 @@ public class Play : MonoBehaviour
                         bool success = mod.ModifierEffect();
                         if (success)
                         {
-                            expGainText.text = $"+{expGain} xp";
-                            GameObject src = Instantiate(expSourceText, expContent);
+                            expGainText.text = $"+{expGain}xp";
+                            GameObject src = expContent.GetChild(expContent.childCount - 1).gameObject;
                             src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: {mod.ModifierExpDescription()}";
 
                             expSpeed = (expGain - prevExpGain) / (stepT - delayBtwnSteps);
                             prevExpGain = expGain;
+                        }
+                        else
+                        {
+                            GameObject src = expContent.GetChild(expContent.childCount - 1).gameObject;
+                            src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: failed";
+                        }
+
+                        if (Player.instance.modifiers.Count - 1 > modifierExpPhaseIndex)
+                        {
+                            GameObject tempText = Instantiate(expSourceText, expContent);
+                            tempText.GetComponent<TMP_Text>().text = $"...";
                         }
                     }
 
@@ -151,7 +171,6 @@ public class Play : MonoBehaviour
                 skipHomeButton.onClick.RemoveAllListeners();
                 skipHomeButton.onClick.AddListener(ReturnHome);
                 skipHomeButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "HOME";
-                skip = true;
             }
             return;
         }
@@ -163,6 +182,8 @@ public class Play : MonoBehaviour
         {
             displayCurrentExp = 0f;
             displayCurrentLevel++;
+            if (displayCurrentLevel == Player.instance.maxLevel)
+                SkipToEndPostMatchSummary();
             currentLevel.text = $"{displayCurrentLevel}";
             nextLevel.text = $"{displayCurrentLevel + 1}";
             currentLevelCap = Player.instance.CalculateLevelCap(displayCurrentLevel);
@@ -237,21 +258,37 @@ public class Play : MonoBehaviour
                 if (success)
                 {
                     src = Instantiate(expSourceText, expContent);
-                    src.GetComponent<TMP_Text>().text = mod.ModifierExpDescription();
+                    src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: {mod.ModifierExpDescription()}";
+                }
+                else
+                {
+                    src = Instantiate(expSourceText, expContent);
+                    src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: failed";
                 }
             }
         }
 
         Player.instance.AddTotalExperience(expGain);
 
-        expGainText.text = $"+{expGain} xp";
+        expGainText.text = $"+{expGain}xp";
 
-        currentLevel.text = $"{Player.instance.level}";
-        nextLevel.text = $"{Player.instance.level + 1}";
-        //expText.text = $"{Player.instance.exp}/{Player.instance.levelCap}";
+        if (Player.instance.level == Player.instance.maxLevel)
+        {
+            currentLevel.text = $"{Player.instance.level - 1}";
+            nextLevel.text = $"{Player.instance.level}";
 
-        expCurrentProgressBar.anchorMax = new Vector2((float)Player.instance.exp / (float)Player.instance.levelCap, 0.5f);
-        expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
+            expCurrentProgressBar.anchorMax = new Vector2(1f, 0.5f);
+            expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
+        }
+        else
+        {
+            currentLevel.text = $"{Player.instance.level}";
+            nextLevel.text = $"{Player.instance.level + 1}";
+            //expText.text = $"{Player.instance.exp}/{Player.instance.levelCap}";
+
+            expCurrentProgressBar.anchorMax = new Vector2((float)Player.instance.exp / (float)Player.instance.levelCap, 0.5f);
+            expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
+        }
 
         skipHomeButton.onClick.RemoveAllListeners();
         skipHomeButton.onClick.AddListener(ReturnHome);
@@ -272,11 +309,11 @@ public class Play : MonoBehaviour
         gameObject.SetActive(false);
         Home.instance.gameObject.SetActive(true);
         Home.instance.OpenCanvas(Home.instance.collectionCanvas, Home.instance.collectionBtn);
-        Store.instance.RandomizeFeaturedStore();
 
         if (EnemyController.instance.bossFight)
         {
             Player.instance.StartNextSeason();
+            Store.instance.RandomizeFeaturedStore();
             EnemyController.instance.bossFight = false;
         }
             

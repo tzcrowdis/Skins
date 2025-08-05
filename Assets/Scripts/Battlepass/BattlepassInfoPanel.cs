@@ -44,6 +44,9 @@ public class BattlepassInfoPanel : MonoBehaviour
 
     public void BattlepassUnlock()
     {
+        if (Player.instance.level > bpItem.levelToClaim)
+            locked = false;
+        
         lockedOverlay.GetComponent<Image>().enabled = locked;
     }
 

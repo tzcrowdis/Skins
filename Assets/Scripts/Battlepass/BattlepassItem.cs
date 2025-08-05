@@ -203,12 +203,16 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
             }
         }
         lockedLevel.text = $"{levelToClaim}";
+        locked = true;
 
         BattlepassUnlock();
     }
 
     public void BattlepassUnlock()
     {
+        if (Player.instance.level >= levelToClaim)
+            locked = false;
+        
         lockedOverlay.GetComponent<Image>().enabled = locked;
 
         if (selected)

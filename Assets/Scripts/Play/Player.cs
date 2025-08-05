@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
 
     [Header("Stats")]
     public int level = 0;
+    public int maxLevel = 10;
     public int exp = 0;
     public int levelCap;
     public int levelBase = 100;
@@ -67,7 +68,7 @@ public class Player : MonoBehaviour
         UpdateCurrencyFields();
         UpdateLevelText();
 
-        levelCap = levelBase * (int)Mathf.Pow(levelDelta, level + 1);
+        levelCap = CalculateLevelCap(level);
 
         seasonText.text = $"Season: {season}";
         seasonTimeLeft = seasonTotalMinutes * 60f;
@@ -148,6 +149,9 @@ public class Player : MonoBehaviour
 
             return;
         }
+
+        // TODO 
+        level = 0;
 
         Battlepass.instance.GenerateBattlepassItems();
 
@@ -267,6 +271,9 @@ public class Player : MonoBehaviour
 
     public void AddTotalExperience(int newExp)
     {
+        if (level == maxLevel)
+            return;
+        
         int expRemainder = newExp;
 
         exp += expRemainder;
@@ -277,8 +284,12 @@ public class Player : MonoBehaviour
                 expRemainder = exp - levelCap;
                 exp = expRemainder;
                 level += 1;
-                levelCap = CalculateLevelCap(level);
                 UpdateLevelText();
+
+                if (level == maxLevel)
+                    return;
+
+                levelCap = CalculateLevelCap(level);
                 Battlepass.instance.LevelReachedUnlock(level);
             }
             else
@@ -296,6 +307,7 @@ public class Player : MonoBehaviour
 
     public int CalculateLevelCap(int level)
     {
-        return levelBase * (int)Mathf.Pow(levelDelta, level + 1);
+        //return levelBase * (int)Mathf.Pow(levelDelta, level + 1 + (season - 1) * 10);
+        return levelBase * (level + 1 + (season - 1) * 10);
     }
 }

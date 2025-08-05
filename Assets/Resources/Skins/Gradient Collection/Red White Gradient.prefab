@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: itemName
       value: Red White
       objectReference: {fileID: 0}
+    - target: {fileID: -2194661887340983621, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
+      propertyPath: collection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 466925660307145571, guid: a99a65c437b32954f97a2ee84d972eca, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
