@@ -26,8 +26,8 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public GameObject infoPanel;
     public TMP_Text nameText;
     public TMP_Text rarityText;
-
-    Transform collectionCanvas; // HACK to get around render order
+    Vector3 defaultInfoPanelPosition;
+    bool offscreen = true;
 
     public enum Rarity
     {
@@ -39,14 +39,46 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     protected virtual void Start()
     {
-        collectionCanvas = GameObject.Find("Collection Canvas").transform;
-        
         nameText.text = itemName;
         rarityText.text = ObjectNames.NicifyVariableName(rarity.ToString());
 
         SetRarityColor();
 
+        defaultInfoPanelPosition = infoPanel.GetComponent<RectTransform>().anchoredPosition3D;
         infoPanel.SetActive(false);
+    }
+
+    void Update()
+    {
+        // adjust position if any corner is off screen
+        if (infoPanel.activeSelf && offscreen)
+        {
+            RectTransform rect = infoPanel.GetComponent<RectTransform>();
+            Vector3[] corners = new Vector3[4];
+            rect.GetWorldCorners(corners);
+            foreach (Vector3 corner in corners)
+            {
+                // HACK first frame all corners are equal (not sure why) so skip this frame
+                if (corner == corners[corners.Length - 1])
+                    break;
+                
+                if (corner.x > Screen.width) // assumes off in +x direction
+                {
+                    Vector3 offset = Vector3.zero;
+                    offset.x = corner.x - Screen.width;
+                    infoPanel.GetComponent<RectTransform>().anchoredPosition3D -= offset;
+                    offscreen = false;
+                }
+
+                if (corner.y < 0) // assumes off in -y direction
+                {
+                    Vector3 offset = Vector3.zero;
+                    offset.y =  -corner.y;
+                    infoPanel.GetComponent<RectTransform>().anchoredPosition3D += offset;
+                    offscreen = false;
+                }
+            }
+        }
     }
 
     void SetRarityColor()
@@ -108,12 +140,14 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         infoPanel.SetActive(true);
-        infoPanel.transform.SetParent(collectionCanvas);
+        infoPanel.transform.SetParent(Collection.instance.transform);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         infoPanel.transform.SetParent(transform);
+        infoPanel.GetComponent<RectTransform>().anchoredPosition3D = defaultInfoPanelPosition;
+        offscreen = true;
         infoPanel.SetActive(false);
     }
 }

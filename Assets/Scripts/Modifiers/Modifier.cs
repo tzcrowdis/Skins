@@ -25,12 +25,13 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     Transform modifierCanvas;
 
     [Header("Hover Effects")]
-    public Outline outline;
     [HideInInspector]
     public AudioSource buttonHover;
     public AudioClip hoverSound;
     AudioSource buttonClick;
     public AudioClip clickSound;
+    Vector3 hoverScale;
+    Vector3 notHoverScale;
 
     [Header("Drag")]
     public GameObject modifierDragPrefab;
@@ -62,7 +63,9 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         modifierDetailPanel.SetActive(false);
         modifierCanvas = GameObject.Find("Modifier Canvas").transform;
 
-        outline.enabled = false;
+        hoverScale = transform.localScale * 1.1f;
+        notHoverScale = transform.localScale;
+
         buttonHover = GameObject.Find("Button Hover Audio Source").GetComponent<AudioSource>();
         buttonClick = GameObject.Find("Button Click Audio Source").GetComponent<AudioSource>();
     }
@@ -144,7 +147,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (!modifierDetailPanel.activeSelf)
             modifierNamePanel.SetActive(true);
 
-        outline.enabled = true;
+        transform.localScale = hoverScale;
         buttonHover.PlayOneShot(hoverSound);
     }
 
@@ -153,7 +156,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (!modifierDetailPanel.activeSelf)
             modifierNamePanel.SetActive(false);
 
-        outline.enabled = false;
+        transform.localScale = notHoverScale;
     }
 
     public void OnPointerClick(PointerEventData eventData)

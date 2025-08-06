@@ -14,7 +14,6 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     public Image crateImage;
     public int coinCost;
     public GameObject cratePrefab;
-    public Outline outline;
 
     [Header("Info Panel")]
     public GameObject infoPanel;
@@ -22,14 +21,15 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     public TMP_Text itemsText;
     Transform storeCanvas;
 
-    // TODO crate info panel with collection skins and name
-
     [Header("Confirmation Panel")]
     public GameObject confirmationPanel;
     public Image crateConfirmationImage;
     public TMP_Text costConfirmationText;
     public Button crateConfirmButton;
     public Button crateCancelButton;
+
+    Vector3 hoverScale;
+    Vector3 notHoverScale;
 
 
     void Start()
@@ -44,10 +44,11 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
         infoPanel.SetActive(false);
         storeCanvas = Store.instance.transform;
-
-        outline.enabled = false;
         
         crateCancelButton.onClick.AddListener(CloseCrateConfirmationPanel);
+
+        notHoverScale = transform.localScale;
+        hoverScale = transform.localScale * 1.1f;
 
         confirmationPanel.SetActive(false);
     }
@@ -110,14 +111,14 @@ public class CrateButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         infoPanel.SetActive(true);
         infoPanel.transform.SetParent(storeCanvas);
 
-        outline.enabled = true;
+        transform.localScale = hoverScale;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        transform.localScale = notHoverScale;
+
         infoPanel.transform.SetParent(transform);
         infoPanel.SetActive(false);
-
-        outline.enabled = false;
     }
 }

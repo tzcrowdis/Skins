@@ -56,7 +56,10 @@ public class Home : MonoBehaviour
         buttonList.Add(collectionBtn);
         battlepassBtn.onClick.AddListener(delegate { OpenCanvas(battlepassCanvas, battlepassBtn); });
         buttonList.Add(battlepassBtn);
-        storeBtn.onClick.AddListener(delegate { OpenCanvas(storeCanvas, storeBtn); });
+        storeBtn.onClick.AddListener(delegate { 
+            OpenCanvas(storeCanvas, storeBtn);
+            Store.instance.OpenSubPanel(Store.instance.featuredPanel, Store.instance.featuredButton);
+        });
         buttonList.Add(storeBtn);
 
         quitButton.onClick.AddListener(QuitGame);
@@ -91,7 +94,7 @@ public class Home : MonoBehaviour
 
     public void OpenCoinStore()
     {
-        OpenCanvas(Home.instance.storeCanvas, Home.instance.storeBtn);
+        OpenCanvas(storeCanvas, storeBtn);
         Store.instance.OpenSubPanel(Store.instance.coinPanel, Store.instance.coinButton);
     }
 

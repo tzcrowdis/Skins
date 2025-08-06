@@ -30,6 +30,11 @@ public class Collection : MonoBehaviour
     Crate purchasedCrate;
     bool rotateClockwise = false;
 
+    [Header("Crate Opening Sounds")]
+    public AudioSource crateAudio;
+    public AudioClip crateRotateSound;
+    public AudioClip crateOpenSound;
+
     public static Collection instance { get; private set; }
     void Awake()
     {
@@ -81,6 +86,7 @@ public class Collection : MonoBehaviour
                 crateOpeningAnimation = false;
                 crateAnimTime = 0f;
                 OpenOpeningPanel(purchasedCrate);
+                crateAudio.PlayOneShot(crateOpenSound);
             }
         }
     }
@@ -88,6 +94,7 @@ public class Collection : MonoBehaviour
     void CrateAnimRotationFlip()
     {
         rotateClockwise = !rotateClockwise;
+        crateAudio.PlayOneShot(crateRotateSound);
     }
 
     public void AddToCollection(CollectionItem item)

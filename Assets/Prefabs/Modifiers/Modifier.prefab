@@ -1145,7 +1145,6 @@ GameObject:
   - component: {fileID: 1777193106275768079}
   - component: {fileID: 6484972064007299970}
   - component: {fileID: 7772839054300522219}
-  - component: {fileID: 2716182460678101290}
   - component: {fileID: 2882096282380768386}
   m_Layer: 5
   m_Name: Modifier
@@ -1213,21 +1212,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2716182460678101290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7772332494021742694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 2.5, y: 2.5}
-  m_UseGraphicAlpha: 0
 --- !u!114 &2882096282380768386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1250,12 +1234,11 @@ MonoBehaviour:
   nameText: {fileID: 6682322680532701472}
   modifierDetailPanel: {fileID: 7955662102764944758}
   modifierDescription: {fileID: 816702639457262600}
-  outline: {fileID: 2716182460678101290}
   buttonHover: {fileID: 0}
   hoverSound: {fileID: 8300000, guid: 31a178b8d003c2148bc026949bfaa8a3, type: 3}
   clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
   modifierDragPrefab: {fileID: 5447770173701632408, guid: f323cf4b7fa01814f8352457fc61791b, type: 3}
-  modifierDrag: {fileID: 0}
+  lockDrag: 0
 --- !u!1 &7955662102764944758
 GameObject:
   m_ObjectHideFlags: 0
