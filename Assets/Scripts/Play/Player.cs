@@ -275,10 +275,13 @@ public class Player : MonoBehaviour
             return;
         
         int expRemainder = newExp;
+        int expPreviousIteration;
 
         exp += expRemainder;
         for (int i = 0; i < 1000; i++) // 1000 iterations instead of while to prevent infinite loop
         {
+            expPreviousIteration = exp;
+            
             if (exp >= levelCap)
             {
                 expRemainder = exp - levelCap;
@@ -292,12 +295,27 @@ public class Player : MonoBehaviour
                 levelCap = CalculateLevelCap(level);
                 Battlepass.instance.LevelReachedUnlock(level);
             }
-            else
+            else if (exp < 0)
             {
-                break;
-            }   
+                level -= 1;
+                levelCap = CalculateLevelCap(level);
+                expRemainder = exp;
+                exp = levelCap;
+                UpdateLevelText();
 
-            if (expRemainder <= 0)
+                if (level <= 0 & exp <= 0)
+                {
+                    level = 0;
+                    exp = 0;
+                    UpdateLevelText();
+                    return;
+                }
+            }
+
+            if (exp == expPreviousIteration)
+                break;
+
+            if (expRemainder <= 0 & level == 0)
                 break;
 
             if (i == 999)

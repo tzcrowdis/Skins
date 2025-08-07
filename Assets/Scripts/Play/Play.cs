@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -44,11 +45,12 @@ public class Play : MonoBehaviour
     int modifierExpPhaseIndex = 0;
 
     // player exp state
-    int playerStartExp;
-    int playerStartLevel;
-    float displayCurrentExp;
-    int displayCurrentLevel;
-    int currentLevelCap;
+    [HideInInspector] public int playerStartExp;
+    [HideInInspector] public int playerStartLevel;
+    [HideInInspector] public float displayCurrentExp;
+    [HideInInspector] public int displayCurrentLevel;
+    [HideInInspector] public int currentLevelCap;
+    [HideInInspector] public int negativeStoppingPoint;
     float currentNewExp = 0;
 
 
@@ -134,6 +136,11 @@ public class Play : MonoBehaviour
 
                             expSpeed = (expGain - prevExpGain) / (stepT - delayBtwnSteps);
                             prevExpGain = expGain;
+
+                            if (expSpeed < 0)
+                            {
+
+                            }
                         }
                         else
                         {
@@ -164,7 +171,8 @@ public class Play : MonoBehaviour
 
 
         // update exp progress bar
-        if (currentNewExp >= expGain)
+        // early exit
+        if ((currentNewExp >= expGain & expSpeed >= 0) | (currentNewExp <= expGain & expSpeed < 0))
         {
             if (!baseExpPhase & !modifierExpPhase)
             {
@@ -174,11 +182,23 @@ public class Play : MonoBehaviour
             }
             return;
         }
-        
+
         displayCurrentExp += expSpeed * Time.deltaTime;
         currentNewExp += expSpeed * Time.deltaTime;
 
-        if (displayCurrentExp >= currentLevelCap)
+        // adjust for xp going below 0xp lvl0
+        if (displayCurrentExp <= 0 & displayCurrentLevel <= 0 & expSpeed < 0)
+        {
+            displayCurrentExp = 0;
+            displayCurrentLevel = 0;
+            currentLevel.text = $"{displayCurrentLevel}";
+            nextLevel.text = $"{displayCurrentLevel + 1}";
+            t = stepT + 1f; // exit modifier phase early
+            return;
+        }
+
+        // increment/decrement level
+        if (expSpeed > 0 && displayCurrentExp >= currentLevelCap)
         {
             displayCurrentExp = 0f;
             displayCurrentLevel++;
@@ -187,6 +207,14 @@ public class Play : MonoBehaviour
             currentLevel.text = $"{displayCurrentLevel}";
             nextLevel.text = $"{displayCurrentLevel + 1}";
             currentLevelCap = Player.instance.CalculateLevelCap(displayCurrentLevel);
+        }
+        else if (displayCurrentExp < 0)
+        {
+            displayCurrentLevel--;
+            currentLevelCap = Player.instance.CalculateLevelCap(displayCurrentLevel);
+            displayCurrentExp = currentLevelCap;
+            currentLevel.text = $"{displayCurrentLevel}";
+            nextLevel.text = $"{displayCurrentLevel + 1}";
         }
 
         expCurrentProgressBar.anchorMax = new Vector2(displayCurrentExp / (float)currentLevelCap, 0.5f);
@@ -219,7 +247,7 @@ public class Play : MonoBehaviour
         nextLevel.text = $"{playerStartLevel + 1}";
         //expText.text = $"{Player.instance.exp}/{Player.instance.levelCap}";
 
-        expCurrentProgressBar.anchorMax = new Vector2((float)Player.instance.exp / (float)Player.instance.levelCap, 0.5f);
+        expCurrentProgressBar.anchorMax = new Vector2((float)playerStartExp / (float)currentLevelCap, 0.5f);
         expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
 
         foreach (Transform t in expContent)

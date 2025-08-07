@@ -39,6 +39,7 @@ public class Cannibal : Modifier
             modifierExpDescription = $"ate {Player.instance.skin.itemName}. multiplied xp by {mult}x.";
 
             Collection.instance.DeleteCollectionItem(Player.instance.skin);
+            Player.instance.skin = null; // testing
 
             return true;
         }

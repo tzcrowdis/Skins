@@ -8,14 +8,21 @@ public class Camoist : Modifier
 
     public override bool ModifierEffect()
     {
-        if (Player.instance.skin.collection == thisCollectionType)
+        try
         {
-            float expGain = (float)Play.instance.expGain;
-            expGain *= 1.5f;
-            Play.instance.expGain = (int)expGain;
-            return true;
-        }
+            if (Player.instance.skin.collection == thisCollectionType)
+            {
+                float expGain = (float)Play.instance.expGain;
+                expGain *= 1.5f;
+                Play.instance.expGain = (int)expGain;
+                return true;
+            }
 
-        return false;
+            return false;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

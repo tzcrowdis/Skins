@@ -11,10 +11,10 @@ PrefabInstance:
     - target: {fileID: 643875775329671029, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: modifier
       value: 
-      objectReference: {fileID: 2766137487477850498}
+      objectReference: {fileID: 8618758438189845442}
     - target: {fileID: 816702639457262600, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: 1.5x for using a skin from the Solid Color Collection
+      value: -200xp then duplicates your played skin
       objectReference: {fileID: 0}
     - target: {fileID: 1777193106275768079, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Pivot.x
@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2075746475058616377, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: Colorist
+      value: Mitosis
       objectReference: {fileID: 0}
     - target: {fileID: 2310916207335243524, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -182,7 +182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682322680532701472, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: Colorist
+      value: Mitosis
       objectReference: {fileID: 0}
     - target: {fileID: 7184628645145214161, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -230,16 +230,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Name
-      value: Colorist
+      value: Mitosis
       objectReference: {fileID: 0}
     - target: {fileID: 7772839054300522219, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 690de4b87502677479235f910c868e79, type: 3}
+      objectReference: {fileID: 21300000, guid: f47d25e03d4cd334babdd6bf595b3f3e, type: 3}
     - target: {fileID: 8944072175151877350, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 690de4b87502677479235f910c868e79, type: 3}
+      objectReference: {fileID: 21300000, guid: f47d25e03d4cd334babdd6bf595b3f3e, type: 3}
     - target: {fileID: 8955967633608589712, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -271,7 +271,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2766137487477850498}
+      addedObject: {fileID: 8618758438189845442}
   m_SourcePrefab: {fileID: 100100000, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
 --- !u!114 &627773629695598587 stripped
 MonoBehaviour:
@@ -327,7 +327,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
   m_PrefabInstance: {fileID: 1847780349768048589}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2766137487477850498
+--- !u!114 &8618758438189845442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,16 +336,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8248480471839362987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b476a34a17c549c4691299ce4a9446f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 61b1c39cd94e38349a27044b57ee1657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifierName: Colorist
-  modifierRarity: 0
+  modifierName: Mitosis
+  modifierRarity: 1
   modifierImage: {fileID: 7330479418411651883}
   modifierImageMask: {fileID: 627773629695598587}
   modifierCost: 250
-  modifierType: 0
-  modifierExpDescription: 1.5x for using a skin from the Color Collection
+  modifierType: 1
+  modifierExpDescription: -200xp if duplicated failed if no skin
   modifierNamePanel: {fileID: 8174638505999638499}
   nameText: {fileID: 4978944217581555437}
   modifierDetailPanel: {fileID: 8632436180661068475}

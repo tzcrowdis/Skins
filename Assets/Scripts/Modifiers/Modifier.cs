@@ -11,6 +11,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public string modifierName;
     public Rarity modifierRarity;
     public Image modifierImage;
+    public Image modifierImageMask;
     public int modifierCost;
     public Type modifierType;
     public string modifierExpDescription;
@@ -193,13 +194,14 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             return;
 
         modifierDrag = Instantiate(modifierDragPrefab, transform.parent.transform.parent); // NOTE shameful parent accessing
-        Image img = modifierDrag.GetComponent<Image>();
+        Image img = modifierDrag.transform.GetChild(0).GetChild(0).GetComponent<Image>(); // more shame
         img.sprite = modifierImage.sprite;
         img.material = modifierImage.material;
         img.color = modifierImage.color;
 
         modifierDetailPanel.SetActive(false);
         modifierImage.enabled = false;
+        modifierImageMask.enabled = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -240,5 +242,6 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         Destroy(modifierDrag);
         modifierImage.enabled = true;
+        modifierImageMask.enabled = true;
     }
 }

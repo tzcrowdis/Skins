@@ -28,6 +28,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
     [Header("Image + Border + Text")]
     public Image itemImage;
+    public Image itemImageMask;
     public Image rarityBorder;
     public GameObject textPanel;
     public TMP_Text nameText;
@@ -310,7 +311,8 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     void MoveImageAndBorderUp()
     {
         float distance = 20f;
-        itemImage.transform.position += new Vector3(0, distance, 0);
+        //itemImage.transform.position += new Vector3(0, distance, 0);
+        itemImageMask.transform.position += new Vector3(0, distance, 0);
         rarityBorder.transform.position += new Vector3(0, distance, 0);
         lockedOverlay.transform.position += new Vector3(0, distance, 0);
         claimedOverlay.transform.position += new Vector3(0, distance, 0);
@@ -322,7 +324,8 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     void MoveImageAndBorderDown()
     {
         float distance = 20f;
-        itemImage.transform.position -= new Vector3(0, distance, 0);
+        //itemImage.transform.position -= new Vector3(0, distance, 0);
+        itemImageMask.transform.position -= new Vector3(0, distance, 0);
         rarityBorder.transform.position -= new Vector3(0, distance, 0);
         lockedOverlay.transform.position -= new Vector3(0, distance, 0);
         claimedOverlay.transform.position -= new Vector3(0, distance, 0);
