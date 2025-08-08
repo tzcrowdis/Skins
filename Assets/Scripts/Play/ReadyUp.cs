@@ -137,10 +137,9 @@ public class ReadyUp : MonoBehaviour
                 skinSelectionBtn.clickSource = clickSource;
                 skinSelectionBtn.PopulateSkinInfo();
 
-                Image img = skinButton.GetComponent<Image>();
-                img.sprite = skin.itemImage.sprite;
-                img.color = skin.itemImage.color;
-                img.material = skin.itemImage.material;
+                skinSelectionBtn.skinImage.sprite = skin.itemImage.sprite;
+                skinSelectionBtn.skinImage.color = skin.itemImage.color;
+                skinSelectionBtn.skinImage.material = skin.itemImage.material;
             }
         }
     }

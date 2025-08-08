@@ -12,6 +12,7 @@ public class SkinSelectionButton : MonoBehaviour, IPointerClickHandler, IPointer
     [Header("Skin Info")]
     public GameObject skinInfoCanvas;
     public TMP_Text skinName;
+    public Image skinImage;
     public Outline skinRarityOutline;
 
     [Header("Sounds")]

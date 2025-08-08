@@ -30,6 +30,10 @@ public class Play : MonoBehaviour
     [HideInInspector] public int expGain = 0;
     int prevExpGain;
 
+    [Header("Exp Sounds")]
+    public AudioSource expSFXSource;
+    public AudioClip expSFXClip;
+
     [Header("Populate Timing")]
     public float stepT;
     public float delayBtwnSteps;
@@ -70,6 +74,8 @@ public class Play : MonoBehaviour
         postMatchSummaryPanel.SetActive(false);
         skipHomeButton.onClick.AddListener(SkipToEndPostMatchSummary);
         skipHomeButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "SKIP";
+
+        expSFXSource.clip = expSFXClip;
     }
 
     void Update()
@@ -121,6 +127,17 @@ public class Play : MonoBehaviour
                 if (mod.modifierType != Modifier.Type.ExpMult & mod.modifierType != Modifier.Type.ExpAdd)
                     t = stepT + 1f;
 
+                if (!expSFXSource.isPlaying)
+                {
+                    expSFXSource.Play();
+                    expSFXSource.loop = true;
+
+                    if (expSpeed > 0)
+                        expSFXSource.pitch = 1f;
+                    else
+                        expSFXSource.pitch = 0.75f;
+                }   
+
                 // update exp gain
                 t += Time.deltaTime;
                 if (t >= stepT)
@@ -137,15 +154,16 @@ public class Play : MonoBehaviour
                             expSpeed = (expGain - prevExpGain) / (stepT - delayBtwnSteps);
                             prevExpGain = expGain;
 
-                            if (expSpeed < 0)
-                            {
-
-                            }
+                            if (expSpeed > 0)
+                                expSFXSource.pitch = 1f;
+                            else
+                                expSFXSource.pitch = 0.75f;
                         }
                         else
                         {
                             GameObject src = expContent.GetChild(expContent.childCount - 1).gameObject;
                             src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: failed";
+                            expSFXSource.Stop();
                         }
 
                         if (Player.instance.modifiers.Count - 1 > modifierExpPhaseIndex)
@@ -180,6 +198,9 @@ public class Play : MonoBehaviour
                 skipHomeButton.onClick.AddListener(ReturnHome);
                 skipHomeButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "HOME";
             }
+
+            if (expSFXSource.isPlaying)
+                expSFXSource.Stop();
             return;
         }
 
@@ -194,6 +215,7 @@ public class Play : MonoBehaviour
             currentLevel.text = $"{displayCurrentLevel}";
             nextLevel.text = $"{displayCurrentLevel + 1}";
             t = stepT + 1f; // exit modifier phase early
+            Debug.Log("zero zero exit");
             return;
         }
 
