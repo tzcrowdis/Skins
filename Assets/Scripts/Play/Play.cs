@@ -33,6 +33,8 @@ public class Play : MonoBehaviour
     [Header("Exp Sounds")]
     public AudioSource expSFXSource;
     public AudioClip expSFXClip;
+    public float expPosPitch = 1f;
+    public float expNegPitch = 0.5f;
 
     [Header("Populate Timing")]
     public float stepT;
@@ -133,9 +135,9 @@ public class Play : MonoBehaviour
                     expSFXSource.loop = true;
 
                     if (expSpeed > 0)
-                        expSFXSource.pitch = 1f;
+                        expSFXSource.pitch = expPosPitch;
                     else
-                        expSFXSource.pitch = 0.75f;
+                        expSFXSource.pitch = expNegPitch;
                 }   
 
                 // update exp gain
@@ -155,9 +157,9 @@ public class Play : MonoBehaviour
                             prevExpGain = expGain;
 
                             if (expSpeed > 0)
-                                expSFXSource.pitch = 1f;
+                                expSFXSource.pitch = expPosPitch;
                             else
-                                expSFXSource.pitch = 0.75f;
+                                expSFXSource.pitch = expNegPitch;
                         }
                         else
                         {
@@ -215,7 +217,7 @@ public class Play : MonoBehaviour
             currentLevel.text = $"{displayCurrentLevel}";
             nextLevel.text = $"{displayCurrentLevel + 1}";
             t = stepT + 1f; // exit modifier phase early
-            Debug.Log("zero zero exit");
+            currentNewExp = expGain - 1f; // exit final xp count early
             return;
         }
 
