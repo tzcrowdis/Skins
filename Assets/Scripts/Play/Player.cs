@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
-using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -87,7 +85,7 @@ public class Player : MonoBehaviour
 
         int minutes = Mathf.FloorToInt(seasonTimeLeft / 60f);
         int seconds = Mathf.FloorToInt(seasonTimeLeft % 60);
-        seasonTimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds); ;
+        seasonTimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
         if (seasonTimeLeft <= 0)
             QueueBoss();
@@ -99,10 +97,13 @@ public class Player : MonoBehaviour
         seasonTimerText.text = $"00:00";
         seasonTimerText.color = Color.red;
 
-        GameObject alert = Instantiate(alertPrefab, Home.instance.readyUpBtn.transform);
-        alert.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-115f, 0f, 0f);
-        Home.instance.readyUpBtn.onClick.AddListener(delegate { DestroyAlert(alert); });
-        ReadyUp.instance.startButton.onClick.AddListener(delegate { DestroyAlert(alert); });
+        if (!Home.instance.readyUpCanvas.gameObject.activeSelf)
+        {
+            GameObject alert = Instantiate(alertPrefab, Home.instance.readyUpBtn.transform);
+            alert.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-115f, 0f, 0f);
+            Home.instance.readyUpBtn.onClick.AddListener(delegate { DestroyAlert(alert); });
+            ReadyUp.instance.startButton.onClick.AddListener(delegate { DestroyAlert(alert); });
+        }
 
         if (season == 1)
         {
@@ -130,6 +131,9 @@ public class Player : MonoBehaviour
 
     public void StartNextSeason()
     {
+        // TODO win/lose conidition
+        // if you dont reach max level each season then you lose
+        
         season += 1; // TODO season themes??
         if (season > lastSeason)
         {
@@ -150,8 +154,10 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // TODO 
         level = 0;
+        exp = 0;
+        levelCap = CalculateLevelCap(level);
+        UpdateLevelText();
 
         Battlepass.instance.GenerateBattlepassItems();
 
@@ -160,13 +166,19 @@ public class Player : MonoBehaviour
         seasonTimeLeft = seasonTotalMinutes * 60f;
         seasonTimerLock = false;
 
-        dollars += dollarsPerSeason;
-        GameObject alert = Instantiate(alertPrefab, dollarText.transform);
-        alert.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-75f, 0f, 0f);
-        alert.GetComponent<AlertEffect>().lifetime = 5f;
+        //dollars += dollarsPerSeason;
+        dollars += Random.Range(0, 51); // NOTE per season $ variance
+        MoneyAlert();
         UpdateCurrencyFields();
 
         ReadyUp.instance.bossWarningContainer.SetActive(false);
+    }
+
+    public void MoneyAlert()
+    {
+        GameObject alert = Instantiate(alertPrefab, dollarText.transform);
+        alert.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-75f, 0f, 0f);
+        alert.GetComponent<AlertEffect>().lifetime = 5f;
     }
 
     public void AddToModifierList(Modifier mod)
@@ -202,6 +214,13 @@ public class Player : MonoBehaviour
         {
             modifiers.Add(child.GetComponent<Modifier>());
         }
+    }
+
+    public void ResetModifierList()
+    {
+        modifiers.Clear();
+        foreach (Transform child in modifierPanel.transform)
+            Destroy(child.gameObject);
     }
 
     void UpdateCurrencyFields()

@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 using static Crate;
 
 public class Collection : MonoBehaviour
 {
-    List<CollectionItem> items;
-
     [Header("Collection Content")]
     public GameObject collectionContent;
+
+    [Header("Default Collection Items")]
+    public GameObject[] defaultCollectionItems;
 
     [Header("Crate Purchase")]
     public GameObject crateKeyPanel;
@@ -55,19 +55,11 @@ public class Collection : MonoBehaviour
 
     public void ResetCollection()
     {
-        // i = 3 to preserve first three (RGB)
-        for (int i = 3; i < collectionContent.transform.childCount; i++)
-        {
-            try { Destroy(collectionContent.transform.GetChild(i)); }
-            catch { break; }
-        }
+        foreach (Transform item in collectionContent.transform)
+            Destroy(item.gameObject);
 
-        if (items != null) items.Clear();
-        items = new List<CollectionItem>();
-        foreach (Transform child in collectionContent.transform)
-        {
-            items.Add(child.GetComponent<CollectionItem>());
-        }
+        foreach (GameObject defaultItem in defaultCollectionItems)
+            Instantiate(defaultItem, collectionContent.transform);
     }
 
     void Update()
@@ -95,11 +87,6 @@ public class Collection : MonoBehaviour
     {
         rotateClockwise = !rotateClockwise;
         crateAudio.PlayOneShot(crateRotateSound);
-    }
-
-    public void AddToCollection(CollectionItem item)
-    {
-        Instantiate(item.gameObject, collectionContent.transform);
     }
 
     public void OpenCrateKeyPanel(Crate crate)
@@ -195,9 +182,13 @@ public class Collection : MonoBehaviour
         openingPanel.SetActive(false);
     }
 
+    public void AddToCollection(CollectionItem item)
+    {
+        Instantiate(item.gameObject, collectionContent.transform);
+    }
+
     public void DeleteCollectionItem(CollectionItem item)
     {
-        items.Remove(item);
         foreach (Transform colItem in collectionContent.transform)
         {
             if (colItem.GetComponent<CollectionItem>() == item)

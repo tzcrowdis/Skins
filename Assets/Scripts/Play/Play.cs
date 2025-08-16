@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static Unity.VisualScripting.Member;
 
 public class Play : MonoBehaviour
 {
@@ -100,7 +99,7 @@ public class Play : MonoBehaviour
             expGainText.text = $"+{expGain}xp";
             
             GameObject src = Instantiate(expSourceText, expContent);
-            src.GetComponent<TMP_Text>().text = $"+{posExpGain}xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())} and {negExpGain}xp from enemies";
+            src.GetComponent<TMP_Text>().text = $"+{posExpGain}xp from skin rarity {Home.instance.SplitCamelCase(Player.instance.GetSkinRarity().ToString())} and {negExpGain}xp from enemies";
 
             if (Player.instance.modifiers.Count > 0)
             {
@@ -114,6 +113,9 @@ public class Play : MonoBehaviour
             expSpeed = expGain / (stepT - delayBtwnSteps);
             prevExpGain = expGain;
             t = 0f;
+
+            expSFXSource.Play();
+            expSFXSource.loop = true;
         }
         else if (modifierExpPhase)
         {
@@ -203,6 +205,7 @@ public class Play : MonoBehaviour
 
             if (expSFXSource.isPlaying)
                 expSFXSource.Stop();
+
             return;
         }
 
@@ -299,7 +302,7 @@ public class Play : MonoBehaviour
         int negExpGain = EnemyController.instance.GetNegativeExp();
         expGain += negExpGain;
         GameObject src = Instantiate(expSourceText, expContent);
-        src.GetComponent<TMP_Text>().text = $"+{expGain} xp from skin rarity {ObjectNames.NicifyVariableName(Player.instance.GetSkinRarity().ToString())} and {negExpGain}xp from enemies";
+        src.GetComponent<TMP_Text>().text = $"+{expGain} xp from skin rarity {Home.instance.SplitCamelCase(Player.instance.GetSkinRarity().ToString())} and {negExpGain}xp from enemies";
 
         // modifier exp
         foreach (Modifier mod in Player.instance.modifiers)

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
-using UnityEditor.VersionControl;
 
 public class SunnyDisposition : Modifier
 {

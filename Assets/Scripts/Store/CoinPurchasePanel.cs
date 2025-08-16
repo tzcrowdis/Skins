@@ -86,7 +86,8 @@ public class CoinPurchasePanel : MonoBehaviour, IPointerEnterHandler, IPointerEx
             CloseConfirmationPanel();
         else
         {
-            // TODO say "need more funds in wallet"
+            Player.instance.MoneyAlert();
+            CloseConfirmationPanel();
         }
     }
 

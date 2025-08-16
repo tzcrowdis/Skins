@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -43,8 +44,9 @@ public class Cannibal : Modifier
 
             return true;
         }
-        catch
+        catch (Exception e)
         {
+            Debug.Log(e);
             return false;
         }
     }

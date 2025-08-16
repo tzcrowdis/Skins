@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -40,7 +39,7 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     protected virtual void Start()
     {
         nameText.text = itemName;
-        rarityText.text = ObjectNames.NicifyVariableName(rarity.ToString());
+        rarityText.text = Home.instance.SplitCamelCase(rarity.ToString());
 
         SetRarityColor();
 

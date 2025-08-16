@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +38,21 @@ public class GameSettings : MonoBehaviour
             Destroy(instance.gameObject);
         else
             instance = this;
+
+        // set resolution on awake
+        Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, true);
+        int value = 0;
+        foreach (TMP_Dropdown.OptionData option in resolutionDropdown.options)
+        {
+            string[] optionResolution = option.text.Split("x");
+            if (int.Parse(optionResolution[0]) == Screen.width & int.Parse(optionResolution[1]) == Screen.height)
+            {
+                resolutionDropdown.value = value;
+                resolutionDropdown.RefreshShownValue();
+                break;
+            }
+            value++;
+        }
     }
 
     void Start()

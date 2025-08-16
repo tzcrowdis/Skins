@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
-using static UnityEditor.Progress;
 
 public class BattlepassInfoPanel : MonoBehaviour
 {
@@ -110,14 +109,14 @@ public class BattlepassInfoPanel : MonoBehaviour
             case BattlepassItem.itemType.Skin:
                 CollectionItem item = battlepassItem.collectionItem;
                 itemName.text = item.itemName;
-                rarityText.text = ObjectNames.NicifyVariableName(item.rarity.ToString());
+                rarityText.text = Home.instance.SplitCamelCase(item.rarity.ToString());
                 rarityText.color = item.GetRarityColor();
                 descriptionText.gameObject.SetActive(false);
                 break;
             case BattlepassItem.itemType.Modifier:
                 Modifier mod = battlepassItem.mod;
                 itemName.text = mod.modifierName;
-                rarityText.text = ObjectNames.NicifyVariableName(mod.modifierRarity.ToString());
+                rarityText.text = Home.instance.SplitCamelCase(mod.modifierRarity.ToString());
                 rarityText.color = mod.GetRarityColor();
                 descriptionText.gameObject.SetActive(true);
                 descriptionText.text = mod.modifierDescription.text;

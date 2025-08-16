@@ -21,6 +21,7 @@ public class Battlepass : MonoBehaviour
 
     [Header("Battlepass Content")]
     public GameObject bpContent;
+    public GameObject bpInfoPanel;
     
 
     public static Battlepass instance { get; private set; }
@@ -41,6 +42,18 @@ public class Battlepass : MonoBehaviour
         premiumPanel.SetActive(false);
 
         GenerateBattlepassItems();
+    }
+
+    private void OnDisable()
+    {
+        if (bpInfoPanel.activeSelf)
+            bpInfoPanel.SetActive(false);
+
+        foreach (Transform item in bpContent.transform)
+        {
+            try { item.GetComponent<BattlepassItem>().Deselect(); }
+            catch { Debug.Log("couldn't deselect battlepass item"); }
+        }
     }
 
     public void GenerateBattlepassItems()

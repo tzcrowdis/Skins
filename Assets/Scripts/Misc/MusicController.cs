@@ -45,14 +45,16 @@ public class MusicController : MonoBehaviour
         {
             case Scenario.Default:
                 if (bossMusicSource.isPlaying)
+                {
                     StartCoroutine(FadeOut(bossMusicSource, 1f));
+                    backgroundSource.volume *= 2f;
+                } 
                 else
                     bossMusicSource.Stop();
 
                 backgroundSource.clip = background;
                 backgroundSource.loop = true;
-                backgroundSource.volume *= 2f;
-                if (backgroundSource.isPlaying) // makes sense?
+                if (backgroundSource.isPlaying)
                     backgroundSource.Play();
                 else
                     StartCoroutine(FadeIn(backgroundSource, 1f));
