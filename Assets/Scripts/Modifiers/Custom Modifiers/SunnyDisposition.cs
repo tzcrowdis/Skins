@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
+using System;
 
 public class SunnyDisposition : Modifier
 {
@@ -13,7 +14,7 @@ public class SunnyDisposition : Modifier
             // overwrite base exp and give it +1 rarity
             TMP_Text baseText = Play.instance.expContent.GetChild(0).GetComponent<TMP_Text>();
 
-            Play.instance.expGain += 100;
+            Play.instance.expGain += add;
             int expGain = Play.instance.expGain;
 
             string rarity = "";
@@ -51,8 +52,9 @@ public class SunnyDisposition : Modifier
 
             return true;
         }
-        catch
+        catch (Exception e)
         {
+            Debug.Log(e);
             return false;
         }
     }

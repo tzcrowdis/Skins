@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 643875775329671029, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: modifier
       value: 
-      objectReference: {fileID: 2360758639157921635}
+      objectReference: {fileID: 0}
     - target: {fileID: 816702639457262600, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
       value: 3x xp if at least three Very Common skins appear in the match (including
@@ -231,7 +231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Name
-      value: Three Stones
+      value: Stronger Together
       objectReference: {fileID: 0}
     - target: {fileID: 7772839054300522219, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Sprite
@@ -240,7 +240,7 @@ PrefabInstance:
     - target: {fileID: 8944072175151877350, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 20d6d317439d6f548837bda148220512, type: 3}
+      objectReference: {fileID: 21300000, guid: ced8ad5c1e71e8a4f99b90a128a46e8d, type: 3}
     - target: {fileID: 8955967633608589712, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -272,7 +272,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2360758639157921635}
+      addedObject: {fileID: 7361751021945833084}
   m_SourcePrefab: {fileID: 100100000, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
 --- !u!114 &627773629695598587 stripped
 MonoBehaviour:
@@ -339,7 +339,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7772332494021742694, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
   m_PrefabInstance: {fileID: 1847780349768048589}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2360758639157921635
+--- !u!114 &7361751021945833084
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -348,15 +348,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8248480471839362987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c23d6627ae1272c4eaf6262caca058a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a77bf125a71f2345b39f480f9dcd16d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifierName: Three Stones
+  modifierName: Stronger Together
   modifierRarity: 0
   modifierImage: {fileID: 7330479418411651883}
   modifierImageMask: {fileID: 627773629695598587}
-  modifierCost: 500
-  modifierExpDescription: 3x xp for three very common skins appearing
+  modifierCost: 250
+  modifierExpDescription: we are stronger together
   modifierNamePanel: {fileID: 8174638505999638499}
   nameText: {fileID: 4978944217581555437}
   modifierDetailPanel: {fileID: 8632436180661068475}
@@ -367,9 +367,11 @@ MonoBehaviour:
   modifierDragPrefab: {fileID: 5447770173701632408, guid: f323cf4b7fa01814f8352457fc61791b, type: 3}
   lockDrag: 0
   deleteButton: {fileID: 1246129214640228536}
-  modifierType: 0
-  mult: 3
-  add: 0
+  modifierType: 2
+  mult: 0.1
+  add: 100
+  smile: {fileID: 21300000, guid: ced8ad5c1e71e8a4f99b90a128a46e8d, type: 3}
+  frown: {fileID: 21300000, guid: c75066c90c9e6a54eac48997ced17259, type: 3}
 --- !u!1 &8632436180661068475 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7955662102764944758, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}

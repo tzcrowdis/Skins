@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,15 +23,16 @@ public class ThreeStones : Modifier
             if (veryCommonCount >= 3)
             {
                 float expGain = (float)Play.instance.expGain;
-                expGain *= 3f;
+                expGain *= mult;
                 Play.instance.expGain = (int)expGain;
                 return true;
             }
 
             return false;
         }
-        catch
+        catch (Exception e)
         {
+            Debug.Log(e);
             return false;
         }
     }

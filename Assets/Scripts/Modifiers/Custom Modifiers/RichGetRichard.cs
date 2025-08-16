@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,8 +9,7 @@ public class RichGetRichard : Modifier
 {
     [Header("Richard")]
     public TMP_Text adderText;
-    int adder = 0;
-    int adderDelta = 10;
+    public int addDelta = 10;
     
     public override bool ModifierEffect()
     {
@@ -19,32 +19,33 @@ public class RichGetRichard : Modifier
             switch (Player.instance.skin.rarity)
             {
                 case Skin.Rarity.VeryCommon:
-                    adder += adderDelta;
+                    add += addDelta;
                     adderGrowth = "10xp";
                     break;
                 case Skin.Rarity.Common:
-                    adder += adderDelta * 2;
+                    add += addDelta * 2;
                     adderGrowth = "20xp";
                     break;
                 case Skin.Rarity.Rare:
-                    adder += adderDelta * 3;
+                    add += addDelta * 3;
                     adderGrowth = "30xp";
                     break;
                 case Skin.Rarity.Legendary:
-                    adder += adderDelta * 4;
+                    add += addDelta * 4;
                     adderGrowth = "40xp";
                     break;
             }
 
-            Play.instance.expGain += adder;
+            Play.instance.expGain += add;
 
-            adderText.text = $"+{adder}xp";
-            modifierExpDescription = $"grew by {adderGrowth}. added +{adder}xp";
+            adderText.text = $"+{add}xp";
+            modifierExpDescription = $"grew by {adderGrowth}. added +{add}xp";
 
             return true;
         }
-        catch
+        catch (Exception e)
         {
+            Debug.Log(e);
             return false;
         }
     }

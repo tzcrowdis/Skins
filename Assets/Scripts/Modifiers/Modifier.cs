@@ -13,7 +13,6 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Image modifierImage;
     public Image modifierImageMask;
     public int modifierCost;
-    public Type modifierType;
     public string modifierExpDescription;
 
     [Header("Name Panel")]
@@ -39,6 +38,14 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public bool lockDrag = false;
     GameObject modifierDrag;
 
+    [Header("Delete Button")]
+    public ModifierDeleteButton deleteButton;
+
+    [Header("Mult/Add")]
+    public Type modifierType;
+    public float mult;
+    public int add;
+
     public enum Rarity
     {
         Common,
@@ -50,10 +57,10 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         ExpMult,
         ExpAdd,
-        AlterEnemy
+        AlterState
     }
 
-    void Start()
+    protected virtual void Start()
     {
         nameText.text = modifierName;
 
@@ -69,9 +76,13 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         buttonHover = GameObject.Find("Button Hover Audio Source").GetComponent<AudioSource>();
         buttonClick = GameObject.Find("Button Click Audio Source").GetComponent<AudioSource>();
+
+        deleteButton.modifier = this;
     }
     
     public virtual bool ModifierEffect() { return false; /* override */ }
+
+    public virtual void AlterOtherModifier(Modifier mod) { /* override */ }
 
     public string ModifierExpDescription()
     {

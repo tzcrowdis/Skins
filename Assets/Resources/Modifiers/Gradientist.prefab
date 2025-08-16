@@ -284,6 +284,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1246129214640228536 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 643875775329671029, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
+  m_PrefabInstance: {fileID: 1847780349768048589}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a95918b8ac9261841a2b2c63797b13e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1364908210219533253 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 816702639457262600, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
@@ -344,7 +355,6 @@ MonoBehaviour:
   modifierImage: {fileID: 7330479418411651883}
   modifierImageMask: {fileID: 627773629695598587}
   modifierCost: 250
-  modifierType: 0
   modifierExpDescription: 1.5x for using a skin from the Gradient Collection
   modifierNamePanel: {fileID: 8174638505999638499}
   nameText: {fileID: 4978944217581555437}
@@ -355,6 +365,10 @@ MonoBehaviour:
   clickSound: {fileID: 8300000, guid: 71169f5d0663f4f4394035de8d33831a, type: 3}
   modifierDragPrefab: {fileID: 5447770173701632408, guid: f323cf4b7fa01814f8352457fc61791b, type: 3}
   lockDrag: 0
+  deleteButton: {fileID: 1246129214640228536}
+  modifierType: 0
+  mult: 1.5
+  add: 0
 --- !u!1 &8632436180661068475 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7955662102764944758, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}

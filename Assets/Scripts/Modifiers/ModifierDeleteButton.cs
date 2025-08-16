@@ -7,8 +7,7 @@ using UnityEngine.UI;
 
 public class ModifierDeleteButton : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
 {
-    [Header("Modifier")]
-    public Modifier modifier;
+    [HideInInspector] public Modifier modifier;
 
     [Header("Progress Bar")]
     public float deleteSpeed;

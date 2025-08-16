@@ -9,8 +9,7 @@ public class Cannibal : Modifier
 {
     [Header("Cannibal")]
     public TMP_Text multText;
-    float mult = 1;
-    float multDelta = 0.1f;
+    public float multDelta = 0.1f;
 
     
     public override bool ModifierEffect()

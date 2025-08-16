@@ -199,6 +199,12 @@ public class Player : MonoBehaviour
                     storeBtn.LockModifiersFull();
             }
         }
+
+        foreach (Modifier activeMod in modifiers)
+        {
+            if (activeMod != mod && mod.modifierType == Modifier.Type.AlterState)
+                activeMod.AlterOtherModifier(mod);
+        }
     }
 
     public void RemoveFromModifierList(Modifier mod)
