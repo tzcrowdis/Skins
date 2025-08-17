@@ -24,7 +24,7 @@ public class StrongerTogether : Modifier
                 modifierImage.sprite = frown;
             }
 
-            return true;
+            return true; // should be false?
         }
         catch (Exception e)
         {

@@ -93,7 +93,7 @@ public class Play : MonoBehaviour
         if (baseExpPhase) // doesn't wait to populate
         {
             expGain = 0;
-            int posExpGain = GetSkinExp();
+            int posExpGain = Player.instance.skin.GetSkinExp();
             int negExpGain = EnemyController.instance.GetNegativeExp();
             expGain += posExpGain + negExpGain;
             expGainText.text = $"+{expGain}xp";
@@ -298,7 +298,7 @@ public class Play : MonoBehaviour
 
         // base exp
         expGain = 0;
-        expGain += GetSkinExp();
+        expGain += Player.instance.skin.GetSkinExp();
         int negExpGain = EnemyController.instance.GetNegativeExp();
         expGain += negExpGain;
         GameObject src = Instantiate(expSourceText, expContent);
@@ -373,22 +373,5 @@ public class Play : MonoBehaviour
         }
             
         Player.instance.seasonTimerLock = false;
-    }
-
-    public int GetSkinExp()
-    {
-        switch (Player.instance.GetSkinRarity())
-        {
-            case Skin.Rarity.VeryCommon:
-                return 100;
-            case Skin.Rarity.Common:
-                return 200;
-            case Skin.Rarity.Rare:
-                return 300;
-            case Skin.Rarity.Legendary:
-                return 400;
-        }
-
-        return 0;
     }
 }

@@ -14,8 +14,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 816702639457262600, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: 3x xp if at least three Very Common skins appear in the match (including
-        yours)
+      value: '+100xp to all modifiers that add
+
+        +0.1x to all modifiers that
+        mult'
       objectReference: {fileID: 0}
     - target: {fileID: 1777193106275768079, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_Pivot.x
@@ -99,7 +101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2075746475058616377, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: Three Stones
+      value: Stronger Together
       objectReference: {fileID: 0}
     - target: {fileID: 2310916207335243524, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -183,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6682322680532701472, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_text
-      value: Three Stones
+      value: Stronger Together
       objectReference: {fileID: 0}
     - target: {fileID: 7184628645145214161, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}
       propertyPath: m_AnchorMax.y

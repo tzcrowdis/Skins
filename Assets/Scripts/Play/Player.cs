@@ -286,7 +286,7 @@ public class Player : MonoBehaviour
 
         playedSkin.SetSkin(skin);
 
-        skinExpText.text = $"+{Play.instance.GetSkinExp()}xp";
+        skinExpText.text = $"+{skin.GetSkinExp()}xp";
     }
 
     public Skin.Rarity GetSkinRarity()
