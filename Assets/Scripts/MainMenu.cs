@@ -7,11 +7,17 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("Main Menu")]
     public Button play;
     public Button settings;
     public Button quit;
     public ParticleSystem backgroundParticles;
     [HideInInspector] public GameObject[] openingCanvases;
+
+    [Header("Tutorial")]
+    public GameObject tutorialPanel;
+    public Button dismissTutorialButton;
+    public bool tutorialDismissed = false;
 
 
     public static MainMenu instance { get; private set; }
@@ -34,6 +40,9 @@ public class MainMenu : MonoBehaviour
             canvas.SetActive(false);
 
         Player.instance.seasonTimerLock = true;
+
+        tutorialPanel.SetActive(!tutorialDismissed);
+        dismissTutorialButton.onClick.AddListener(DismissTutorial);
 
         // TESTING (jump into season)
         //gameObject.SetActive(false);
@@ -96,5 +105,12 @@ public class MainMenu : MonoBehaviour
     {
         gameObject.SetActive(false);
         GameSettings.instance.OpenSettings(gameObject);
+    }
+
+    void DismissTutorial()
+    {
+        tutorialPanel.SetActive(false);
+        tutorialDismissed = true;
+        SaveManager.instance.SavePlayerSettings();
     }
 }

@@ -10,6 +10,8 @@ public class SaveManager : MonoBehaviour
 
     string resolutionKey = "Resolution";
 
+    string tutorialKey = "Tutorial";
+
     
     public static SaveManager instance { get; private set; }
     void Awake()
@@ -18,10 +20,7 @@ public class SaveManager : MonoBehaviour
             Destroy(instance.gameObject);
         else
             instance = this;
-    }
 
-    void Start()
-    {
         LoadPlayerSettings();
     }
 
@@ -32,6 +31,8 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetFloat(musicVolumeKey, GameSettings.instance.musicVolume.value);
 
         PlayerPrefs.SetInt(resolutionKey, GameSettings.instance.resolutionDropdown.value);
+
+        PlayerPrefs.SetString(tutorialKey, MainMenu.instance.tutorialDismissed.ToString());
     }
 
     void LoadPlayerSettings()
@@ -41,5 +42,12 @@ public class SaveManager : MonoBehaviour
         if (PlayerPrefs.HasKey(musicVolumeKey)) GameSettings.instance.musicVolume.value = PlayerPrefs.GetFloat(musicVolumeKey);
 
         if (PlayerPrefs.HasKey(resolutionKey)) GameSettings.instance.SetResolution(PlayerPrefs.GetInt(resolutionKey));
+
+        if (PlayerPrefs.HasKey(tutorialKey))
+        {
+            bool tutorialDismissed;
+            if (bool.TryParse(PlayerPrefs.GetString(tutorialKey), out tutorialDismissed))
+                MainMenu.instance.tutorialDismissed = tutorialDismissed;
+        }
     }
 }

@@ -33,12 +33,12 @@ public class GameOver : MonoBehaviour
         if (Player.instance.level == 10)
         {
             winLose.text = "WIN";
-            gameExplanation.text = $"you reached level 10 in the final season!";
+            gameExplanation.text = $"you reached level {Player.instance.maxLevel} in the final season!";
         }
         else
         {
             winLose.text = "LOSE";
-            gameExplanation.text = $"you were level {Player.instance.level} but need to be level 10...";
+            gameExplanation.text = $"you were level {Player.instance.level} but need to be level {Player.instance.maxLevel}...";
         }
         
         // TODO grade based on how close they were?

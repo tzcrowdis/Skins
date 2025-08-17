@@ -131,11 +131,10 @@ public class Player : MonoBehaviour
 
     public void StartNextSeason()
     {
-        // TODO win/lose conidition
-        // if you dont reach max level each season then you lose
-        
-        season += 1; // TODO season themes??
-        if (season > lastSeason)
+        // TODO season themes??
+
+        season += 1; 
+        if (season > lastSeason || level < maxLevel) // if you dont reach max level each season then you lose
         {
             var particles = MainMenu.instance.backgroundParticles.main;
             particles.simulationSpeed = 1f;
