@@ -236,7 +236,10 @@ public class Player : MonoBehaviour
 
     public void UpdateLevelText()
     {
-        levelText.text = $"Lvl. {level}";
+        if (level == maxLevel)
+            levelText.text = $"Lvl. MAX";
+        else
+            levelText.text = $"Lvl. {level}";
     }
 
     public bool InGamePurchase(int coinAmount)

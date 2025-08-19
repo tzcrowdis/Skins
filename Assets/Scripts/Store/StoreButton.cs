@@ -19,6 +19,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     public TMP_Text cost;
     public GameObject modDescPanel;
     public TMP_Text modDesc;
+    public Image rarityOutline;
 
     [Header("Discount")]
     public float discount;
@@ -39,6 +40,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     void Start()
     {
         modDescPanel.SetActive(false);
+        rarityOutline.enabled = false;
     }
 
     public void RandomizeItem()
@@ -61,6 +63,8 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
                 image.color = skin.itemImage.color;
                 image.material = skin.itemImage.material;
                 if (skin.itemImage.sprite) image.sprite = skin.itemImage.sprite;
+
+                rarityOutline.color = skin.GetRarityColor();
                 break;
 
             case itemType.Modifier:
@@ -77,9 +81,11 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
                 if (Player.instance.modifiers.Count == Player.instance.modifierCapacity)
                     LockModifiersFull();
+
+                rarityOutline.color = mod.GetRarityColor();
                 break;
 
-            case itemType.Crate:
+            case itemType.Crate: // NOTE decided against crates in the featured store
                 Crate crate = ItemDatabase.instance.RandomCrate();
                 item = crate.gameObject;
 
@@ -142,7 +148,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     {
         if (!purchased && !modifierLock)
         {
-            transform.localScale += Vector3.one * 0.05f;
+            rarityOutline.enabled = true;
 
             if (type == itemType.Modifier)
             {
@@ -155,7 +161,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     {
         if (!purchased && !modifierLock)
         {
-            transform.localScale -= Vector3.one * 0.05f;
+            rarityOutline.enabled = false;
 
             if (type == itemType.Modifier)
             {

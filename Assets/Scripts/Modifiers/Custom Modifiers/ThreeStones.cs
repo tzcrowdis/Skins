@@ -13,21 +13,23 @@ public class ThreeStones : Modifier
             int veryCommonCount = 0;
             foreach (Transform enemy in EnemyController.instance.transform)
             {
-                if (enemy.gameObject.activeSelf && enemy.GetComponent<Enemy>().skin.rarity == Skin.Rarity.VeryCommon)
+                if (!enemy.gameObject.CompareTag("Boss") && enemy.GetComponent<Enemy>().skin.rarity == Skin.Rarity.VeryCommon)
                     veryCommonCount++;
             }
 
             if (Player.instance.skin.rarity == Skin.Rarity.VeryCommon)
                 veryCommonCount++;
-
+            
             if (veryCommonCount >= 3)
             {
                 float expGain = (float)Play.instance.expGain;
                 expGain *= mult;
                 Play.instance.expGain = (int)expGain;
+                modifierExpDescription = "3x to xp, three stones appeared in your match";
                 return true;
             }
 
+            modifierExpDescription = "too rich for us";
             return false;
         }
         catch (Exception e)

@@ -209,7 +209,11 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
     public void BattlepassUnlock()
     {
         if (Player.instance.level >= levelToClaim)
+        {
             locked = false;
+            if (Battlepass.instance.premiumOwner)
+                FullUnlock();
+        }
         
         lockedOverlay.GetComponent<Image>().enabled = locked;
 

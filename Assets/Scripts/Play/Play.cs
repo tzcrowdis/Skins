@@ -166,7 +166,7 @@ public class Play : MonoBehaviour
                         else
                         {
                             GameObject src = expContent.GetChild(expContent.childCount - 1).gameObject;
-                            src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: failed";
+                            src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: {mod.ModifierExpDescription()}";
                             expSFXSource.Stop();
                         }
 
@@ -193,7 +193,7 @@ public class Play : MonoBehaviour
 
 
         // update exp progress bar
-        // early exit
+        // default exit
         if ((currentNewExp >= expGain & expSpeed >= 0) | (currentNewExp <= expGain & expSpeed < 0))
         {
             if (!baseExpPhase & !modifierExpPhase)
@@ -205,6 +205,23 @@ public class Play : MonoBehaviour
 
             if (expSFXSource.isPlaying)
                 expSFXSource.Stop();
+
+            return;
+        }
+
+        // max level exit
+        if (Player.instance.level == Player.instance.maxLevel)
+        {
+            currentLevel.text = $"{displayCurrentLevel - 1}";
+            nextLevel.text = "MAX";
+
+            expCurrentProgressBar.anchorMax = new Vector2(1f, 0.5f);
+            expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
+
+            if (expSFXSource.isPlaying)
+                expSFXSource.Stop();
+
+            t = stepT + 1f; // exit modifier phase early
 
             return;
         }
@@ -227,10 +244,17 @@ public class Play : MonoBehaviour
         // increment/decrement level
         if (expSpeed > 0 && displayCurrentExp >= currentLevelCap)
         {
+            if (displayCurrentLevel + 1 == Player.instance.maxLevel)
+            {
+                nextLevel.text = "MAX";
+                expCurrentProgressBar.anchorMax = new Vector2(1f, 0.5f);
+                expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
+                t = stepT + 1f;
+                return;
+            }
+
             displayCurrentExp = 0f;
             displayCurrentLevel++;
-            if (displayCurrentLevel == Player.instance.maxLevel)
-                SkipToEndPostMatchSummary();
             currentLevel.text = $"{displayCurrentLevel}";
             nextLevel.text = $"{displayCurrentLevel + 1}";
             currentLevelCap = Player.instance.CalculateLevelCap(displayCurrentLevel);

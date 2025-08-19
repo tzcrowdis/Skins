@@ -46,15 +46,15 @@ public class SunnyDisposition : Modifier
                     break;
             }
 
-            baseText.text = $"+{expGain} xp from skin rarity {rarity}";
+            baseText.text = $"+{expGain}xp from skin rarity {rarity} and {EnemyController.instance.GetNegativeExp()}xp from enemies";
 
-            // TODO restart modifier phase to account for mults?
-
+            modifierExpDescription = "actually, that wasn't so bad";
             return true;
         }
         catch (Exception e)
         {
             Debug.Log(e);
+            modifierExpDescription = "that was horrible";
             return false;
         }
     }

@@ -22,6 +22,7 @@ public class Mitosis : Modifier
         catch (Exception e)
         {
             Debug.Log(e);
+            modifierExpDescription = "failed to replicate";
             return false;
         }
     }

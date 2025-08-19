@@ -46,6 +46,7 @@ public class RichGetRichard : Modifier
         catch (Exception e)
         {
             Debug.Log(e);
+            modifierExpDescription = "failed to get richer";
             return false;
         }
     }

@@ -26,7 +26,7 @@ public class Multer : Modifier
                     break;
                 case CollectionItem.Rarity.Legendary:
                     mult = 1.4f;
-                    adjective = "fuckable";
+                    adjective = "delicious";
                     break;
             }
 

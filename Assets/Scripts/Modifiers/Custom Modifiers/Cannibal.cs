@@ -46,6 +46,7 @@ public class Cannibal : Modifier
         catch (Exception e)
         {
             Debug.Log(e);
+            modifierExpDescription = "there was no skin to consume";
             return false;
         }
     }

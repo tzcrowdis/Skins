@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class AppreciatorSeries : Modifier
 {
@@ -15,16 +16,43 @@ public class AppreciatorSeries : Modifier
         {
             int count = 0;
             add = 0;
-            foreach (Enemy enemy in EnemyController.instance.transform.GetComponentsInChildren<Enemy>())
+            if (EnemyController.instance.bossFight)
             {
-                if (!enemy.gameObject.activeSelf)
-                    continue;
+                Enemy enemy = null;
+                switch (EnemyController.instance.boss)
+                {
+                    case EnemyController.BossType.Randomizer:
+                        enemy = EnemyController.instance.randomizerBoss.GetComponent<Enemy>();
+                        break;
+                    case EnemyController.BossType.EvilRandomizer:
+                        enemy = EnemyController.instance.evilRandomizer.GetComponent<Enemy>();
+                        break;
+                    case EnemyController.BossType.MonkeyPaw:
+                        enemy = EnemyController.instance.monkeyPaw.GetComponent<Enemy>();
+                        break;
+                }
 
-                if (enemy.skin.collection == thisCollectionType)
+                if (enemy != null && enemy.skin.collection == thisCollectionType)
                 {
                     add += enemy.skin.GetSkinExp() / divideExpBy;
                     count++;
-                }   
+                }
+            }
+            else
+            {
+                foreach (Transform enemyTransform in EnemyController.instance.transform)
+                {
+                    Enemy enemy = enemyTransform.GetComponent<Enemy>();
+
+                    if (enemy.gameObject.CompareTag("Boss"))
+                        continue;
+
+                    if (enemy.skin.collection == thisCollectionType)
+                    {
+                        add += enemy.skin.GetSkinExp() / divideExpBy;
+                        count++;
+                    }
+                }
             }
 
             if (count > 0)

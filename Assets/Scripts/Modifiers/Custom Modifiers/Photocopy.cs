@@ -16,8 +16,8 @@ public class Photocopy : Modifier
                 modifierExpDescription = "there's nothing left";
                 return false;
             }
-
-            Modifier leftMod = EnemyController.instance.transform.GetChild(siblingIndex - 1).GetComponent<Modifier>();
+            
+            Modifier leftMod = Player.instance.modifierPanel.transform.GetChild(siblingIndex - 1).GetComponent<Modifier>();
             leftMod.ModifierEffect();
             modifierExpDescription = leftMod.modifierExpDescription;
             return true;
