@@ -91,6 +91,9 @@ public class Player : MonoBehaviour
             QueueBoss();
     }
 
+    /*
+     * GAME PROGRESSION
+     */
     void QueueBoss()
     {
         seasonTimerLock = true;
@@ -124,11 +127,6 @@ public class Player : MonoBehaviour
         ReadyUp.instance.bossWarningContainer.SetActive(true);
     }
 
-    public void DestroyAlert(GameObject alert)
-    {
-        Destroy(alert);
-    }
-
     public void StartNextSeason()
     {
         // TODO season themes??
@@ -149,6 +147,8 @@ public class Player : MonoBehaviour
 
             GameOver.instance.gameObject.SetActive(true);
             GameOver.instance.PopulateGameExplanation();
+
+            seasonTimeLeft = Mathf.Infinity; // HACK prevents queueing next boss if lost before final
 
             return;
         }
@@ -173,12 +173,24 @@ public class Player : MonoBehaviour
         ReadyUp.instance.bossWarningContainer.SetActive(false);
     }
 
+    /*
+     * ALERTS
+     */
+    public void DestroyAlert(GameObject alert)
+    {
+        Destroy(alert);
+    }
+
     public void MoneyAlert()
     {
         GameObject alert = Instantiate(alertPrefab, dollarText.transform);
         alert.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-75f, 0f, 0f);
         alert.GetComponent<AlertEffect>().lifetime = 5f;
     }
+
+    /*
+     * MODIFIERS
+     */
 
     public void AddToModifierList(Modifier mod)
     {
@@ -199,10 +211,11 @@ public class Player : MonoBehaviour
             }
         }
 
+        Modifier alterMod = newMod.GetComponent<Modifier>();
         foreach (Modifier activeMod in modifiers)
         {
-            if (activeMod != mod && mod.modifierType == Modifier.Type.AlterState)
-                activeMod.AlterOtherModifier(mod);
+            if (activeMod.modifierType == Modifier.Type.AlterState)
+                activeMod.AlterOtherModifier(alterMod);
         }
     }
 
@@ -228,24 +241,22 @@ public class Player : MonoBehaviour
             Destroy(child.gameObject);
     }
 
+    /*
+     * CURRENCY
+     */
     void UpdateCurrencyFields()
     {
         dollarText.text = $"${dollars}";
         coinsText.text = $"\u0424{coins}";
     }
 
-    public void UpdateLevelText()
-    {
-        if (level == maxLevel)
-            levelText.text = $"Lvl. MAX";
-        else
-            levelText.text = $"Lvl. {level}";
-    }
-
     public bool InGamePurchase(int coinAmount)
     {
         if (coins - coinAmount < 0)
+        {
+            MoneyAlert();
             return false;
+        } 
 
         coins -= coinAmount;
         UpdateCurrencyFields();
@@ -294,6 +305,17 @@ public class Player : MonoBehaviour
     public Skin.Rarity GetSkinRarity()
     {
         return skin.rarity;
+    }
+
+    /*
+     * LEVELING
+     */
+    public void UpdateLevelText()
+    {
+        if (level == maxLevel)
+            levelText.text = $"Lvl. MAX";
+        else
+            levelText.text = $"Lvl. {level}";
     }
 
     public void AddTotalExperience(int newExp)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Store : MonoBehaviour
@@ -24,6 +25,10 @@ public class Store : MonoBehaviour
     public TMP_Text costText;
     public Button confirmButton;
     public Button cancelButton;
+
+    [Header("Reroll")]
+    public int rerollCost = 500;
+    public Button rerollButton;
 
 
     public static Store instance { get; private set; }
@@ -48,6 +53,8 @@ public class Store : MonoBehaviour
         subPanels.Add(featuredPanel);
         subPanels.Add(cratePanel);
         subPanels.Add(coinPanel);
+
+        rerollButton.onClick.AddListener(RerollFeaturedStore);
     }
 
     void Start()
@@ -153,7 +160,16 @@ public class Store : MonoBehaviour
     {
         foreach (Transform child in featuredPanel.transform)
         {
-            child.GetComponent<StoreButton>().RandomizeItem();
+            try { child.GetComponent<StoreButton>().RandomizeItem(); }
+            catch { continue; }
         }
+    }
+
+    void RerollFeaturedStore()
+    {
+        if (Player.instance.InGamePurchase(rerollCost))
+            RandomizeFeaturedStore();
+
+        EventSystem.current.SetSelectedGameObject(null);
     }
 }

@@ -357,7 +357,7 @@ MonoBehaviour:
   modifierRarity: 1
   modifierImage: {fileID: 7330479418411651883}
   modifierImageMask: {fileID: 627773629695598587}
-  modifierCost: 500
+  modifierCost: 750
   modifierExpDescription: counterspelled
   modifierNamePanel: {fileID: 8174638505999638499}
   nameText: {fileID: 4978944217581555437}

@@ -354,7 +354,7 @@ MonoBehaviour:
   modifierRarity: 0
   modifierImage: {fileID: 7330479418411651883}
   modifierImageMask: {fileID: 627773629695598587}
-  modifierCost: 250
+  modifierCost: 500
   modifierExpDescription: 1.5x for using a skin from the Color Collection
   modifierNamePanel: {fileID: 8174638505999638499}
   nameText: {fileID: 4978944217581555437}

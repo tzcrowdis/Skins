@@ -60,6 +60,11 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         AlterState
     }
 
+    void Awake()
+    {
+        deleteButton.modifier = this;
+    }
+
     protected virtual void Start()
     {
         nameText.text = modifierName;
@@ -76,8 +81,6 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         buttonHover = GameObject.Find("Button Hover Audio Source").GetComponent<AudioSource>();
         buttonClick = GameObject.Find("Button Click Audio Source").GetComponent<AudioSource>();
-
-        deleteButton.modifier = this;
     }
     
     public virtual bool ModifierEffect() { return false; /* override */ }
@@ -140,9 +143,13 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         foreach (Transform storeItem in Store.instance.featuredPanel.transform)
         {
-            StoreButton.itemType type = storeItem.GetComponent<StoreButton>().type;
-            if (type == StoreButton.itemType.Modifier)
-                storeItem.GetComponent<StoreButton>().UnlockModifiersNotFull();
+            try
+            {
+                StoreButton.itemType type = storeItem.GetComponent<StoreButton>().type;
+                if (type == StoreButton.itemType.Modifier)
+                    storeItem.GetComponent<StoreButton>().UnlockModifiersNotFull();
+            }
+            catch { continue; }
         }
 
         modifierDetailPanel.transform.SetParent(transform);
