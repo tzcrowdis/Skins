@@ -26,6 +26,8 @@ public class Crate : CollectionItem, IPointerClickHandler
     {
         base.Start();
 
+        itemCost = 250;
+
         // overwrite rarity text and use for crate item display
         rarityText.text = "";
         foreach (GameObject item in items)

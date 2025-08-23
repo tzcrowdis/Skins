@@ -16,11 +16,16 @@ public class Skin : CollectionItem
     [Header("Collection This Skin Belongs To")]
     public Collection collection;
 
+    private void Awake()
+    {
+        itemCost = GenerateSkinCost();
+    }
+
     protected override void Start()
     {
         base.Start();
 
-        itemCost = GenerateSkinCost();
+        //itemCost = GenerateSkinCost();
     }
 
     public int GetSkinExp()

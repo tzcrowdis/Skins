@@ -130,7 +130,7 @@ public class GameSettings : MonoBehaviour
     /*
      * AUDIO
      */
-    void AdjustMainVolume(float newVol)
+    public void AdjustMainVolume(float newVol)
     {
         foreach (AudioSource soundEffect in soundEffectSources)
         {
@@ -143,7 +143,7 @@ public class GameSettings : MonoBehaviour
         }
     }
 
-    void AdjustSoundEffectsVolume(float newVol)
+    public void AdjustSoundEffectsVolume(float newVol)
     {
         foreach (AudioSource soundEffect in soundEffectSources)
         {
@@ -151,7 +151,7 @@ public class GameSettings : MonoBehaviour
         }
     }
 
-    void AdjustMusicVolume(float newVol)
+    public void AdjustMusicVolume(float newVol)
     {
         foreach (AudioSource music in musicSources)
         {

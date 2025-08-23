@@ -61,11 +61,6 @@ public class Store : MonoBehaviour
     {
         RandomizeFeaturedStore();
 
-        foreach (GameObject panel in subPanels)
-            panel.SetActive(false);
-        featuredPanel.SetActive(true);
-        featuredButton.interactable = false;
-
         confirmationPanel.SetActive(false);
     }
 
@@ -129,10 +124,7 @@ public class Store : MonoBehaviour
         bool purchased = Player.instance.InGamePurchase(storeButton.itemCost);
 
         if (!purchased)
-        {
-            Debug.Log("not purchased"); // TODO notify player
             return;
-        }  
 
         switch (storeButton.type)
         {

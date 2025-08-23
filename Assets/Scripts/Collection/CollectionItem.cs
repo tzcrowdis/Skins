@@ -18,8 +18,8 @@ public class CollectionItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public Rarity rarity;
     //public Outline rarityBorder;
 
-    [Header("Cost")]
-    public int itemCost;
+    //[Header("Cost")]
+    [HideInInspector] public int itemCost;
 
     [Header("Info Panel")]
     public GameObject infoPanel;

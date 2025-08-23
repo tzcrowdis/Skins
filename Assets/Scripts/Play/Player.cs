@@ -111,17 +111,20 @@ public class Player : MonoBehaviour
         if (season == 1)
         {
             EnemyController.instance.QueueBoss(EnemyController.BossType.Randomizer);
-            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.Randomizer.ToString()}!";
+            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.Randomizer.ToString()}!" +
+                $"\nYou will need to gain more than {EnemyController.instance.GetBossExpThreshold()}xp to progress.";
         }   
         else if (season == 2)
         {
             EnemyController.instance.QueueBoss(EnemyController.BossType.MonkeyPaw);
-            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.MonkeyPaw.ToString()}!";
+            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.MonkeyPaw.ToString()}!" +
+                $"\nYou will need to gain more than {EnemyController.instance.GetBossExpThreshold()}xp to progress.";
         }   
         else if (season == 3)
         {
             EnemyController.instance.QueueBoss(EnemyController.BossType.EvilRandomizer);
-            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.EvilRandomizer.ToString()}!";
+            ReadyUp.instance.bossWarning.text = $"Warning! You are about to face the {EnemyController.BossType.EvilRandomizer.ToString()}!" +
+                $"\nYou will need to gain more than {EnemyController.instance.GetBossExpThreshold()}xp to progress.";
         }
             
         ReadyUp.instance.bossWarningContainer.SetActive(true);
@@ -132,7 +135,7 @@ public class Player : MonoBehaviour
         // TODO season themes??
 
         season += 1; 
-        if (season > lastSeason || level < maxLevel) // if you dont reach max level each season then you lose
+        if (season > lastSeason || Play.instance.expGain < EnemyController.instance.GetBossExpThreshold())
         {
             var particles = MainMenu.instance.backgroundParticles.main;
             particles.simulationSpeed = 1f;
@@ -158,7 +161,9 @@ public class Player : MonoBehaviour
         levelCap = CalculateLevelCap(level);
         UpdateLevelText();
 
+        Battlepass.instance.premiumOwner = false;
         Battlepass.instance.GenerateBattlepassItems();
+        Battlepass.instance.premiumButton.gameObject.SetActive(true);
 
         seasonText.text = $"Season: {season}";
         seasonTimerText.color = Color.white;
@@ -192,10 +197,10 @@ public class Player : MonoBehaviour
      * MODIFIERS
      */
 
-    public void AddToModifierList(Modifier mod)
+    public bool AddToModifierList(Modifier mod)
     {
         if (modifiers.Count + 1 > modifierCapacity)
-            return; // TODO notify player that a mod needs to be deleted?
+            return false; // TODO notify player that a mod needs to be deleted?
 
         GameObject newMod = Instantiate(mod.gameObject, modifierPanel.transform);
         modifiers.Add(newMod.GetComponent<Modifier>());
@@ -206,7 +211,7 @@ public class Player : MonoBehaviour
             foreach (Transform btn in Store.instance.featuredPanel.transform)
             {
                 StoreButton storeBtn = btn.GetComponent<StoreButton>();
-                if (storeBtn.type == StoreButton.itemType.Modifier)
+                if (storeBtn && storeBtn.type == StoreButton.itemType.Modifier)
                     storeBtn.LockModifiersFull();
             }
         }
@@ -217,6 +222,8 @@ public class Player : MonoBehaviour
             if (activeMod.modifierType == Modifier.Type.AlterState)
                 activeMod.AlterOtherModifier(alterMod);
         }
+
+        return true;
     }
 
     public void RemoveFromModifierList(Modifier mod)
@@ -337,12 +344,11 @@ public class Player : MonoBehaviour
                 exp = expRemainder;
                 level += 1;
                 UpdateLevelText();
-
-                if (level == maxLevel)
-                    return;
-
                 levelCap = CalculateLevelCap(level);
                 Battlepass.instance.LevelReachedUnlock(level);
+                
+                if (level == maxLevel)
+                    return;
             }
             else if (exp < 0)
             {

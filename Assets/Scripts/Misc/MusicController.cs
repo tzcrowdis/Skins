@@ -91,7 +91,7 @@ public class MusicController : MonoBehaviour
     IEnumerator FadeIn(AudioSource audioSource, float fadeTime)
     {
         float startVolume = 0f;
-        float targetVolume = 0.5f; // NOTE make parameter?
+        float targetVolume = audioSource.volume;
         audioSource.volume = startVolume;
         audioSource.Play();
 

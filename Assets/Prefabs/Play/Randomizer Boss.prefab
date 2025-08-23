@@ -819,6 +819,7 @@ MonoBehaviour:
   negExp: 0
   bossName: Randomizer
   negExpMult: 0
+  expThreshold: 1000
   eyeL: {fileID: 9057061255898651201}
   eyeR: {fileID: 8559574076610429177}
   spinSpeed: 100

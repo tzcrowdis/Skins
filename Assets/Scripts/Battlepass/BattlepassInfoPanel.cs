@@ -93,6 +93,7 @@ public class BattlepassInfoPanel : MonoBehaviour
         claimed = battlepassItem.claimed;
         claimedOverlay.SetActive(claimed);
 
+        claimButton.gameObject.SetActive(false);
         if (!claimed & !locked)
         {
             if (Player.instance.level >= battlepassItem.levelToClaim)
@@ -137,6 +138,9 @@ public class BattlepassInfoPanel : MonoBehaviour
 
     void ItemClaimed()
     {
+        if (!bpItem.claimed)
+            return;
+
         claimButton.gameObject.SetActive(false);
         claimedOverlay.SetActive(true);
     }

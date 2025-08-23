@@ -819,6 +819,7 @@ MonoBehaviour:
   negExp: 0
   bossName: Evil Randomizer
   negExpMult: 3
+  expThreshold: 5000
   eyeL: {fileID: 9057061255898651201}
   eyeR: {fileID: 8559574076610429177}
   spinSpeed: 200

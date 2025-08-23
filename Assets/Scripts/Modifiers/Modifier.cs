@@ -63,11 +63,15 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     void Awake()
     {
         deleteButton.modifier = this;
+
+        modifierCost = GetModifierCost();
     }
 
     protected virtual void Start()
     {
         nameText.text = modifierName;
+
+        //modifierCost = GetModifierCost();
 
         modifierNamePanel.GetComponent<Outline>().effectColor = GetRarityColor();
         modifierNamePanel.SetActive(false);
@@ -119,6 +123,21 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
 
         return Color.black;
+    }
+
+    public int GetModifierCost()
+    {
+        switch (modifierRarity)
+        {
+            case Rarity.Common:
+                return 500;
+            case Rarity.Rare:
+                return 750;
+            case Rarity.Legendary:
+                return 1000;
+        }
+
+        return 0;
     }
 
     public void DeleteModifier()

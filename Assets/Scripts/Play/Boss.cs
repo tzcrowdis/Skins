@@ -7,6 +7,7 @@ public class Boss : Enemy
     [Header("Boss Info")]
     public string bossName;
     public int negExpMult;
+    public int expThreshold;
     
     protected override void Start()
     {

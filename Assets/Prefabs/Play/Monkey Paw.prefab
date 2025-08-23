@@ -3213,6 +3213,7 @@ MonoBehaviour:
   negExp: 0
   bossName: Monkey Paw
   negExpMult: 2
+  expThreshold: 3000
   backgroundParticles: {fileID: 0}
   skinOptions:
   - {fileID: 8102396401684606566}

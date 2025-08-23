@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
@@ -40,6 +41,10 @@ public class SaveManager : MonoBehaviour
         if (PlayerPrefs.HasKey(mainVolumeKey)) GameSettings.instance.mainVolume.value = PlayerPrefs.GetFloat(mainVolumeKey);
         if (PlayerPrefs.HasKey(soundEffectsVolumeKey)) GameSettings.instance.soundEffectsVolume.value = PlayerPrefs.GetFloat(soundEffectsVolumeKey);
         if (PlayerPrefs.HasKey(musicVolumeKey)) GameSettings.instance.musicVolume.value = PlayerPrefs.GetFloat(musicVolumeKey);
+
+        GameSettings.instance.AdjustMainVolume(GameSettings.instance.mainVolume.value);
+        GameSettings.instance.AdjustSoundEffectsVolume(GameSettings.instance.soundEffectsVolume.value);
+        GameSettings.instance.AdjustMusicVolume(GameSettings.instance.musicVolume.value);
 
         if (PlayerPrefs.HasKey(resolutionKey)) GameSettings.instance.SetResolution(PlayerPrefs.GetInt(resolutionKey));
 

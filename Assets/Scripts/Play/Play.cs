@@ -96,8 +96,12 @@ public class Play : MonoBehaviour
             int posExpGain = Player.instance.skin.GetSkinExp();
             int negExpGain = EnemyController.instance.GetNegativeExp();
             expGain += posExpGain + negExpGain;
-            expGainText.text = $"+{expGain}xp";
-            
+
+            if (EnemyController.instance.bossFight)
+                expGainText.text = $"+{expGain}xp / {EnemyController.instance.GetBossExpThreshold()}xp";
+            else
+                expGainText.text = $"+{expGain}xp";
+
             GameObject src = Instantiate(expSourceText, expContent);
             src.GetComponent<TMP_Text>().text = $"+{posExpGain}xp from skin rarity {Home.instance.SplitCamelCase(Player.instance.GetSkinRarity().ToString())} and {negExpGain}xp from enemies";
 
@@ -151,7 +155,11 @@ public class Play : MonoBehaviour
                         bool success = mod.ModifierEffect();
                         if (success)
                         {
-                            expGainText.text = $"+{expGain}xp";
+                            if (EnemyController.instance.bossFight)
+                                expGainText.text = $"+{expGain}xp / {EnemyController.instance.GetBossExpThreshold()}xp";
+                            else
+                                expGainText.text = $"+{expGain}xp";
+
                             GameObject src = expContent.GetChild(expContent.childCount - 1).gameObject;
                             src.GetComponent<TMP_Text>().text = $"{mod.nameText.text}: {mod.ModifierExpDescription()}";
 
@@ -301,8 +309,13 @@ public class Play : MonoBehaviour
         expCurrentProgressBar.anchorMax = new Vector2((float)playerStartExp / (float)currentLevelCap, 0.5f);
         expCurrentProgressBar.sizeDelta = new Vector2(0, expCurrentProgressBar.sizeDelta.y);
 
+        if (EnemyController.instance.bossFight)
+            expGainText.alignment = TextAlignmentOptions.Right;
+        else
+            expGainText.alignment = TextAlignmentOptions.Center;
+
         foreach (Transform t in expContent)
-            Destroy(t.gameObject);
+                Destroy(t.gameObject);
 
         baseExpPhase = true;
         currentNewExp = 0f;
@@ -319,6 +332,9 @@ public class Play : MonoBehaviour
         skip = true;
         foreach (Transform t in expContent)
             Destroy(t.gameObject);
+
+        if (expSFXSource.isPlaying)
+            expSFXSource.Stop();
 
         // base exp
         expGain = 0;
@@ -349,7 +365,10 @@ public class Play : MonoBehaviour
 
         Player.instance.AddTotalExperience(expGain);
 
-        expGainText.text = $"+{expGain}xp";
+        if (EnemyController.instance.bossFight)
+            expGainText.text = $"+{expGain}xp / {EnemyController.instance.GetBossExpThreshold()}xp";
+        else
+            expGainText.text = $"+{expGain}xp";
 
         if (Player.instance.level == Player.instance.maxLevel)
         {

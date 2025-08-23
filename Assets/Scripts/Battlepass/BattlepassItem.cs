@@ -214,7 +214,11 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
             if (Battlepass.instance.premiumOwner)
                 FullUnlock();
         }
-        
+        else
+        {
+            locked = true;
+        }
+
         lockedOverlay.GetComponent<Image>().enabled = locked;
 
         if (selected)
@@ -248,8 +252,9 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
                     Collection.instance.AddToCollection(collectionItem);
                     break;
                 case itemType.Modifier:
-                    Player.instance.AddToModifierList(mod);
-                    break;
+                    bool modifierSuccess = Player.instance.AddToModifierList(mod);
+                    if (modifierSuccess) break;
+                    else return;
                 case itemType.Currency:
                     Player.instance.CoinPurchase(0, coinAmount);
                     break;

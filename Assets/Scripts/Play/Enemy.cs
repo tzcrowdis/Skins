@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
-        dialogueCanvas.gameObject.SetActive(false);
+        //dialogueCanvas.gameObject.SetActive(false);
     }
 
     public virtual void SetSkin(Skin newSkin)
@@ -51,18 +51,19 @@ public class Enemy : MonoBehaviour
         switch (skin.rarity)
         {
             case CollectionItem.Rarity.VeryCommon:
-                negExp = -5;
-                break;
-            case CollectionItem.Rarity.Common:
                 negExp = -10;
                 break;
+            case CollectionItem.Rarity.Common:
+                negExp = -20;
+                break;
             case CollectionItem.Rarity.Rare:
-                negExp = -15;
+                negExp = -30;
                 break;
             case CollectionItem.Rarity.Legendary:
-                negExp = -25;
+                negExp = -40;
                 break;
         }
+        negExp *= Player.instance.season;
         
         expText.text = $"{negExp}xp";
     }

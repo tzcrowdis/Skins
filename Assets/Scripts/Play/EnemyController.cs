@@ -162,4 +162,22 @@ public class EnemyController : MonoBehaviour
                 break;
         }
     }
+
+    public int GetBossExpThreshold()
+    {
+        int expThreshold = 0;
+        switch (boss)
+        {
+            case BossType.Randomizer:
+                expThreshold = randomizerBoss.GetComponent<RandomizerBoss>().expThreshold;
+                break;
+            case BossType.EvilRandomizer:
+                expThreshold = evilRandomizer.GetComponent<EvilRandomizer>().expThreshold;
+                break;
+            case BossType.MonkeyPaw:
+                expThreshold = monkeyPaw.GetComponent<MonkeyPaw>().expThreshold;
+                break;
+        }
+        return expThreshold;
+    }
 }

@@ -21,6 +21,9 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     public TMP_Text modDesc;
     public Image rarityOutline;
 
+    [Header("Sound Effects")]
+    public EventTrigger trigger;
+
     [Header("Discount")]
     public float discount;
     public TMP_Text discountText;
@@ -50,6 +53,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         discount = numSteps * stepSize;
         discountText.text = $"-{discount}%";
         purchased = false;
+        trigger.enabled = true;
 
         switch (type)
         {
@@ -58,7 +62,9 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
                 item = skin.gameObject;
 
                 itemName.text = skin.itemName;
-                itemCost = (int)(skin.itemCost - skin.itemCost * discount / 100);
+                itemCost = skin.GenerateSkinCost();
+                itemCost = (int)(itemCost - itemCost * discount / 100);
+                //itemCost = (int)(skin.itemCost - skin.itemCost * discount / 100);
                 cost.text = $"\u0424{itemCost}";
                 image.color = skin.itemImage.color;
                 image.material = skin.itemImage.material;
@@ -111,24 +117,33 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         image.color = Color.black;
         discountText.text = "";
         cost.text = "";
+        trigger.enabled = false;
     }
 
     public void LockModifiersFull()
     {
         modifierLock = true;
 
+        if (purchased)
+            return;
+
         Color color = image.color;
         color.a = 0.5f;
         image.color = color;
+        trigger.enabled = false;
     }
 
     public void UnlockModifiersNotFull()
     {
         modifierLock = false;
 
+        if (purchased)
+            return;
+
         Color color = image.color;
         color.a = 1f;
         image.color = color;
+        trigger.enabled = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)

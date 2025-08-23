@@ -19,10 +19,10 @@ public class Counterspell : Modifier
             TMP_Text baseText = Play.instance.expContent.GetChild(0).GetComponent<TMP_Text>();
 
             float expGain = (float)Play.instance.expGain;
-            expGain = Player.instance.skin.GetSkinExp() + EnemyController.instance.GetNegativeExp();
+            expGain = Player.instance.skin.GetSkinExp() + -1 * EnemyController.instance.GetNegativeExp();
             Play.instance.expGain = (int)expGain;
 
-            baseText.text = $"+{expGain}xp from skin rarity {Home.instance.SplitCamelCase(Player.instance.GetSkinRarity().ToString())} and +{EnemyController.instance.GetNegativeExp()}xp from enemies";
+            baseText.text = $"+{expGain}xp from skin rarity {Home.instance.SplitCamelCase(Player.instance.GetSkinRarity().ToString())} and +{-1 * EnemyController.instance.GetNegativeExp()}xp from enemies";
             modifierExpDescription = "successfully counterspelled";
 
             return true;

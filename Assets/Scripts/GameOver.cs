@@ -30,15 +30,15 @@ public class GameOver : MonoBehaviour
 
     public void PopulateGameExplanation()
     {
-        if (Player.instance.level == 10)
+        if (Play.instance.expGain >= EnemyController.instance.GetBossExpThreshold())
         {
             winLose.text = "WIN";
-            gameExplanation.text = $"you reached level {Player.instance.maxLevel} in the final season!";
+            gameExplanation.text = $"you gained {Play.instance.expGain}xp surpassing the {EnemyController.instance.GetBossExpThreshold()}xp threshold!";
         }
         else
         {
             winLose.text = "LOSE";
-            gameExplanation.text = $"you were level {Player.instance.level} but need to be level {Player.instance.maxLevel}...";
+            gameExplanation.text = $"you gained {Play.instance.expGain}xp but needed to get {EnemyController.instance.GetBossExpThreshold()}xp...";
         }
         
         // TODO grade based on how close they were?
