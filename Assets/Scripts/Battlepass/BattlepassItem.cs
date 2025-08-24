@@ -201,9 +201,9 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
             }
         }
         lockedLevel.text = $"{levelToClaim}";
-        locked = true;
 
-        BattlepassUnlock();
+        locked = true;
+        lockedOverlay.SetActive(locked);
     }
 
     public void BattlepassUnlock()

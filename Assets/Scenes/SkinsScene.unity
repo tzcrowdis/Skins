@@ -17560,7 +17560,7 @@ MonoBehaviour:
   seasonText: {fileID: 493385412}
   lastSeason: 3
   seasonTimerText: {fileID: 1101003284}
-  seasonTotalMinutes: 1
+  seasonTotalMinutes: 6
   seasonTimerLock: 0
 --- !u!4 &1255826327
 Transform:
@@ -19990,7 +19990,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000042915344}
+  m_AnchoredPosition: {x: 0, y: 0.00091654167}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1377965573
@@ -34356,12 +34356,21 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Reach the maximum level before the end of each season. \n\nEquip your
-    best skins and compete in matches to earn xp to level up.\n\nThe maximum level
-    coincides with the # of items in the battlepass.\n\nOnce the timer for the season
-    reaches zero you will have to compete against a boss, this is your final chance
-    to reach the maximum level.\n\nThere's no way to save your run, set aside ~15
-    minutes if you intend to win."
+  m_text: 'There are 3 seasons, you need to be able to gain 1000xp to progress pass
+    the first, 3000xp for the second, and 5000xp to win.
+
+
+    Equip your best skins
+    and compete in matches to earn xp to level up.
+
+
+    Once the timer for the season
+    reaches zero you will have to compete against a boss, this is where you will
+    be required to reach the threshold.
+
+
+    There''s no way to save your run, set
+    aside ~15 minutes if you intend to win.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 44944b3fb5e69d44fb61810b28cde71e, type: 2}
   m_sharedMaterial: {fileID: -8769998392869931355, guid: 44944b3fb5e69d44fb61810b28cde71e, type: 2}
