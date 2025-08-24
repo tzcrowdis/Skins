@@ -180,4 +180,11 @@ public class EnemyController : MonoBehaviour
         }
         return expThreshold;
     }
+
+    public void ResetBosses()
+    {
+        randomizerBoss.GetComponent<RandomizerBoss>().lockSkin = false;
+
+        evilRandomizer.GetComponent<EvilRandomizer>().lockSkin = false;
+    }
 }

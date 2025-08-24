@@ -63,6 +63,8 @@ public class MainMenu : MonoBehaviour
         Collection.instance.ResetCollection();
         Store.instance.RandomizeFeaturedStore();
 
+        EnemyController.instance.ResetBosses();
+
         foreach (GameObject canvas in openingCanvases)
             canvas.SetActive(true);
 

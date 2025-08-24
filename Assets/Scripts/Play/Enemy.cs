@@ -48,23 +48,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void SetExpAndText()
     {
-        switch (skin.rarity)
-        {
-            case CollectionItem.Rarity.VeryCommon:
-                negExp = -10;
-                break;
-            case CollectionItem.Rarity.Common:
-                negExp = -20;
-                break;
-            case CollectionItem.Rarity.Rare:
-                negExp = -30;
-                break;
-            case CollectionItem.Rarity.Legendary:
-                negExp = -40;
-                break;
-        }
+        negExp = skin.GetEnemyExp();
         negExp *= Player.instance.season;
-        
         expText.text = $"{negExp}xp";
     }
 

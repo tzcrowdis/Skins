@@ -19,6 +19,9 @@ public class MonkeyPaw : Boss
     public AudioSource hoverSource;
     public AudioSource clickSource;
 
+    [Header("Deselected Skin Placeholder")]
+    public Sprite skinPlaceholder;
+
     protected override void Start()
     {
         base.Start();
@@ -41,19 +44,19 @@ public class MonkeyPaw : Boss
             switch (newSkin.rarity)
             {
                 case CollectionItem.Rarity.VeryCommon:
-                    optionExp = -5;
+                    optionExp = newSkin.GetEnemyExp();
                     negExp = optionExp * 10;
                     break;
                 case CollectionItem.Rarity.Common:
-                    optionExp = -10;
+                    optionExp = newSkin.GetEnemyExp();
                     negExp = optionExp * 4;
                     break;
                 case CollectionItem.Rarity.Rare:
-                    optionExp = -15;
+                    optionExp = newSkin.GetEnemyExp();
                     negExp = optionExp * 2;
                     break;
                 case CollectionItem.Rarity.Legendary:
-                    optionExp = -25;
+                    optionExp = newSkin.GetEnemyExp();
                     negExp = optionExp * 1;
                     break;
             }
@@ -87,9 +90,7 @@ public class MonkeyPaw : Boss
         expText.text = $"{negExp}xp";
 
         foreach (GameObject skinOption in skinOptions)
-        {
             skinOption.SetActive(false);
-        }
     }
 
     public override void ReactToPlayerSkin(Skin playerSkin)
@@ -144,6 +145,10 @@ public class MonkeyPaw : Boss
 
     void OnEnable()
     {
+        foreach (GameObject skinOption in skinOptions)
+            skinOption.SetActive(true);
+
+        skinSpriteRenderer.sprite = skinPlaceholder;
         skinSpriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         expText.gameObject.SetActive(false);
         playedSkin.gameObject.GetComponent<BoxCollider2D>().enabled = false;

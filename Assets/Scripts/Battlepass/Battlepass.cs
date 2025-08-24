@@ -108,6 +108,9 @@ public class Battlepass : MonoBehaviour
 
     public void LevelReachedUnlock(int level)
     {
+        if (level <= 0)
+            return;
+        
         if (premiumOwner)
             bpContent.transform.GetChild(level - 1).GetComponent<BattlepassItem>().FullUnlock();
         else

@@ -76,6 +76,8 @@ public class ReadyUp : MonoBehaviour
             startButton.GetComponentInChildren<TMP_Text>().text = "Equip Skin";
             changeSkinButton.gameObject.SetActive(false);
 
+            bossWarningContainer.SetActive(false);
+
             EnemyController.instance.StartPlay();
             gameObject.SetActive(false);
         }

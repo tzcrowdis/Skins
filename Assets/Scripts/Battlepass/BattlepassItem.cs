@@ -204,6 +204,7 @@ public class BattlepassItem : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
         locked = true;
         lockedOverlay.SetActive(locked);
+        lockedOverlay.GetComponent<Image>().enabled = locked;
     }
 
     public void BattlepassUnlock()

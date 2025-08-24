@@ -45,6 +45,23 @@ public class Skin : CollectionItem
         return 0;
     }
 
+    public int GetEnemyExp()
+    {
+        switch (rarity)
+        {
+            case Skin.Rarity.VeryCommon:
+                return -10;
+            case Skin.Rarity.Common:
+                return -20;
+            case Skin.Rarity.Rare:
+                return -30;
+            case Skin.Rarity.Legendary:
+                return -40;
+        }
+
+        return 0;
+    }
+
     // NOTE better than writing the prices individually but should have a location in the editor
     public int GenerateSkinCost() 
     {
