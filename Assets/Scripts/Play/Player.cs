@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
         seasonTimerLock = false;
 
         //dollars += dollarsPerSeason;
-        dollars += Random.Range(0, 51); // NOTE per season $ variance
+        dollars += Random.Range(25, 51); // NOTE per season $ variance
         MoneyAlert();
         UpdateCurrencyFields();
 
@@ -243,7 +243,7 @@ public class Player : MonoBehaviour
 
     public void ResetModifierList()
     {
-        modifiers.Clear();
+        modifiers = new List<Modifier>();
         foreach (Transform child in modifierPanel.transform)
             Destroy(child.gameObject);
     }

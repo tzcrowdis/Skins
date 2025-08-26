@@ -54,13 +54,16 @@ public class MainMenu : MonoBehaviour
         Player.instance.level = 0;
         Player.instance.seasonTimerLock = false;
         Player.instance.seasonTimerText.color = Color.white;
-        Player.instance.dollars = Random.Range(10, 100); // NOTE starting $ variance
+        Player.instance.dollars = Random.Range(25, 100); // NOTE starting $ variance
         Player.instance.coins = 0;
         Player.instance.Start();
-
         Player.instance.ResetModifierList();
+
         Battlepass.instance.GenerateBattlepassItems();
+        Battlepass.instance.premiumButton.gameObject.SetActive(true);
+
         Collection.instance.ResetCollection();
+
         Store.instance.RandomizeFeaturedStore();
 
         EnemyController.instance.ResetBosses();

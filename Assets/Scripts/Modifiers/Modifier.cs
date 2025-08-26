@@ -23,6 +23,7 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public GameObject modifierDetailPanel;
     public TMP_Text modifierDescription;
     Transform modifierCanvas;
+    bool modifierDetailsOpen = false;
 
     [Header("Hover Effects")]
     [HideInInspector]
@@ -85,6 +86,43 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         buttonHover = GameObject.Find("Button Hover Audio Source").GetComponent<AudioSource>();
         buttonClick = GameObject.Find("Button Click Audio Source").GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        // disables the modifier details panel if you click off of it
+        if (modifierDetailsOpen)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+                pointerEventData.position = Input.mousePosition;
+
+                List<RaycastResult> results = new List<RaycastResult>();
+                GraphicRaycaster modifierCanvasRaycaster = modifierCanvas.GetComponent<GraphicRaycaster>();
+                modifierCanvasRaycaster.Raycast(pointerEventData, results);
+
+                bool detailsHit = false;
+                foreach (RaycastResult result in results)
+                {
+
+                    if (result.gameObject == modifierDetailPanel)
+                    {
+                        detailsHit = true;
+                        break;
+                    }
+                }
+
+                if (results.Count == 0 || !detailsHit)
+                {
+                    modifierNamePanel.SetActive(false);
+                    modifierDetailPanel.SetActive(false);
+                    transform.localScale = notHoverScale; // HACK detail panel kept growing
+                    modifierDetailPanel.transform.SetParent(transform);
+                    modifierDetailsOpen = false;
+                }
+            }
+        }
     }
     
     public virtual bool ModifierEffect() { return false; /* override */ }
@@ -211,11 +249,13 @@ public class Modifier : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             
             modifierDetailPanel.SetActive(true);
             modifierDetailPanel.transform.SetParent(modifierCanvas);
+            modifierDetailsOpen = true;
         }
         else
         {
             modifierDetailPanel.SetActive(false);
             modifierDetailPanel.transform.SetParent(transform);
+            modifierDetailsOpen = false;
         }
 
         buttonClick.PlayOneShot(clickSound);

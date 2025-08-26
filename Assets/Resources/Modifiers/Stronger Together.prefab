@@ -16,7 +16,7 @@ PrefabInstance:
       propertyPath: m_text
       value: '+100xp to all modifiers that add
 
-        +0.1x to all modifiers that
+        +0.25x to all modifiers that
         mult'
       objectReference: {fileID: 0}
     - target: {fileID: 1777193106275768079, guid: 19f7e3471c61157429bfd0069ecd044a, type: 3}

@@ -161,7 +161,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!purchased && !modifierLock)
+        if (!purchased)
         {
             rarityOutline.enabled = true;
 
@@ -174,7 +174,7 @@ public class StoreButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (!purchased && !modifierLock)
+        if (!purchased)
         {
             rarityOutline.enabled = false;
 

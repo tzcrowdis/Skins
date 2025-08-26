@@ -16,19 +16,25 @@ public class Cannibal : Modifier
     {
         try 
         {
+            if (Player.instance.skin == null)
+            {
+                modifierExpDescription = "there was no skin to consume";
+                return false;
+            }
+            
             switch (Player.instance.skin.rarity)
             {
                 case Skin.Rarity.VeryCommon:
                     mult += multDelta;
                     break;
                 case Skin.Rarity.Common:
-                    mult += multDelta * 2;
+                    mult += multDelta * 2f;
                     break;
                 case Skin.Rarity.Rare:
-                    mult += multDelta * 3;
+                    mult += multDelta * 3f;
                     break;
                 case Skin.Rarity.Legendary:
-                    mult += multDelta * 4;
+                    mult += multDelta * 4f;
                     break;
             }
 
@@ -39,7 +45,7 @@ public class Cannibal : Modifier
             modifierExpDescription = $"ate {Player.instance.skin.itemName}. multiplied xp by {mult}x.";
 
             Collection.instance.DeleteCollectionItem(Player.instance.skin);
-            Player.instance.skin = null; // testing
+            Player.instance.skin = null;
 
             return true;
         }
